@@ -15,6 +15,7 @@ import PrankRevealScreen from '../../components/PrankRevealScreen';
 import PrankModal from '../../components/PrankModal';
 import SendMoneyModal from '../../components/SendMoneyModal';
 import TransactionIcon from '../../components/TransactionIcon';
+import SwipeableTransaction from '../../components/SwipeableTransaction';
 import { formatCurrency } from '../../utils/currency';
 
 export default function HomeScreen() {
