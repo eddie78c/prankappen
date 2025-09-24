@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Modal } from 'react-native';
+import { Audio } from 'expo-av';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -11,6 +12,7 @@ import Animated, {
 import { LinearGradient } from 'expo-linear-gradient';
 import { CircleCheck as CheckCircle } from 'lucide-react-native';
 import { useTheme } from '../contexts/ThemeContext';
+import { usePrank } from '../contexts/PrankContext';
 import { formatCurrency } from '../utils/currency';
 
 interface TransactionAnimationProps {
@@ -27,11 +29,39 @@ export default function TransactionAnimation({
   onClose 
 }: TransactionAnimationProps) {
   const { theme } = useTheme();
+  const { settings } = usePrank();
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
   const checkScale = useSharedValue(0);
 
+  const playRequestSound = async () => {
+    try {
+      const { sound } = await Audio.Sound.createAsync(
+        require('../assets/sounds/a-pay.mp3')
+      );
+      await sound.playAsync();
+      
+      // Unload sound after playing
+      sound.setOnPlaybackStatusUpdate((status) => {
+        if (status.isLoaded && status.didJustFinish) {
+          sound.unloadAsync();
+        }
+      });
+    } catch (error) {
+      console.log('Error playing sound:', error);
+    }
+  };
+
+  const generateTransactionId = () => {
+    return Math.random().toString(36).substr(2, 9).toUpperCase();
+  };
+
   useEffect(() => {
+    // Play sound only for Money Received (positive amounts)
+    if (amount > 0) {
+      playRequestSound();
+    }
+    
     // Start animation sequence
     opacity.value = withTiming(1, { duration: 300 });
     scale.value = withSequence(
@@ -80,7 +110,7 @@ export default function TransactionAnimation({
             </Animated.View>
             
             <Text style={[styles.title, { color: theme.colors.surface }]}>
-              {amount > 0 ? 'Money Received!' : 'Money Sent!'}
+              {amount < 0 ? 'Money Sent!' : 'Money Received!'}
             </Text>
             
             <Text style={[styles.amount, { color: theme.colors.surface }]}>
@@ -89,6 +119,10 @@ export default function TransactionAnimation({
             
             <Text style={[styles.receiver, { color: theme.colors.surface }]}>
               {receiver}
+            </Text>
+            
+            <Text style={[styles.transactionId, { color: theme.colors.surface }]}>
+              ID: {generateTransactionId()}
             </Text>
           </LinearGradient>
         </Animated.View>
@@ -130,6 +164,13 @@ const styles = StyleSheet.create({
   receiver: {
     fontSize: 16,
     opacity: 0.9,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  transactionId: {
+    fontSize: 14,
+    fontFamily: 'monospace',
+    opacity: 0.8,
     textAlign: 'center',
   },
 });
