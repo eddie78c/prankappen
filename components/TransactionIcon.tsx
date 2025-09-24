@@ -67,21 +67,6 @@ export default function TransactionIcon({ icon, color, size = 24 }: TransactionI
       <Ionicons name={ioniconsName as any} size={size} color={color} />
     </View>
   );
-  }
-
-  return (
-    <View style={[
-      styles.container,
-      {
-        backgroundColor: color + '20',
-        width: size + 16,
-        height: size + 16,
-        borderRadius: (size + 16) / 2,
-      }
-    ]}>
-      <IconComponent size={size} color={color} />
-    </View>
-  );
 }
 
 const styles = StyleSheet.create({
