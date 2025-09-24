@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Settings, Bell, Shield, CircleHelp, LogOut, ChevronRight } from 'lucide-react-native';
+import { Settings, Bell, Shield, HelpCircle as CircleHelp, LogOut, ChevronRight } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import avatarPlaceholder from '../../assets/images/avatar.jpg';
 import { useTheme } from '../../contexts/ThemeContext';
