@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity, Platform } from 'react-native';
 import { Audio } from 'expo-av';
 import { Asset } from 'expo-asset';
-import { X, TriangleAlert as AlertTriangle } from 'lucide-react-native';
+import { X, AlertTriangle as AlertTriangle } from 'lucide-react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePrank } from '../contexts/PrankContext';
