@@ -33,6 +33,8 @@ interface PrankContextType {
   addTransaction: (transaction: Transaction) => void;
   sendMode: 'send' | 'receive';
   setSendMode: (mode: 'send' | 'receive') => void;
+  deleteTransaction: (transactionId: string) => void;
+  updateMonthlyIncome: (amount: number) => void;
 }
 
 const PrankContext = createContext<PrankContextType | undefined>(undefined);
@@ -98,12 +100,23 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     setSettings(prev => ({ ...prev, ...newSettings }));
   };
 
+  const updateMonthlyIncome = (amount: number) => {
+    setSettings(prev => ({ 
+      ...prev, 
+      profileMonthlyIncome: prev.profileMonthlyIncome + amount 
+    }));
+  };
+
   const addTransaction = (transaction: Transaction) => {
     const newTransaction = {
       ...transaction,
       id: Date.now().toString(),
     };
     setTransactions(prev => [newTransaction, ...prev]);
+  };
+
+  const deleteTransaction = (transactionId: string) => {
+    setTransactions(prev => prev.filter(t => t.id !== transactionId));
   };
 
   return (
@@ -115,7 +128,9 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
       transactions,
       addTransaction,
       sendMode,
-      setSendMode
+      setSendMode,
+      deleteTransaction,
+      updateMonthlyIncome
     }}>
       {children}
     </PrankContext.Provider>

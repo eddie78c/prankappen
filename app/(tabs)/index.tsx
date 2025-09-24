@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, Animated as RNAnimated, PanGestureHandler, State } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Send, Plus, CreditCard, PiggyBank, TrendingUp, Bell } from 'lucide-react-native';
-import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
+import Animated, { FadeInDown, FadeInRight, useSharedValue, useAnimatedStyle, withTiming, runOnJS } from 'react-native-reanimated';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { Audio } from 'expo-av';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -21,10 +22,13 @@ export default function HomeScreen() {
   const { translations } = useLanguage();
   const { 
     settings, 
+    updateSettings,
     showPrankReveal, 
     setShowPrankReveal, 
     transactions, 
     addTransaction,
+    deleteTransaction,
+    updateMonthlyIncome,
     sendMode,
     setSendMode 
   } = usePrank();
@@ -73,8 +77,11 @@ export default function HomeScreen() {
     
     addTransaction(newTransaction);
     
-    // Update balance
-    settings.profileBalance += settings.defaultAmount;
+    // Update balance and monthly income
+    updateSettings({ 
+      profileBalance: settings.profileBalance + settings.defaultAmount 
+    });
+    updateMonthlyIncome(settings.defaultAmount);
     
     // Play sound
     playRequestSound();
@@ -102,9 +109,11 @@ export default function HomeScreen() {
     
     addTransaction(newTransaction);
     
-    // Update balance
-    settings.profileBalance -= amount;
-    settings.profileTodaySpent += amount;
+    // Update balance and today spent
+    updateSettings({ 
+      profileBalance: settings.profileBalance - amount,
+      profileTodaySpent: settings.profileTodaySpent + amount
+    });
     
     setAnimationData({
       amount: amount,
@@ -172,37 +181,13 @@ export default function HomeScreen() {
   );
 
   const renderTransaction = (transaction: any, index: number) => (
-    <Animated.View
+    <SwipeableTransaction
       key={transaction.id}
-      entering={FadeInRight.delay(index * 50).springify()}
-    >
-      <TouchableOpacity style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}>
-        <TransactionIcon 
-          icon={transaction.icon} 
-          color={transaction.color}
-          size={20}
-        />
-        <View style={styles.transactionDetails}>
-          <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
-            {transaction.title}
-          </Text>
-          <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
-            {transaction.description}
-          </Text>
-        </View>
-        <View style={styles.transactionAmount}>
-          <Text style={[
-            styles.amountText,
-            { color: transaction.amount > 0 ? theme.colors.success : theme.colors.text }
-          ]}>
-            {formatCurrency(transaction.amount, settings.currency)}
-          </Text>
-          <Text style={[styles.transactionDate, { color: theme.colors.textSecondary }]}>
-            {transaction.date}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    </Animated.View>
+      transaction={transaction}
+      index={index}
+      onDelete={() => deleteTransaction(transaction.id)}
+      canDelete={transaction.date === 'Today'}
+    />
   );
 
   if (showPrankReveal) {
