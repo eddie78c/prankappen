@@ -8,7 +8,8 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { usePrank } from '../../contexts/PrankContext';
 import GlassCard from '../../components/GlassCard';
-import TransactionAnimation from '../../components/TransactionAnimation';
+import MoneySentAnimation from '../../components/MoneySentAnimation';
+import MoneyReceivedAnimation from '../../components/MoneyReceivedAnimation';
 import PrankRevealScreen from '../../components/PrankRevealScreen';
 import PrankModal from '../../components/PrankModal';
 import SendMoneyModal from '../../components/SendMoneyModal';
@@ -28,6 +29,7 @@ export default function HomeScreen() {
     setSendMode 
   } = usePrank();
   const [showAnimation, setShowAnimation] = React.useState(false);
+  const [animationType, setAnimationType] = React.useState<'sent' | 'received'>('received');
   const [secretTaps, setSecretTaps] = React.useState(0);
   const [lastTapTime, setLastTapTime] = React.useState(0);
   const [longPressTimer, setLongPressTimer] = React.useState<NodeJS.Timeout | null>(null);
@@ -82,6 +84,7 @@ export default function HomeScreen() {
       currency: settings.currency,
       receiver: `From ${settings.receiverName}`
     });
+    setAnimationType('received');
     setShowAnimation(true);
   };
 
@@ -108,6 +111,7 @@ export default function HomeScreen() {
       currency: settings.currency,
       receiver: phoneNumber
     });
+    setAnimationType('sent');
     setShowAnimation(true);
   };
 
@@ -342,15 +346,30 @@ export default function HomeScreen() {
       </ScrollView>
       
       {showAnimation && (
-        <TransactionAnimation 
-          amount={animationData?.amount || 0}
-          currency={animationData?.currency || settings.currency}
-          receiver={animationData?.receiver || ''}
-          onClose={() => {
-            setShowAnimation(false);
-            setAnimationData(null);
-          }}
-        />
+        <>
+          {animationType === 'sent' && (
+            <MoneySentAnimation 
+              amount={animationData?.amount || 0}
+              currency={animationData?.currency || settings.currency}
+              receiver={animationData?.receiver || ''}
+              onClose={() => {
+                setShowAnimation(false);
+                setAnimationData(null);
+              }}
+            />
+          )}
+          {animationType === 'received' && (
+            <MoneyReceivedAnimation 
+              amount={animationData?.amount || 0}
+              currency={animationData?.currency || settings.currency}
+              receiver={animationData?.receiver || ''}
+              onClose={() => {
+                setShowAnimation(false);
+                setAnimationData(null);
+              }}
+            />
+          )}
+        </>
       )}
       
       <PrankModal 
