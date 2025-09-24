@@ -1,0 +1,396 @@
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { CreditCard, Plus, Settings, Eye, EyeOff } from 'lucide-react-native';
+import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
+import { useTheme } from '../../contexts/ThemeContext';
+import { useLanguage } from '../../contexts/LanguageContext';
+import { mockUserData } from '../../data/mockData';
+import GlassCard from '../../components/GlassCard';
+
+export default function CardsScreen() {
+  const { theme } = useTheme();
+  const { translations } = useLanguage();
+  const [selectedCard, setSelectedCard] = useState(0);
+  const [showCardNumber, setShowCardNumber] = useState(false);
+  const [cardSettings, setCardSettings] = useState({
+    contactless: true,
+    online: false,
+    atm: true,
+  });
+
+  const renderCard = (card: any, index: number) => (
+    <Animated.View
+      key={card.id}
+      entering={FadeInRight.delay(index * 200).springify()}
+    >
+      <TouchableOpacity
+        onPress={() => setSelectedCard(index)}
+        style={[
+          styles.cardContainer,
+          selectedCard === index && styles.selectedCard,
+        ]}
+      >
+        <LinearGradient
+          colors={[card.color, card.color + '80']}
+          style={styles.card}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <View style={styles.cardHeader}>
+            <Text style={styles.cardType}>{card.type}</Text>
+            <Text style={styles.visa}>VISA</Text>
+          </View>
+          
+          <View style={styles.cardNumber}>
+            <Text style={styles.numberText}>
+              {showCardNumber ? card.number : '**** **** **** ' + card.number.slice(-4)}
+            </Text>
+          </View>
+          
+          <View style={styles.cardFooter}>
+            <View>
+              <Text style={styles.cardLabel}>CARD HOLDER</Text>
+              <Text style={styles.cardValue}>{card.holder}</Text>
+            </View>
+            <View>
+              <Text style={styles.cardLabel}>EXPIRES</Text>
+              <Text style={styles.cardValue}>{card.expiry}</Text>
+            </View>
+            <View>
+              <Text style={styles.cardLabel}>CVV</Text>
+              <Text style={styles.cardValue}>
+                {showCardNumber ? card.cvv : '***'}
+              </Text>
+            </View>
+          </View>
+        </LinearGradient>
+      </TouchableOpacity>
+    </Animated.View>
+  );
+
+  const renderSettingItem = (icon: React.ReactNode, title: string, key: string, index: number) => (
+    <Animated.View
+      key={key}
+      entering={FadeInDown.delay(index * 100).springify()}
+    >
+      <View style={[styles.settingItem, { backgroundColor: theme.colors.surface }]}>
+        <View style={styles.settingLeft}>
+          <View style={[styles.settingIcon, { backgroundColor: theme.colors.primary + '20' }]}>
+            {icon}
+          </View>
+          <Text style={[styles.settingTitle, { color: theme.colors.text }]}>
+            {title}
+          </Text>
+        </View>
+        <Switch
+          value={cardSettings[key as keyof typeof cardSettings]}
+          onValueChange={(value) => 
+            setCardSettings(prev => ({ ...prev, [key]: value }))
+          }
+          trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
+          thumbColor={theme.colors.surface}
+        />
+      </View>
+    </Animated.View>
+  );
+
+  return (
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+      {/* Header */}
+      <View style={[styles.header, { backgroundColor: theme.colors.surface }]}>
+        <Text style={[styles.title, { color: theme.colors.text }]}>
+          {translations.yourCards}
+        </Text>
+        <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>
+          {mockUserData.cards.length} physical card, 1 virtual card
+        </Text>
+      </View>
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Card Tabs */}
+        <View style={styles.cardTabs}>
+          <Animated.View entering={FadeInDown.delay(100)}>
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                {
+                  backgroundColor: selectedCard === 0 ? theme.colors.primary : theme.colors.surface,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  { color: selectedCard === 0 ? theme.colors.surface : theme.colors.text },
+                ]}
+              >
+                {translations.physicalCard}
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+          
+          <Animated.View entering={FadeInDown.delay(200)}>
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                {
+                  backgroundColor: selectedCard === 1 ? theme.colors.primary : theme.colors.surface,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  { color: selectedCard === 1 ? theme.colors.surface : theme.colors.text },
+                ]}
+              >
+                {translations.virtualCard}
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </View>
+
+        {/* Cards Display */}
+        <View style={styles.cardsSection}>
+          {mockUserData.cards.map(renderCard)}
+          
+          <Animated.View entering={FadeInDown.delay(600)}>
+            <TouchableOpacity style={[styles.addCard, { backgroundColor: theme.colors.surface }]}>
+              <Plus size={24} color={theme.colors.primary} />
+              <Text style={[styles.addCardText, { color: theme.colors.primary }]}>
+                Add New Card
+              </Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </View>
+
+        {/* Card Visibility Toggle */}
+        <Animated.View entering={FadeInDown.delay(700)} style={styles.visibilitySection}>
+          <TouchableOpacity
+            style={[styles.visibilityButton, { backgroundColor: theme.colors.surface }]}
+            onPress={() => setShowCardNumber(!showCardNumber)}
+          >
+            {showCardNumber ? (
+              <EyeOff size={20} color={theme.colors.text} />
+            ) : (
+              <Eye size={20} color={theme.colors.text} />
+            )}
+            <Text style={[styles.visibilityText, { color: theme.colors.text }]}>
+              {showCardNumber ? 'Hide' : 'Show'} Card Details
+            </Text>
+          </TouchableOpacity>
+        </Animated.View>
+
+        {/* Card Settings */}
+        <View style={styles.settingsSection}>
+          <Animated.View entering={FadeInDown.delay(800)}>
+            <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+              {translations.cardSettings}
+            </Text>
+          </Animated.View>
+          
+          {renderSettingItem(
+            <CreditCard size={20} color={theme.colors.primary} />,
+            translations.contactlessPayment,
+            'contactless',
+            0
+          )}
+          {renderSettingItem(
+            <Settings size={20} color={theme.colors.primary} />,
+            translations.onlinePayment,
+            'online',
+            1
+          )}
+          {renderSettingItem(
+            <CreditCard size={20} color={theme.colors.primary} />,
+            translations.atmWithdraws,
+            'atm',
+            2
+          )}
+        </View>
+      </ScrollView>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  header: {
+    paddingTop: 48,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    height: 48,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 4,
+  },
+  subtitle: {
+    fontSize: 14,
+  },
+  cardTabs: {
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    gap: 12,
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  tabText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  cardsSection: {
+    paddingHorizontal: 20,
+  },
+  cardContainer: {
+    marginBottom: 16,
+  },
+  selectedCard: {
+    transform: [{ scale: 1.02 }],
+  },
+  card: {
+    height: 200,
+    borderRadius: 16,
+    padding: 20,
+    justifyContent: 'space-between',
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  cardType: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  visa: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontStyle: 'italic',
+  },
+  cardNumber: {
+    marginVertical: 20,
+  },
+  numberText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+    letterSpacing: 2,
+  },
+  cardFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  cardLabel: {
+    color: 'rgba(255, 255, 255, 0.8)',
+    fontSize: 10,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  cardValue: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  addCard: {
+    height: 80,
+    borderRadius: 16,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#E5E7EB',
+    borderStyle: 'dashed',
+    gap: 8,
+  },
+  addCardText: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  visibilitySection: {
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+  },
+  visibilityButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    borderRadius: 8,
+    gap: 8,
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+  },
+  visibilityText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  settingsSection: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  settingItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 8,
+    elevation: 1,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+  },
+  settingLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  settingIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+  },
+  settingTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
