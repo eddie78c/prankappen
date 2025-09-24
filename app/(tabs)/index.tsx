@@ -549,6 +549,22 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 2,
   },
+  deleteIndicator: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    bottom: 0,
+    width: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  deleteText: {
+    color: 'white',
+    fontSize: 12,
+    fontWeight: '600',
+  },
   secretSpot: {
     position: 'absolute',
     top: 0,
