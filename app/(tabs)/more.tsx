@@ -189,11 +189,9 @@ export default function MoreScreen() {
               {item.title}
             </Text>
             {item.value && item.type === 'selector' && (
-            <View style={[styles.configCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
               <Text style={[styles.compactSettingValue, { color: theme.colors.textSecondary }]}>
                 {item.value}
               </Text>
-            </View>
             )}
           </View>
         </View>
