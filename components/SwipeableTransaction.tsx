@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
 import Animated, { 
   FadeInDown, 
   useSharedValue, 
@@ -71,38 +71,69 @@ export default function SwipeableTransaction({
       entering={FadeInDown.delay(index * 50).springify()}
       style={styles.container}
     >
-      <PanGestureHandler onGestureEvent={gestureHandler}>
-        <Animated.View style={[animatedStyle]}>
-          <TouchableOpacity 
-            style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
-          >
-            <TransactionIcon 
-              icon={transaction.icon} 
-              color={transaction.color} 
-              size={20} 
-            />
-            <View style={styles.transactionDetails}>
-              <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
-                {transaction.title}
-              </Text>
-              <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
-                {transaction.description}
-              </Text>
-            </View>
-            <View style={styles.transactionAmount}>
-              <Text style={[
-                styles.amountText,
-                { color: transaction.amount > 0 ? theme.colors.success : theme.colors.text }
-              ]}>
-                {formatCurrency(transaction.amount, settings.currency)}
-              </Text>
-              <Text style={[styles.transactionDate, { color: theme.colors.textSecondary }]}>
-                {transaction.date}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </Animated.View>
-      </PanGestureHandler>
+      {Platform.OS !== 'web' ? (
+        <PanGestureHandler onGestureEvent={gestureHandler}>
+          <Animated.View style={[animatedStyle]}>
+            <TouchableOpacity 
+              style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
+            >
+              <TransactionIcon 
+                icon={transaction.icon} 
+                color={transaction.color} 
+                size={20} 
+              />
+              <View style={styles.transactionDetails}>
+                <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
+                  {transaction.title}
+                </Text>
+                <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
+                  {transaction.description}
+                </Text>
+              </View>
+              <View style={styles.transactionAmount}>
+                <Text style={[
+                  styles.amountText,
+                  { color: transaction.amount > 0 ? theme.colors.success : theme.colors.text }
+                ]}>
+                  {formatCurrency(transaction.amount, settings.currency)}
+                </Text>
+                <Text style={[styles.transactionDate, { color: theme.colors.textSecondary }]}>
+                  {transaction.date}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </Animated.View>
+        </PanGestureHandler>
+      ) : (
+        <TouchableOpacity 
+          style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
+        >
+          <TransactionIcon 
+            icon={transaction.icon} 
+            color={transaction.color} 
+            size={20} 
+          />
+          <View style={styles.transactionDetails}>
+            <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
+              {transaction.title}
+            </Text>
+            <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
+              {transaction.description}
+            </Text>
+          </View>
+          <View style={styles.transactionAmount}>
+            <Text style={[
+              styles.amountText,
+              { color: transaction.amount > 0 ? theme.colors.success : theme.colors.text }
+            ]}>
+              {formatCurrency(transaction.amount, settings.currency)}
+            </Text>
+            <Text style={[styles.transactionDate, { color: theme.colors.textSecondary }]}>
+              {transaction.date}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      )}
       
       {canDelete && (
         <Animated.View style={[styles.deleteIndicator, deleteIndicatorStyle]}>
