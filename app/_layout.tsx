@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import { LanguageProvider } from '../contexts/LanguageContext';
@@ -51,17 +52,19 @@ export default function RootLayout() {
   useFrameworkReady();
 
   return (
-    <>
-      <ThemeProvider>
-        <LanguageProvider>
-          <PrankProvider>
-            <AuthProvider>
-              <AuthenticatedApp />
-            </AuthProvider>
-          </PrankProvider>
-        </LanguageProvider>
-      </ThemeProvider>
-      <StatusBar style="auto" />
-    </>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <>
+        <ThemeProvider>
+          <LanguageProvider>
+            <PrankProvider>
+              <AuthProvider>
+                <AuthenticatedApp />
+              </AuthProvider>
+            </PrankProvider>
+          </LanguageProvider>
+        </ThemeProvider>
+        <StatusBar style="auto" />
+      </>
+    </GestureHandlerRootView>
   );
 }
