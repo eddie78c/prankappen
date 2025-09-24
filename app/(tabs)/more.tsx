@@ -189,9 +189,11 @@ export default function MoreScreen() {
               {item.title}
             </Text>
             {item.value && item.type === 'selector' && (
+            <View style={[styles.configCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
               <Text style={[styles.compactSettingValue, { color: theme.colors.textSecondary }]}>
                 {item.value}
               </Text>
+            </View>
             )}
           </View>
         </View>
@@ -844,33 +846,6 @@ const styles = StyleSheet.create({
   soundButtonText: {
     fontSize: 14,
   },
-  laughterGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  laughterOption: {
-    flex: 1,
-    minWidth: '30%',
-    padding: 12,
-    borderRadius: 8,
-    alignItems: 'center',
-    justifyContent: 'center',
-    minHeight: 50,
-  },
-  laughterText: {
-    fontSize: 12,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  selectedDot: {
-    position: 'absolute',
-    top: 4,
-    right: 4,
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-  },
   saveButton: {
     paddingVertical: 12,
     paddingHorizontal: 24,
@@ -891,5 +866,44 @@ const styles = StyleSheet.create({
   },
   closeConfigText: {
     fontSize: 12,
+  },
+  configCard: {
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    marginBottom: 16,
+  },
+  laughterGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  laughterOption: {
+    flex: 1,
+    minWidth: '45%',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 50,
+    position: 'relative',
+  },
+  laughterText: {
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  selectedDot: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
 });
