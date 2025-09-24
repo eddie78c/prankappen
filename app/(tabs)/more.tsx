@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, TextInput, Image, Alert } from 'react-native';
-import { Globe, Moon, Sun, CreditCard, Shield, Bell, CircleHelp as HelpCircle, Info, Settings as SettingsIcon, Camera, DollarSign } from 'lucide-react-native';
+import { 
+  Globe, 
+  Moon, 
+  Sun, 
+  CreditCard, 
+  Shield, 
+  Bell, 
+  HelpCircle, 
+  Info, 
+  Settings as SettingsIcon, 
+  Camera, 
+  DollarSign 
+} from 'lucide-react-native';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import Animated, { FadeInDown } from 'react-native-reanimated';
