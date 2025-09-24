@@ -17,16 +17,19 @@ interface PrankSettings {
   defaultAmount: number;
   currency: string;
   requestSound?: string;
+  laughterSound?: string;
   profileName: string;
   profileLocation: string;
   profileBalance: number;
   profileMonthlyIncome: number;
   profileTodaySpent: number;
+  customSounds: string[];
 }
 
 interface PrankContextType {
   settings: PrankSettings;
   updateSettings: (newSettings: Partial<PrankSettings>) => void;
+  addCustomSound: (soundUri: string) => void;
   showPrankReveal: boolean;
   setShowPrankReveal: (show: boolean) => void;
   transactions: Transaction[];
@@ -49,6 +52,7 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     profileBalance: 21500.00,
     profileMonthlyIncome: 300.90,
     profileTodaySpent: 600.90,
+    customSounds: [],
   });
 
   const [showPrankReveal, setShowPrankReveal] = useState(false);
@@ -100,6 +104,13 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     setSettings(prev => ({ ...prev, ...newSettings }));
   };
 
+  const addCustomSound = (soundUri: string) => {
+    setSettings(prev => ({ 
+      ...prev, 
+      customSounds: [...prev.customSounds, soundUri] 
+    }));
+  };
+
   const updateMonthlyIncome = (amount: number) => {
     setSettings(prev => ({ 
       ...prev, 
@@ -123,6 +134,7 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     <PrankContext.Provider value={{
       settings,
       updateSettings,
+      addCustomSound,
       showPrankReveal,
       setShowPrankReveal,
       transactions,

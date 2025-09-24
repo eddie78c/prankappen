@@ -1,8 +1,11 @@
 import React from 'react';
+import { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
+import { Audio } from 'expo-av';
 import { X, TriangleAlert as AlertTriangle } from 'lucide-react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { usePrank } from '../contexts/PrankContext';
 
 interface PrankModalProps {
   visible: boolean;
@@ -12,6 +15,73 @@ interface PrankModalProps {
 export default function PrankModal({ visible, onClose }: PrankModalProps) {
   const { theme } = useTheme();
   const { translations } = useLanguage();
+  const { settings } = usePrank();
+  const soundRef = useRef<Audio.Sound | null>(null);
+
+  const playLaughterSound = async () => {
+    try {
+      if (soundRef.current) {
+        await soundRef.current.unloadAsync();
+      }
+
+      let soundSource;
+      if (settings.laughterSound?.startsWith('file://') || settings.laughterSound?.startsWith('content://')) {
+        // Custom sound
+        soundSource = { uri: settings.laughterSound };
+      } else {
+        // Built-in sound
+        const soundFile = settings.laughterSound || 'Chuckle.mp3';
+        if (soundFile === 'Chuckle.mp3') {
+          soundSource = require('../assets/sounds/laugh/Chuckle.mp3');
+        } else if (soundFile === 'Giggle.mp3') {
+          soundSource = require('../assets/sounds/laugh/Giggle.mp3');
+        } else if (soundFile === 'Tee-hee.mp3') {
+          soundSource = require('../assets/sounds/laugh/Tee-hee.mp3');
+        } else {
+          soundSource = require('../assets/sounds/laugh/Chuckle.mp3');
+        }
+      }
+
+      const { sound } = await Audio.Sound.createAsync(soundSource, {
+        isLooping: true,
+        volume: 0.8,
+      });
+      
+      soundRef.current = sound;
+      await sound.playAsync();
+    } catch (error) {
+      console.log('Error playing laughter sound:', error);
+    }
+  };
+
+  const stopLaughterSound = async () => {
+    try {
+      if (soundRef.current) {
+        await soundRef.current.stopAsync();
+        await soundRef.current.unloadAsync();
+        soundRef.current = null;
+      }
+    } catch (error) {
+      console.log('Error stopping laughter sound:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (visible) {
+      playLaughterSound();
+    } else {
+      stopLaughterSound();
+    }
+
+    return () => {
+      stopLaughterSound();
+    };
+  }, [visible]);
+
+  const handleClose = () => {
+    stopLaughterSound();
+    onClose();
+  };
 
   return (
     <Modal
@@ -24,7 +94,7 @@ export default function PrankModal({ visible, onClose }: PrankModalProps) {
         <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
           <TouchableOpacity 
             style={[styles.closeButton, { backgroundColor: theme.colors.background }]}
-            onPress={onClose}
+            onPress={handleClose}
           >
             <X size={20} color={theme.colors.text} />
           </TouchableOpacity>
@@ -43,7 +113,7 @@ export default function PrankModal({ visible, onClose }: PrankModalProps) {
           
           <TouchableOpacity 
             style={[styles.button, { backgroundColor: theme.colors.primary }]}
-            onPress={onClose}
+            onPress={handleClose}
           >
             <Text style={[styles.buttonText, { color: theme.colors.surface }]}>
               Got it

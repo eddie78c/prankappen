@@ -257,7 +257,7 @@ export default function HomeScreen() {
                 </View>
                 <View style={styles.statItem}>
                   <Text style={[styles.statAmount, { color: theme.colors.surface }]}>
-                    {formatCurrency(settings.profileTodaySpent, settings.currency)}
+                    -{formatCurrency(settings.profileTodaySpent, settings.currency)}
                   </Text>
                   <Text style={[styles.statLabel, { color: theme.colors.surface }]}>
                     {translations.todaySpent}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, TextInput, Image, Alert } from 'react-native';
 import { Globe, Moon, Sun, CreditCard, Shield, Bell, CircleHelp as HelpCircle, Info, Settings as SettingsIcon, Camera, DollarSign } from 'lucide-react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as DocumentPicker from 'expo-document-picker';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -21,6 +22,13 @@ export default function MoreScreen() {
   const [tempProfileName, setTempProfileName] = useState(settings.profileName);
   const [tempProfileLocation, setTempProfileLocation] = useState(settings.profileLocation);
   const [tempProfileBalance, setTempProfileBalance] = useState(settings.profileBalance.toString());
+  const [tempLaughterSound, setTempLaughterSound] = useState(settings.laughterSound || 'Chuckle.mp3');
+
+  const laughterSounds = [
+    { name: 'Chuckle', file: 'Chuckle.mp3' },
+    { name: 'Giggle', file: 'Giggle.mp3' },
+    { name: 'Tee-hee', file: 'Tee-hee.mp3' },
+  ];
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -46,6 +54,7 @@ export default function MoreScreen() {
     updateSettings({
       receiverName: tempReceiverName,
       defaultAmount: parseFloat(tempAmount) || settings.defaultAmount,
+      laughterSound: tempLaughterSound,
     });
     setShowPrankSettings(false);
     Alert.alert('Settings Saved', 'Prank settings have been updated!');
@@ -165,6 +174,7 @@ export default function MoreScreen() {
               {item.title}
             </Text>
             {item.value && item.type === 'selector' && (
+            <View style={[styles.configCard, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
               <Text style={[styles.compactSettingValue, { color: theme.colors.textSecondary }]}>
                 {item.value}
               </Text>
@@ -466,8 +476,57 @@ export default function MoreScreen() {
                       </Text>
                     </TouchableOpacity>
                   </View>
+                  
+                  {/* Types of Laughter */}
+                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
+                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
+                      Types of Laughter
+                    </Text>
+                    <View style={styles.laughterGrid}>
+                      {laughterSounds.map((sound, index) => (
+                        <TouchableOpacity
+                          key={sound.file}
+                          style={[
+                            styles.laughterOption,
+                            {
+                              backgroundColor: theme.colors.background,
+                              borderColor: tempLaughterSound === sound.file ? theme.colors.primary : theme.colors.border,
+                              borderWidth: tempLaughterSound === sound.file ? 2 : 1,
+                            }
+                          ]}
+                          onPress={() => setTempLaughterSound(sound.file)}
+                        >
+                          <Text style={[styles.laughterText, { color: theme.colors.text }]}>
+                            {sound.name}
+                          </Text>
+                          {tempLaughterSound === sound.file && (
+                            <View style={[styles.selectedDot, { backgroundColor: theme.colors.primary }]} />
+                          )}
+                        </TouchableOpacity>
+                      ))}
+                      
+                      {/* Custom Sound Option */}
+                      <TouchableOpacity
+                        style={[
+                          styles.laughterOption,
+                          {
+                            backgroundColor: theme.colors.background,
+                            borderColor: theme.colors.border,
+                            borderWidth: 1,
+                            borderStyle: 'dashed',
+                          }
+                        ]}
+                        onPress={pickCustomSound}
+                      >
+                        <Text style={[styles.laughterText, { color: theme.colors.textSecondary }]}>
+                          + Custom
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </>
               )}
+            </View>
               
               {/* Save Button */}
               <TouchableOpacity
@@ -792,5 +851,44 @@ const styles = StyleSheet.create({
   },
   closeConfigText: {
     fontSize: 12,
+  },
+  configCard: {
+    borderRadius: 16,
+    padding: 16,
+    borderWidth: 1,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    marginBottom: 16,
+  },
+  laughterGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  laughterOption: {
+    flex: 1,
+    minWidth: '45%',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 50,
+    position: 'relative',
+  },
+  laughterText: {
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  selectedDot: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
 });
