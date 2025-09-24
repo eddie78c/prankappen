@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import * as LucideIcons from 'lucide-react-native';
+import { Settings, Bell, Shield, CircleHelp, LogOut, ChevronRight } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import avatarPlaceholder from '../../assets/images/avatar.jpg';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -18,27 +18,27 @@ export default function ProfileScreen() {
 
   const menuItems = [
     {
-      icon: <LucideIcons.Settings size={20} color={theme.colors.primary} />,
+      icon: <Settings size={20} color={theme.colors.primary} />,
       title: translations.settings,
       onPress: () => {},
     },
     {
-      icon: <LucideIcons.Bell size={20} color={theme.colors.primary} />,
+      icon: <Bell size={20} color={theme.colors.primary} />,
       title: translations.notifications,
       onPress: () => {},
     },
     {
-      icon: <LucideIcons.Shield size={20} color={theme.colors.primary} />,
+      icon: <Shield size={20} color={theme.colors.primary} />,
       title: translations.security,
       onPress: () => {},
     },
     {
-      icon: <LucideIcons.CircleHelp size={20} color={theme.colors.primary} />,
+      icon: <CircleHelp size={20} color={theme.colors.primary} />,
       title: 'Help & Support',
       onPress: () => {},
     },
     {
-      icon: <LucideIcons.LogOut size={20} color={theme.colors.error} />,
+      icon: <LogOut size={20} color={theme.colors.error} />,
       title: 'Log Out',
       onPress: logout,
     },
@@ -61,7 +61,7 @@ export default function ProfileScreen() {
             {item.title}
           </Text>
         </View>
-        <LucideIcons.ChevronRight size={20} color={theme.colors.textSecondary} />
+        <ChevronRight size={20} color={theme.colors.textSecondary} />
       </TouchableOpacity>
     </Animated.View>
   );
