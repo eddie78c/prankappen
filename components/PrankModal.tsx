@@ -1,7 +1,8 @@
 import React from 'react';
 import { useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Modal, TouchableOpacity, Platform } from 'react-native';
 import { Audio } from 'expo-av';
+import { Asset } from 'expo-asset';
 import { X, TriangleAlert as AlertTriangle } from 'lucide-react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -11,6 +12,13 @@ interface PrankModalProps {
   visible: boolean;
   onClose: () => void;
 }
+
+// Static map of built-in sound files
+const BUILT_IN_SOUNDS = {
+  'Chuckle.mp3': require('../assets/sounds/laugh/Chuckle.mp3'),
+  'Giggle.mp3': require('../assets/sounds/laugh/Giggle.mp3'),
+  'Tee-hee.mp3': require('../assets/sounds/laugh/Tee-hee.mp3'),
+};
 
 export default function PrankModal({ visible, onClose }: PrankModalProps) {
   const { theme } = useTheme();
@@ -31,14 +39,16 @@ export default function PrankModal({ visible, onClose }: PrankModalProps) {
       } else {
         // Built-in sound
         const soundFile = settings.laughterSound || 'Chuckle.mp3';
-        if (soundFile === 'Chuckle.mp3') {
-          soundSource = require('../assets/sounds/laugh/Chuckle.mp3');
-        } else if (soundFile === 'Giggle.mp3') {
-          soundSource = require('../assets/sounds/laugh/Giggle.mp3');
-        } else if (soundFile === 'Tee-hee.mp3') {
-          soundSource = require('../assets/sounds/laugh/Tee-hee.mp3');
+        const moduleId = BUILT_IN_SOUNDS[soundFile] || BUILT_IN_SOUNDS['Chuckle.mp3'];
+        
+        if (Platform.OS === 'web') {
+          // For web, use Asset.fromModule to get a proper URI
+          const asset = Asset.fromModule(moduleId);
+          await asset.downloadAsync();
+          soundSource = { uri: asset.uri };
         } else {
-          soundSource = require('../assets/sounds/laugh/Chuckle.mp3');
+          // For native, pass the module ID directly
+          soundSource = moduleId;
         }
       }
 
