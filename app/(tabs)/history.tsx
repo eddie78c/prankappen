@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { Search, Filter, Calendar } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -62,13 +62,13 @@ export default function HistoryScreen() {
         
         <View style={styles.headerActions}>
           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-            <Search size={20} color={theme.colors.text} />
+            <Ionicons name="search" size={24} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-            <Filter size={20} color={theme.colors.text} />
+            <Ionicons name="filter" size={24} color={theme.colors.text} />
           </TouchableOpacity>
           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-            <Calendar size={20} color={theme.colors.text} />
+            <Ionicons name="calendar" size={24} color={theme.colors.text} />
           </TouchableOpacity>
         </View>
       </View>
@@ -138,10 +138,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 48,
+    paddingTop: 60,
     paddingHorizontal: 20,
-    paddingBottom: 20,
-    height: 48,
+    paddingBottom: 16,
+    height: 88,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -151,6 +151,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
   },
   headerActions: {
     flexDirection: 'row',

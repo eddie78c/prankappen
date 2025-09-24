@@ -1,18 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, TextInput, Image, Alert } from 'react-native';
-import { 
-  Globe, 
-  Moon, 
-  Sun, 
-  CreditCard, 
-  Shield, 
-  Bell, 
-  HelpCircle, 
-  Info, 
-  Settings as SettingsIcon, 
-  Camera, 
-  DollarSign 
-} from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -107,21 +95,21 @@ export default function MoreScreen() {
       title: 'Appearance',
       items: [
         {
-          icon: isDark ? <Moon size={20} color={theme.colors.primary} /> : <Sun size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name={isDark ? "moon" : "sunny"} size={24} color={theme.colors.primary} />,
           title: translations.darkMode,
           type: 'switch',
           value: isDark,
           onPress: toggleTheme,
         },
         {
-          icon: <Globe size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name="globe" size={24} color={theme.colors.primary} />,
           title: translations.language,
           type: 'selector',
           value: availableLanguages.find(lang => lang.code === currentLanguage)?.name,
           onPress: () => setShowLanguageSelector(!showLanguageSelector),
         },
         {
-          icon: <DollarSign size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name="cash" size={24} color={theme.colors.primary} />,
           title: 'Currency',
           type: 'selector',
           value: `${settings.currency} (${getCurrencySymbol(settings.currency)})`,
@@ -133,13 +121,13 @@ export default function MoreScreen() {
       title: 'Prank Settings',
       items: [
         {
-          icon: <SettingsIcon size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name="settings" size={24} color={theme.colors.primary} />,
           title: 'Configure Prank',
           type: 'navigation',
           onPress: () => setShowPrankSettings(!showPrankSettings),
         },
         {
-          icon: <SettingsIcon size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name="person" size={24} color={theme.colors.primary} />,
           title: 'Profile Settings',
           type: 'navigation',
           onPress: () => setShowProfileSettings(!showProfileSettings),
@@ -150,13 +138,13 @@ export default function MoreScreen() {
       title: 'Services',
       items: [
         {
-          icon: <Shield size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name="shield-checkmark" size={24} color={theme.colors.primary} />,
           title: translations.security,
           type: 'navigation',
           onPress: () => {},
         },
         {
-          icon: <Bell size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name="notifications" size={24} color={theme.colors.primary} />,
           title: translations.notifications,
           type: 'navigation',
           onPress: () => {},
@@ -167,13 +155,13 @@ export default function MoreScreen() {
       title: 'Support',
       items: [
         {
-          icon: <HelpCircle size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name="help-circle" size={24} color={theme.colors.primary} />,
           title: 'Help Center',
           type: 'navigation',
           onPress: () => {},
         },
         {
-          icon: <Info size={20} color={theme.colors.primary} />,
+          icon: <Ionicons name="information-circle" size={24} color={theme.colors.primary} />,
           title: 'About',
           type: 'navigation',
           onPress: () => {},
@@ -623,11 +611,12 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 48,
+    height: 88,
     paddingTop: 0,
     paddingHorizontal: 20,
     paddingBottom: 0,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: 16,
     zIndex: 100,
     elevation: 2,
     shadowColor: '#000',
@@ -639,10 +628,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   content: {
     flex: 1,
-    marginTop: 48,
+    marginTop: 88,
     paddingHorizontal: 20,
   },
   bankInfo: {
@@ -709,9 +699,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   compactSettingIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
@@ -750,6 +740,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     minHeight: 60,
     justifyContent: 'center',
+    borderWidth: 1,
   },
   compactSymbol: {
     fontSize: 20,

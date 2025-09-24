@@ -9,7 +9,7 @@
     "lint": "expo lint"
   },
   "dependencies": {
-    "@expo/vector-icons": "14.0.0",
+    "@expo/vector-icons": "^15.0.2",
     "@react-navigation/bottom-tabs": "^6.5.0",
     "@react-navigation/native": "^6.0.0",
     "expo": "~50.0.0",
@@ -46,5 +46,5 @@
     "@babel/core": "^7.20.0",
     "@types/react": "~18.2.45",
     "typescript": "~5.1.3"
-}
+  }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import * as LucideIcons from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 interface TransactionIconProps {
   icon: string;
@@ -30,29 +30,43 @@ export default function TransactionIcon({ icon, color, size = 24 }: TransactionI
     );
   }
 
-  // Handle Lucide icons
-  const iconName = icon.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-  const capitalizedIconName = iconName.charAt(0).toUpperCase() + iconName.slice(1);
-  
-  // Get the icon component from Lucide
-  const IconComponent = (LucideIcons as any)[capitalizedIconName];
-  
-  if (!IconComponent) {
-    // Fallback to a default icon if not found
-    const DefaultIcon = LucideIcons.Circle;
-    return (
-      <View style={[
-        styles.container,
-        {
-          backgroundColor: color + '20',
-          width: size + 16,
-          height: size + 16,
-          borderRadius: (size + 16) / 2,
-        }
-      ]}>
-        <DefaultIcon size={size} color={color} />
-      </View>
-    );
+  // Map common transaction icons to Ionicons
+  const iconMap: { [key: string]: string } = {
+    'arrow-down-left': 'arrow-down',
+    'arrow-up-right': 'arrow-up',
+    'shopping-cart': 'basket',
+    'car': 'car',
+    'coffee': 'cafe',
+    'home': 'home',
+    'phone': 'call',
+    'credit-card': 'card',
+    'dollar-sign': 'cash',
+    'gift': 'gift',
+    'music': 'musical-notes',
+    'plane': 'airplane',
+    'restaurant': 'restaurant',
+    'gas-pump': 'car-sport',
+    'medical': 'medical',
+    'education': 'school',
+    'entertainment': 'game-controller',
+    'transfer': 'swap-horizontal',
+  };
+
+  const ioniconsName = iconMap[icon] || 'ellipse';
+
+  return (
+    <View style={[
+      styles.container,
+      {
+        backgroundColor: color + '20',
+        width: size + 16,
+        height: size + 16,
+        borderRadius: (size + 16) / 2,
+      }
+    ]}>
+      <Ionicons name={ioniconsName as any} size={size} color={color} />
+    </View>
+  );
   }
 
   return (

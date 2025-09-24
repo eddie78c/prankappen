@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Modal, TouchableOpacity, TextInput, Alert } from 'react-native';
-import { X, Send } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
+import { usePrank } from '../contexts/PrankContext';
 
 interface SendMoneyModalProps {
   visible: boolean;
@@ -13,6 +14,7 @@ interface SendMoneyModalProps {
 export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyModalProps) {
   const { theme } = useTheme();
   const { translations } = useLanguage();
+  const { settings } = usePrank();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [amount, setAmount] = useState('');
 
@@ -25,6 +27,11 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
     const numericAmount = parseFloat(amount);
     if (!numericAmount || numericAmount <= 0) {
       Alert.alert('Error', 'Please enter a valid amount');
+      return;
+    }
+    
+    if (numericAmount > settings.profileBalance) {
+      Alert.alert('Insufficient Balance', 'You cannot send more money than your current balance');
       return;
     }
 
@@ -57,7 +64,7 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
               style={[styles.closeButton, { backgroundColor: theme.colors.background }]}
               onPress={handleClose}
             >
-              <X size={20} color={theme.colors.text} />
+              <Ionicons name="close" size={24} color={theme.colors.text} />
             </TouchableOpacity>
           </View>
           
@@ -113,7 +120,7 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
               style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
               onPress={handleSend}
             >
-              <Send size={16} color={theme.colors.surface} />
+              <Ionicons name="send" size={20} color={theme.colors.surface} />
               <Text style={[styles.sendButtonText, { color: theme.colors.surface }]}>
                 {translations.send}
               </Text>

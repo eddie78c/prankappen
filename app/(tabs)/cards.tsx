@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { CreditCard, Plus, Settings, Eye, EyeOff } from 'lucide-react-native';
+import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -219,10 +219,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    paddingTop: 48,
+    paddingTop: 60,
     paddingHorizontal: 20,
-    paddingBottom: 20,
-    height: 48,
+    paddingBottom: 16,
+    height: 88,
+    justifyContent: 'flex-end',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -232,10 +233,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 14,
+    textAlign: 'center',
   },
   cardTabs: {
     flexDirection: 'row',

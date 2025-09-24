@@ -381,11 +381,12 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 48,
+    height: 88,
     paddingTop: 0,
     paddingHorizontal: 20,
     paddingBottom: 0,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    paddingBottom: 12,
     zIndex: 100,
     elevation: 2,
     shadowColor: '#000',
@@ -395,7 +396,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   balanceSection: {
-    marginTop: 48,
+    marginTop: 88,
     paddingTop: 20,
     paddingHorizontal: 20,
     paddingBottom: 20,
@@ -404,7 +405,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: 48,
+    height: 40,
   },
   menuButton: {
     width: 40,
@@ -419,6 +420,8 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
   },
   subtitle: {
     fontSize: 14,

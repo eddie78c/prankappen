@@ -184,9 +184,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    paddingTop: 48,
+    paddingTop: 60,
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: 16,
+    height: 88,
+    justifyContent: 'flex-end',
   },
   profileInfo: {
     alignItems: 'center',
