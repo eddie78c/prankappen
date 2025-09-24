@@ -50,6 +50,21 @@ export default function MoreScreen() {
     }
   };
 
+  const pickCustomSound = async () => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({
+        type: 'audio/*',
+        copyToCacheDirectory: true,
+      });
+      
+      if (!result.canceled) {
+        setTempLaughterSound(result.assets[0].uri);
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to pick custom sound');
+    }
+  };
+
   const savePrankSettings = () => {
     updateSettings({
       receiverName: tempReceiverName,
@@ -475,6 +490,54 @@ export default function MoreScreen() {
                       </Text>
                     </TouchableOpacity>
                   </View>
+                  
+                  {/* Types of Laughter */}
+                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
+                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
+                      Types of Laughter
+                    </Text>
+                    <View style={styles.laughterGrid}>
+                      {laughterSounds.map((sound, index) => (
+                        <TouchableOpacity
+                          key={sound.file}
+                          style={[
+                            styles.laughterOption,
+                            {
+                              backgroundColor: theme.colors.background,
+                              borderColor: tempLaughterSound === sound.file ? theme.colors.primary : theme.colors.border,
+                              borderWidth: tempLaughterSound === sound.file ? 2 : 1,
+                            }
+                          ]}
+                          onPress={() => setTempLaughterSound(sound.file)}
+                        >
+                          <Text style={[styles.laughterText, { color: theme.colors.text }]}>
+                            {sound.name}
+                          </Text>
+                          {tempLaughterSound === sound.file && (
+                            <View style={[styles.selectedDot, { backgroundColor: theme.colors.primary }]} />
+                          )}
+                        </TouchableOpacity>
+                      ))}
+                      
+                      {/* Custom Sound Option */}
+                      <TouchableOpacity
+                        style={[
+                          styles.laughterOption,
+                          {
+                            backgroundColor: theme.colors.background,
+                            borderColor: theme.colors.border,
+                            borderWidth: 1,
+                            borderStyle: 'dashed',
+                          }
+                        ]}
+                        onPress={pickCustomSound}
+                      >
+                        <Text style={[styles.laughterText, { color: theme.colors.textSecondary }]}>
+                          + Custom
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
                 </>
               )}
               
@@ -780,6 +843,33 @@ const styles = StyleSheet.create({
   },
   soundButtonText: {
     fontSize: 14,
+  },
+  laughterGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  laughterOption: {
+    flex: 1,
+    minWidth: '30%',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 50,
+  },
+  laughterText: {
+    fontSize: 12,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  selectedDot: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
   saveButton: {
     paddingVertical: 12,
