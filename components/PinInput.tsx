@@ -3,7 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Vibration } from 'react-nativ
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withShake,
   withTiming
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -23,7 +22,12 @@ export default function PinInput({ onSubmit, showError }: PinInputProps) {
 
   React.useEffect(() => {
     if (showError) {
-      shakeAnimation.value = withShake(10, 50, 3);
+      // Simple shake animation using withTiming
+      shakeAnimation.value = withTiming(10, { duration: 50 }, () => {
+        shakeAnimation.value = withTiming(-10, { duration: 50 }, () => {
+          shakeAnimation.value = withTiming(0, { duration: 50 });
+        });
+      });
       Vibration.vibrate(100);
       setPin('');
     }
