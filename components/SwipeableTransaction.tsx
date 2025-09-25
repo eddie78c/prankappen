@@ -7,8 +7,7 @@ import Animated, {
   withTiming, 
   runOnJS 
 } from 'react-native-reanimated';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
-import { useAnimatedGestureHandler } from 'react-native-reanimated';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { useTheme } from '../contexts/ThemeContext';
 import { usePrank } from '../contexts/PrankContext';
 import { formatCurrency } from '../utils/currency';
@@ -31,16 +30,19 @@ export default function SwipeableTransaction({
   const { settings } = usePrank();
   const translateX = useSharedValue(0);
 
-  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { startX: number }>({
-    onStart: (_, context) => {
-      context.startX = translateX.value;
-    },
-    onActive: (event, context) => {
+  const panGesture = Gesture.Pan()
+    .onStart(() => {
+      'worklet';
+      // Store initial position
+    })
+    .onUpdate((event) => {
+      'worklet';
       if (canDelete) {
-        translateX.value = Math.min(0, context.startX + event.translationX);
+        translateX.value = Math.min(0, event.translationX);
       }
-    },
-    onEnd: (event) => {
+    })
+    .onEnd(() => {
+      'worklet';
       if (canDelete) {
         if (translateX.value < -100) {
           // Delete the transaction
@@ -51,8 +53,7 @@ export default function SwipeableTransaction({
           translateX.value = withTiming(0);
         }
       }
-    },
-  });
+    });
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -72,7 +73,7 @@ export default function SwipeableTransaction({
       style={styles.container}
     >
       {Platform.OS !== 'web' ? (
-        <PanGestureHandler onGestureEvent={gestureHandler}>
+        <GestureDetector gesture={panGesture}>
           <Animated.View style={[animatedStyle]}>
             <TouchableOpacity 
               style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
@@ -103,7 +104,7 @@ export default function SwipeableTransaction({
               </View>
             </TouchableOpacity>
           </Animated.View>
-        </PanGestureHandler>
+        </GestureDetector>
       ) : (
         <TouchableOpacity 
           style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
