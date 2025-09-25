@@ -4,11 +4,11 @@ import Animated, {
   FadeInDown, 
   useSharedValue, 
   useAnimatedStyle, 
-  useAnimatedGestureHandler, 
   withTiming, 
   runOnJS 
 } from 'react-native-reanimated';
-import { PanGestureHandler } from 'react-native-gesture-handler';
+import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { useAnimatedGestureHandler } from 'react-native-reanimated';
 import { useTheme } from '../contexts/ThemeContext';
 import { usePrank } from '../contexts/PrankContext';
 import { formatCurrency } from '../utils/currency';
@@ -31,7 +31,7 @@ export default function SwipeableTransaction({
   const { settings } = usePrank();
   const translateX = useSharedValue(0);
 
-  const gestureHandler = useAnimatedGestureHandler({
+  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, { startX: number }>({
     onStart: (_, context) => {
       context.startX = translateX.value;
     },
