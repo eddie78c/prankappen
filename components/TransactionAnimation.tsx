@@ -100,7 +100,7 @@ export default function TransactionAnimation({
       <View style={styles.overlay}>
         <Animated.View style={[animatedStyle]}>
           <LinearGradient
-            colors={theme.colors.gradient}
+            colors={theme.colors.gradient as readonly [string, string]}
             style={styles.container}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
