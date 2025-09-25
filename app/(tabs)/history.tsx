@@ -113,17 +113,17 @@ export default function HistoryScreen() {
           <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
             {translations.today}
           </Text>
-          {mockUserData.recentTransactions.slice(0, 2).map(renderTransaction)}
+          {mockUserData.recentTransactions.slice(0, 2).map((transaction, index) => renderTransaction(transaction, index))}
           
           <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
             {translations.yesterday}
           </Text>
-          {mockUserData.recentTransactions.slice(2, 4).map(renderTransaction)}
+          {mockUserData.recentTransactions.slice(2, 4).map((transaction, index) => renderTransaction(transaction, index + 2))}
           
           <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
             {translations.thisWeek}
           </Text>
-          {mockUserData.recentTransactions.map(renderTransaction)}
+          {mockUserData.recentTransactions.slice(0, 4).map((transaction, index) => renderTransaction(transaction, index + 4))}
         </View>
       </ScrollView>
     </View>
