@@ -39,7 +39,7 @@ export default function PrankModal({ visible, onClose }: PrankModalProps) {
       } else {
         // Built-in sound
         const soundFile = settings.laughterSound || 'Chuckle.mp3';
-        const moduleId = BUILT_IN_SOUNDS[soundFile] || BUILT_IN_SOUNDS['Chuckle.mp3'];
+        const moduleId = BUILT_IN_SOUNDS[soundFile as keyof typeof BUILT_IN_SOUNDS] || BUILT_IN_SOUNDS['Chuckle.mp3'];
         
         if (Platform.OS === 'web') {
           // For web, use Asset.fromModule to get a proper URI
