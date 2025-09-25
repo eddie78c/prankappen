@@ -9,7 +9,7 @@
     "lint": "expo lint"
   },
   "engines": {
-    "node": ">=20.19.1"
+    "node": ">=20.19.4"
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.4",
@@ -20,7 +20,7 @@
     "expo-blur": "~13.0.2",
     "expo-camera": "~15.0.16",
     "expo-constants": "~17.0.3",
-    "expo-document-picker": "~12.0.3",
+    "expo-document-picker": "~12.0.0",
     "expo-font": "~13.0.1",
     "expo-haptics": "~13.0.1",
     "expo-image-picker": "~15.0.7",
