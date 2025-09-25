@@ -48,7 +48,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/expo": "^32.0.13",
     "@types/react": "^18.3.12",
+    "expo-module-scripts": "^5.0.7",
     "typescript": "^5.6.3"
   },
   "overrides": {
