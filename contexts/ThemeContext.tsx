@@ -16,7 +16,7 @@ export interface Theme {
     success: string;
     warning: string;
     error: string;
-    gradient: string[];
+    gradient: readonly [string, string];
   };
 }
 
@@ -35,7 +35,7 @@ const lightTheme: Theme = {
     success: '#10B981',
     warning: '#F59E0B',
     error: '#EF4444',
-    gradient: ['#2E5BFF', '#4A90E2']
+    gradient: ['#2E5BFF', '#4A90E2'] as readonly [string, string]
   }
 };
 
@@ -54,7 +54,7 @@ const darkTheme: Theme = {
     success: '#10B981',
     warning: '#F59E0B',
     error: '#EF4444',
-    gradient: ['#4A90E2', '#6366F1']
+    gradient: ['#4A90E2', '#6366F1'] as readonly [string, string]
   }
 };
 
