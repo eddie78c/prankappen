@@ -384,7 +384,6 @@ const styles = StyleSheet.create({
     height: 88,
     paddingTop: 0,
     paddingHorizontal: 20,
-    paddingBottom: 0,
     justifyContent: 'flex-end',
     paddingBottom: 12,
     zIndex: 100,
