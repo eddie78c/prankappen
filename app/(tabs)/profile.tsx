@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'rea
 import { LinearGradient } from 'expo-linear-gradient';
 import { Settings, Bell, Shield, HelpCircle as CircleHelp, LogOut, ChevronRight } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-import avatarPlaceholder from '../../assets/images/avatar.jpg';
+// import avatarPlaceholder from '../../assets/images/avatar.jpg'; // Commented out as it may not exist
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -77,7 +77,7 @@ export default function ProfileScreen() {
       >
         <Animated.View entering={FadeInDown.delay(200)} style={styles.profileInfo}>
           <Image
-            source={settings.receiverPhoto ? { uri: settings.receiverPhoto } : avatarPlaceholder}
+            source={settings.receiverPhoto ? { uri: settings.receiverPhoto } : { uri: 'https://via.placeholder.com/80x80/cccccc/ffffff?text=Avatar' }}
             style={styles.avatar}
           />
           <Text style={[styles.name, { color: theme.colors.surface }]}>
