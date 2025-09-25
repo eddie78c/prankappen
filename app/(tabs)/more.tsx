@@ -45,7 +45,7 @@ export default function MoreScreen() {
       quality: 0.5,
     });
     
-    if (!result.canceled) {
+    if (!result.canceled && result.assets && result.assets.length > 0) {
       updateSettings({ receiverPhoto: result.assets[0].uri });
     }
   };
@@ -57,7 +57,7 @@ export default function MoreScreen() {
         copyToCacheDirectory: true,
       });
       
-      if (!result.canceled) {
+      if (!result.canceled && result.assets && result.assets.length > 0) {
         setTempLaughterSound(result.assets[0].uri);
       }
     } catch (error) {
@@ -464,7 +464,7 @@ export default function MoreScreen() {
                         <Image source={{ uri: settings.receiverPhoto }} style={styles.photo} />
                       ) : (
                         <View style={[styles.photoPlaceholder, { backgroundColor: theme.colors.background }]}>
-                          <Camera size={24} color={theme.colors.textSecondary} />
+                          <Ionicons name="camera" size={24} color={theme.colors.textSecondary} />
                         </View>
                       )}
                     </TouchableOpacity>
@@ -614,7 +614,6 @@ const styles = StyleSheet.create({
     height: 88,
     paddingTop: 0,
     paddingHorizontal: 20,
-    paddingBottom: 0,
     justifyContent: 'flex-end',
     paddingBottom: 16,
     zIndex: 100,
