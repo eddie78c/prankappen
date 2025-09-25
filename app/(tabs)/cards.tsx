@@ -7,6 +7,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { mockUserData } from '../../data/mockData';
 import GlassCard from '../../components/GlassCard';
+import { CreditCard, Eye, EyeOff, Plus, Settings } from 'lucide-react-native';
 
 export default function CardsScreen() {
   const { theme } = useTheme();
