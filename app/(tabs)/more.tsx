@@ -9,6 +9,68 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { usePrank } from '../../contexts/PrankContext';
 import { availableCurrencies, getCurrencySymbol } from '../../utils/currency';
 
+// Återanvändbar GridOption komponent
+const GridOption = ({ item, isSelected, onPress, theme, children }: any) => (
+  <Animated.View style={styles.compactGridItem}>
+    <TouchableOpacity
+      style={[
+        styles.compactOption,
+        { 
+          backgroundColor: theme.colors.surface,
+          borderColor: isSelected ? theme.colors.primary : theme.colors.border,
+          borderWidth: isSelected ? 2 : 1,
+        }
+      ]}
+      onPress={onPress}
+    >
+      {children}
+      {isSelected && (
+        <View style={[styles.compactSelectedIndicator, { backgroundColor: theme.colors.primary }]} />
+      )}
+    </TouchableOpacity>
+  </Animated.View>
+);
+
+// Återanvändbar InputContainer komponent
+const InputContainer = ({ label, value, onChangeText, placeholder, keyboardType, theme, children }: any) => (
+  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
+    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
+      {label}
+    </Text>
+    {children || (
+      <TextInput
+        style={[styles.textInput, { 
+          backgroundColor: theme.colors.background,
+          color: theme.colors.text,
+          borderColor: theme.colors.border,
+        }]}
+        value={value}
+        onChangeText={onChangeText}
+        keyboardType={keyboardType}
+        placeholder={placeholder}
+        placeholderTextColor={theme.colors.textSecondary}
+      />
+    )}
+  </View>
+);
+
+// Återanvändbar SelectionGrid komponent
+const SelectionGrid = ({ items, selectedValue, onSelect, theme, renderItem }: any) => (
+  <View style={styles.compactGrid}>
+    {items.map((item: any, index: number) => (
+      <GridOption
+        key={item.code || item.file || index}
+        item={item}
+        isSelected={selectedValue === (item.code || item.file)}
+        onPress={() => onSelect(item.code || item.file || item)}
+        theme={theme}
+      >
+        {renderItem(item)}
+      </GridOption>
+    ))}
+  </View>
+);
+
 export default function MoreScreen() {
   const { theme, toggleTheme, isDark } = useTheme();
   const { translations, currentLanguage, setLanguage, availableLanguages } = useLanguage();
@@ -210,36 +272,6 @@ export default function MoreScreen() {
     </Animated.View>
   );
 
-  const renderLanguageOption = (language: any, index: number) => (
-    <Animated.View
-      key={language.code}
-      entering={FadeInDown.delay(index * 50).springify()}
-    >
-      <TouchableOpacity
-        style={[
-          styles.languageOption,
-          { 
-            backgroundColor: theme.colors.surface,
-            borderColor: currentLanguage === language.code ? theme.colors.primary : theme.colors.border,
-            borderWidth: currentLanguage === language.code ? 2 : 1,
-          }
-        ]}
-        onPress={() => {
-          setLanguage(language.code);
-          setShowLanguageSelector(false);
-        }}
-      >
-        <Text style={styles.languageFlag}>{language.flag}</Text>
-        <Text style={[styles.languageName, { color: theme.colors.text }]}>
-          {language.name}
-        </Text>
-        {currentLanguage === language.code && (
-          <View style={[styles.selectedIndicator, { backgroundColor: theme.colors.primary }]} />
-        )}
-      </TouchableOpacity>
-    </Animated.View>
-  );
-
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
@@ -274,38 +306,23 @@ export default function MoreScreen() {
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                 Select Language
               </Text>
-              <View style={styles.compactGrid}>
-                {availableLanguages.map((language, index) => (
-                  <Animated.View
-                    key={language.code}
-                    entering={FadeInDown.delay(index * 50).springify()}
-                    style={styles.compactGridItem}
-                  >
-                    <TouchableOpacity
-                      style={[
-                        styles.compactOption,
-                        { 
-                          backgroundColor: theme.colors.surface,
-                          borderColor: currentLanguage === language.code ? theme.colors.primary : theme.colors.border,
-                          borderWidth: currentLanguage === language.code ? 2 : 1,
-                        }
-                      ]}
-                      onPress={() => {
-                        setLanguage(language.code);
-                        setShowLanguageSelector(false);
-                      }}
-                    >
-                      <Text style={styles.compactSymbol}>{language.flag}</Text>
-                      <Text style={[styles.compactCode, { color: theme.colors.text }]}>
-                        {language.name}
-                      </Text>
-                      {currentLanguage === language.code && (
-                        <View style={[styles.compactSelectedIndicator, { backgroundColor: theme.colors.primary }]} />
-                      )}
-                    </TouchableOpacity>
-                  </Animated.View>
-                ))}
-              </View>
+              <SelectionGrid
+                items={availableLanguages}
+                selectedValue={currentLanguage}
+                onSelect={(code: string) => {
+                  setLanguage(code as any);
+                  setShowLanguageSelector(false);
+                }}
+                theme={theme}
+                renderItem={(language: any) => (
+                  <>
+                    <Text style={styles.compactSymbol}>{language.flag}</Text>
+                    <Text style={[styles.compactCode, { color: theme.colors.text }]}>
+                      {language.name}
+                    </Text>
+                  </>
+                )}
+              />
             </View>
           </Animated.View>
         )}
@@ -317,35 +334,20 @@ export default function MoreScreen() {
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                 Select Currency
               </Text>
-              <View style={styles.compactGrid}>
-                {availableCurrencies.map((currency, index) => (
-                  <Animated.View
-                    key={currency.code}
-                    entering={FadeInDown.delay(index * 50).springify()}
-                    style={styles.compactGridItem}
-                  >
-                    <TouchableOpacity
-                      style={[
-                        styles.compactOption,
-                        { 
-                          backgroundColor: theme.colors.surface,
-                          borderColor: settings.currency === currency.code ? theme.colors.primary : theme.colors.border,
-                          borderWidth: settings.currency === currency.code ? 2 : 1,
-                        }
-                      ]}
-                      onPress={() => handleCurrencySelect(currency.code)}
-                    >
-                      <Text style={styles.compactSymbol}>{currency.symbol}</Text>
-                      <Text style={[styles.compactCode, { color: theme.colors.text }]}>
-                        {currency.code}
-                      </Text>
-                      {settings.currency === currency.code && (
-                        <View style={[styles.compactSelectedIndicator, { backgroundColor: theme.colors.primary }]} />
-                      )}
-                    </TouchableOpacity>
-                  </Animated.View>
-                ))}
-              </View>
+              <SelectionGrid
+                items={availableCurrencies}
+                selectedValue={settings.currency}
+                onSelect={handleCurrencySelect}
+                theme={theme}
+                renderItem={(currency: any) => (
+                  <>
+                    <Text style={styles.compactSymbol}>{currency.symbol}</Text>
+                    <Text style={[styles.compactCode, { color: theme.colors.text }]}>
+                      {currency.code}
+                    </Text>
+                  </>
+                )}
+              />
             </View>
           </Animated.View>
         )}
@@ -360,105 +362,54 @@ export default function MoreScreen() {
               
               {showProfileSettings ? (
                 <>
-                  {/* Profile Name */}
-                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                      Profile Name
-                    </Text>
-                    <TextInput
-                      style={[styles.textInput, { 
-                        backgroundColor: theme.colors.background,
-                        color: theme.colors.text,
-                        borderColor: theme.colors.border,
-                      }]}
-                      value={tempProfileName}
-                      onChangeText={setTempProfileName}
-                      placeholder="Enter profile name"
-                      placeholderTextColor={theme.colors.textSecondary}
-                    />
-                  </View>
+                  <InputContainer
+                    label="Profile Name"
+                    value={tempProfileName}
+                    onChangeText={setTempProfileName}
+                    placeholder="Enter profile name"
+                    theme={theme}
+                  />
                   
-                  {/* Profile Location */}
-                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                      Location
-                    </Text>
-                    <TextInput
-                      style={[styles.textInput, { 
-                        backgroundColor: theme.colors.background,
-                        color: theme.colors.text,
-                        borderColor: theme.colors.border,
-                      }]}
-                      value={tempProfileLocation}
-                      onChangeText={setTempProfileLocation}
-                      placeholder="Enter location"
-                      placeholderTextColor={theme.colors.textSecondary}
-                    />
-                  </View>
+                  <InputContainer
+                    label="Location"
+                    value={tempProfileLocation}
+                    onChangeText={setTempProfileLocation}
+                    placeholder="Enter location"
+                    theme={theme}
+                  />
                   
-                  {/* Profile Balance */}
-                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                      Total Balance ({settings.currency})
-                    </Text>
-                    <TextInput
-                      style={[styles.textInput, { 
-                        backgroundColor: theme.colors.background,
-                        color: theme.colors.text,
-                        borderColor: theme.colors.border,
-                      }]}
-                      value={tempProfileBalance}
-                      onChangeText={setTempProfileBalance}
-                      keyboardType="numeric"
-                      placeholder="Enter balance"
-                      placeholderTextColor={theme.colors.textSecondary}
-                    />
-                  </View>
+                  <InputContainer
+                    label={`Total Balance (${settings.currency})`}
+                    value={tempProfileBalance}
+                    onChangeText={setTempProfileBalance}
+                    keyboardType="numeric"
+                    placeholder="Enter balance"
+                    theme={theme}
+                  />
                 </>
               ) : (
                 <>
-                  {/* Receiver Name */}
-                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                      Receiver Name
-                    </Text>
-                    <TextInput
-                      style={[styles.textInput, { 
-                        backgroundColor: theme.colors.background,
-                        color: theme.colors.text,
-                        borderColor: theme.colors.border,
-                      }]}
-                      value={tempReceiverName}
-                      onChangeText={setTempReceiverName}
-                      placeholder="Enter receiver name"
-                      placeholderTextColor={theme.colors.textSecondary}
-                    />
-                  </View>
+                  <InputContainer
+                    label="Receiver Name"
+                    value={tempReceiverName}
+                    onChangeText={setTempReceiverName}
+                    placeholder="Enter receiver name"
+                    theme={theme}
+                  />
                   
-                  {/* Default Amount */}
-                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                      Default Amount ({settings.currency})
-                    </Text>
-                    <TextInput
-                      style={[styles.textInput, { 
-                        backgroundColor: theme.colors.background,
-                        color: theme.colors.text,
-                        borderColor: theme.colors.border,
-                      }]}
-                      value={tempAmount}
-                      onChangeText={setTempAmount}
-                      keyboardType="numeric"
-                      placeholder="Enter amount"
-                      placeholderTextColor={theme.colors.textSecondary}
-                    />
-                  </View>
+                  <InputContainer
+                    label={`Default Amount (${settings.currency})`}
+                    value={tempAmount}
+                    onChangeText={setTempAmount}
+                    keyboardType="numeric"
+                    placeholder="Enter amount"
+                    theme={theme}
+                  />
                   
-                  {/* Receiver Photo */}
-                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                      Receiver Photo
-                    </Text>
+                  <InputContainer
+                    label="Receiver Photo"
+                    theme={theme}
+                  >
                     <TouchableOpacity onPress={pickImage} style={styles.photoButton}>
                       {settings.receiverPhoto ? (
                         <Image source={{ uri: settings.receiverPhoto }} style={styles.photo} />
@@ -468,13 +419,12 @@ export default function MoreScreen() {
                         </View>
                       )}
                     </TouchableOpacity>
-                  </View>
+                  </InputContainer>
                   
-                  {/* Sound Selection */}
-                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                      Request Sound
-                    </Text>
+                  <InputContainer
+                    label="Request Sound"
+                    theme={theme}
+                  >
                     <TouchableOpacity 
                       style={[styles.soundButton, { 
                         backgroundColor: theme.colors.background,
@@ -489,15 +439,14 @@ export default function MoreScreen() {
                         {settings.requestSound || 'Select Sound'}
                       </Text>
                     </TouchableOpacity>
-                  </View>
+                  </InputContainer>
                   
-                  {/* Types of Laughter */}
-                  <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
-                    <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                      Types of Laughter
-                    </Text>
+                  <InputContainer
+                    label="Types of Laughter"
+                    theme={theme}
+                  >
                     <View style={styles.laughterGrid}>
-                      {laughterSounds.map((sound, index) => (
+                      {laughterSounds.map((sound) => (
                         <TouchableOpacity
                           key={sound.file}
                           style={[
@@ -519,7 +468,6 @@ export default function MoreScreen() {
                         </TouchableOpacity>
                       ))}
                       
-                      {/* Custom Sound Option */}
                       <TouchableOpacity
                         style={[
                           styles.laughterOption,
@@ -537,11 +485,11 @@ export default function MoreScreen() {
                         </Text>
                       </TouchableOpacity>
                     </View>
-                  </View>
+                  </InputContainer>
                 </>
               )}
               
-              {/* Save Button */}
+              {/* Action Buttons */}
               <TouchableOpacity
                 style={[styles.saveButton, { backgroundColor: theme.colors.primary }]}
                 onPress={showProfileSettings ? saveProfileSettings : savePrankSettings}
@@ -551,7 +499,6 @@ export default function MoreScreen() {
                 </Text>
               </TouchableOpacity>
               
-              {/* Close Button */}
               <TouchableOpacity
                 style={[styles.closeConfigButton, { backgroundColor: theme.colors.border }]}
                 onPress={() => {
@@ -758,32 +705,7 @@ const styles = StyleSheet.create({
     height: 6,
     borderRadius: 3,
   },
-  languageOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 8,
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-  },
-  languageFlag: {
-    fontSize: 24,
-    marginRight: 12,
-  },
-  languageName: {
-    fontSize: 16,
-    fontWeight: '500',
-    flex: 1,
-  },
-  selectedIndicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-  },
+
   footer: {
     alignItems: 'center',
     paddingVertical: 40,
@@ -867,17 +789,7 @@ const styles = StyleSheet.create({
   closeConfigText: {
     fontSize: 12,
   },
-  configCard: {
-    borderRadius: 16,
-    padding: 16,
-    borderWidth: 1,
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    marginBottom: 16,
-  },
+
   laughterGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
