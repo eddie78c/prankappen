@@ -10,8 +10,12 @@ export const sl = {
   history: "Zgodovina",
   cards: "Kartice",
   profile: "Profil",
+  settings: "Nastavitve",
+  account: "Račun",
+  helpAndSupport: "Pomoč in podpora",
+  logOut: "Odjava",
   more: "Več",
-  
+
   // Dashboard
   dashboard: "Nadzorna plošča",
   overview: "Pregled, preverite svoje stanje",
@@ -50,20 +54,15 @@ export const sl = {
   coffee: "Kavarna",
   
   // Settings
-  settings: "Nastavitve",
   darkMode: "Temni način",
   language: "Jezik",
   notifications: "Obvestila",
   security: "Varnost",
 
-  // Navigation
-  account: "Račun",
-  helpAndSupport: "Pomoč in podpora",
-  logOut: "Odjava",
   physicalCards: "fizična kartica",
   virtualCards: "virtualna kartica",
-  icaMaxiStockholm: "ICA Maxi Stockholm",
-  slCardTopUp: "SL Card Top-up",
+  mainGroceryStore: "Mercator Ljubljana",
+  slCardTopUp: "Polnjenje kartice SL",
   monthlySalary: "Mesečna plača",
   espressoHouse: "Espresso House",
   housing: "Stanovanje",
@@ -135,15 +134,15 @@ export const sl = {
   expenses: "Stroški",
   selectSound: "Izberite zvok",
 
-  // Country-specific chains (Slovenia)
-  reweBerlin: "Mercator Ljubljana",
-  starbucksBerlin: "Čoček Ljubljana",
-  walmartNYC: "Spar Ljubljana",
-  starbucksNYC: "McDonald's Ljubljana",
-  carrefourParis: "Tuš Ljubljana",
-  starbucksParis: "H&M Ljubljana",
-  mercadonaMadrid: "Lekarna Ljubljana",
-  starbucksMadrid: "Zara Ljubljana",
-  coopRoma: "DM Ljubljana",
-  starbucksRoma: "Tisak Ljubljana",
+  // Country-specific chains
+  chain1: "Mercator Ljubljana",
+  chain2: "Spar Ljubljana",
+  chain3: "Tuš Ljubljana",
+  chain4: "DM Ljubljana",
+  chain5: "Lekarna Ljubljana",
+  chain6: "Tisak Ljubljana",
+  chain7: "Čoček Ljubljana",
+  chain8: "McDonald's Ljubljana",
+  chain9: "H&M Ljubljana",
+  chain10: "Zara Ljubljana"
 };

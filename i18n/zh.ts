@@ -10,8 +10,12 @@ export const zh = {
   history: "历史记录",
   cards: "卡片",
   profile: "个人资料",
+  settings: "设置",
+  account: "账户",
+  helpAndSupport: "帮助和支持",
+  logOut: "退出",
   more: "更多",
-  
+
   // Dashboard
   dashboard: "仪表板",
   overview: "概览，查看您的余额",
@@ -50,19 +54,14 @@ export const zh = {
   coffee: "咖啡",
   
   // Settings
-  settings: "设置",
   darkMode: "深色模式",
   language: "语言",
   notifications: "通知",
   security: "安全",
 
-  // Navigation
-  account: "账户",
-  helpAndSupport: "帮助和支持",
-  logOut: "退出",
   physicalCards: "实体卡",
   virtualCards: "虚拟卡",
-  icaMaxiStockholm: "ICA Maxi 斯德哥尔摩",
+  mainGroceryStore: "华润万家 北京",
   slCardTopUp: "SL卡充值",
   monthlySalary: "月薪",
   espressoHouse: "Espresso House",
@@ -135,15 +134,15 @@ export const zh = {
   expenses: "支出",
   selectSound: "选择声音",
 
-  // Country-specific chains (China)
-  reweBerlin: "华润万家 北京",
-  starbucksBerlin: "星巴克 北京",
-  walmartNYC: "沃尔玛 北京",
-  starbucksNYC: "麦当劳 北京",
-  carrefourParis: "家乐福 北京",
-  starbucksParis: "Costa 北京",
-  mercadonaMadrid: "苏宁 北京",
-  starbucksMadrid: "国美 北京",
-  coopRoma: "物美 北京",
-  starbucksRoma: "海底捞 北京",
+  // Country-specific chains
+  chain1: "华润万家 北京",
+  chain2: "星巴克 北京",
+  chain3: "沃尔玛 北京",
+  chain4: "麦当劳 北京",
+  chain5: "家乐福 北京",
+  chain6: "苏宁 北京",
+  chain7: "国美 北京",
+  chain8: "物美 北京",
+  chain9: "海底捞 北京",
+  chain10: "Costa 北京"
 };

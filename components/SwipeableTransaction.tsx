@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
-import Animated, { 
-  FadeInDown, 
-  useSharedValue, 
-  useAnimatedStyle, 
-  withTiming, 
-  runOnJS 
+import Animated, {
+  FadeInDown,
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  runOnJS
 } from 'react-native-reanimated';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { usePrank } from '../contexts/PrankContext';
 import { formatCurrency } from '../utils/currency';
 import TransactionIcon from './TransactionIcon';
@@ -20,13 +21,14 @@ interface SwipeableTransactionProps {
   canDelete: boolean;
 }
 
-export default function SwipeableTransaction({ 
-  transaction, 
-  index, 
-  onDelete, 
-  canDelete 
+export default function SwipeableTransaction({
+  transaction,
+  index,
+  onDelete,
+  canDelete
 }: SwipeableTransactionProps) {
   const { theme } = useTheme();
+  const { translations } = useLanguage();
   const { settings } = usePrank();
   const translateX = useSharedValue(0);
 
@@ -75,20 +77,21 @@ export default function SwipeableTransaction({
       {Platform.OS !== 'web' ? (
         <GestureDetector gesture={panGesture}>
           <Animated.View style={[animatedStyle]}>
-            <TouchableOpacity 
+            <TouchableOpacity
               style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
             >
-              <TransactionIcon 
-                icon={transaction.icon} 
-                color={transaction.color} 
-                size={20} 
+              <TransactionIcon
+                icon={transaction.icon}
+                color={transaction.color}
+                size={20}
+                theme={theme}
               />
               <View style={styles.transactionDetails}>
                 <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
-                  {transaction.title}
+                  {transaction.titleKey ? translations[transaction.titleKey as keyof typeof translations] : transaction.title}
                 </Text>
                 <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
-                  {transaction.description}
+                  {transaction.descriptionKey ? translations[transaction.descriptionKey as keyof typeof translations] : transaction.description}
                 </Text>
               </View>
               <View style={styles.transactionAmount}>
@@ -109,17 +112,18 @@ export default function SwipeableTransaction({
         <TouchableOpacity 
           style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
         >
-          <TransactionIcon 
-            icon={transaction.icon} 
-            color={transaction.color} 
-            size={20} 
+          <TransactionIcon
+            icon={transaction.icon}
+            color={transaction.color}
+            size={20}
+            theme={theme}
           />
           <View style={styles.transactionDetails}>
             <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
-              {transaction.title}
+              {transaction.titleKey ? translations[transaction.titleKey as keyof typeof translations] : transaction.title}
             </Text>
             <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
-              {transaction.description}
+              {transaction.descriptionKey ? translations[transaction.descriptionKey as keyof typeof translations] : transaction.description}
             </Text>
           </View>
           <View style={styles.transactionAmount}>
@@ -138,7 +142,7 @@ export default function SwipeableTransaction({
       
       {canDelete && (
         <Animated.View style={[styles.deleteIndicator, deleteIndicatorStyle]}>
-          <Text style={styles.deleteText}>Delete</Text>
+          <Text style={styles.deleteText}>{translations.delete}</Text>
         </Animated.View>
       )}
     </Animated.View>

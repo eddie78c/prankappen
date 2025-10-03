@@ -1,7 +1,7 @@
 export const sv = {
   // Welcome & Auth
   welcome: "Välkommen till",
-  bankName: "PREMIUM BANK",
+  bankName: "PREMIUMBANK",
   enterPin: "Ange din PIN-kod",
   wrongPin: "Fel PIN-kod. Försök igen.",
   
@@ -14,7 +14,8 @@ export const sv = {
   account: "Konto",
   helpAndSupport: "Hjälp och support",
   logOut: "Logga ut",
-  
+    more: "Mer",
+   
   // Dashboard
   dashboard: "Översikt",
   overview: "Översikt, kolla ditt saldo",
@@ -59,13 +60,14 @@ export const sv = {
   security: "Säkerhet",
 
   // Mock data translations
-  icaMaxiStockholm: "ICA Maxi Stockholm",
+  mainGroceryStore: "ICA Stockholm",
   slCardTopUp: "SL Kortpåfyllning",
   monthlySalary: "Månadslön",
   espressoHouse: "Espresso House",
   housing: "Boende",
   food: "Mat",
   entertainment: "Underhållning",
+  budgetOverview: "Budgetöversikt",
 
   // More screen translations
   selectLanguage: "Välj språk",
@@ -89,8 +91,8 @@ export const sv = {
   saveProfile: "Spara profil",
   saveSettings: "Spara inställningar",
   close: "Stäng",
-  version: "Version 2.1.0",
-  copyright: "© 2024 Premium Bank. Alla rättigheter förbehållna.",
+  version: "Version 1.0.0",
+  copyright: "© 2025 Premium Bank. Alla rättigheter förbehållna.",
   madeWith: "Gjort med ❤️ för säker bankverksamhet",
   permissionNeeded: "Behörighet krävs",
   cameraPermission: "Vi behöver behörighet för kamerarullen för att välja foto.",
@@ -106,7 +108,7 @@ export const sv = {
   appearance: "Utseende",
   prankSettings: "Prank-inställningar",
   services: "Tjänster",
-  support: "Support",
+  support: "Stöd",
 
   // Modal translations
   sendMoney: "Skicka pengar",
@@ -144,6 +146,21 @@ export const sv = {
   income: "Inkomst",
   expenses: "Utgifter",
 
+  // Delete
+  delete: "Ta bort",
+
   // Sound
-  selectSound: "Välj ljud"
+  selectSound: "Välj ljud",
+
+  // Country-specific chains
+  chain1: "ICA Stockholm",
+  chain2: "Wayne's Coffee Stockholm",
+  chain3: "Willys Stockholm",
+  chain4: "HM Stockholm",
+  chain5: "Coop Stockholm",
+  chain6: "Åhléns Stockholm",
+  chain7: "NK Stockholm",
+  chain8: "Systembolaget Stockholm",
+  chain9: "Apotek Hjärtat Stockholm",
+  chain10: "Pressbyrån Stockholm"
 };

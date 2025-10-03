@@ -1,0 +1,122 @@
+Baseline en.ts key count: 128
+
+: keys=128, missing=0, extra=0, identicalToEnglish=2
+  identical keys: bankName, cvv
+
+: keys=128, missing=0, extra=0, identicalToEnglish=2
+  identical keys: bankName, cvv
+
+: keys=128, missing=0, extra=0, identicalToEnglish=2
+  identical keys: bankName, cvv
+
+: keys=128, missing=0, extra=0, identicalToEnglish=4
+  identical keys: bankName, cvv, espressoHouse, transport
+
+: keys=128, missing=0, extra=0, identicalToEnglish=4
+  identical keys: bankName, cvv, espressoHouse, transport
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=9
+  identical keys: bankName, cvv, dashboard, espressoHouse, send, slCardTopUp, support, transport, version
+
+: keys=128, missing=0, extra=0, identicalToEnglish=7
+  identical keys: bankName, cvv, dashboard, espressoHouse, support, transport, version
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=4
+  identical keys: bankName, cvv, error, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=4
+  identical keys: bankName, cvv, espressoHouse, transport
+
+: keys=128, missing=0, extra=0, identicalToEnglish=2
+  identical keys: bankName, cvv
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=9
+  identical keys: bankName, cvv, espressoHouse, notification, notifications, services, support, transport, version
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, dashboard
+
+: keys=128, missing=0, extra=0, identicalToEnglish=1
+  identical keys: bankName
+
+: keys=128, missing=0, extra=0, identicalToEnglish=4
+  identical keys: bankName, cvv, espressoHouse, slCardTopUp
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=6
+  identical keys: account, bankName, cvv, dashboard, espressoHouse, home
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=6
+  identical keys: account, bankName, cvv, dashboard, espressoHouse, home
+
+: keys=128, missing=0, extra=0, identicalToEnglish=6
+  identical keys: bankName, cvv, dashboard, espressoHouse, send, transport
+
+: keys=128, missing=0, extra=0, identicalToEnglish=4
+  identical keys: bankName, cvv, espressoHouse, transport
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=4
+  identical keys: bankName, cvv, espressoHouse, transport
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, expires
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=6
+  identical keys: bankName, cvv, espressoHouse, support, transport, version
+
+: keys=128, missing=0, extra=0, identicalToEnglish=2
+  identical keys: bankName, cvv
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, transport
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+
+: keys=128, missing=0, extra=0, identicalToEnglish=2
+  identical keys: bankName, cvv
+
+: keys=128, missing=0, extra=0, identicalToEnglish=4
+  identical keys: bankName, cvv, espressoHouse, transport
+
+: keys=128, missing=0, extra=0, identicalToEnglish=3
+  identical keys: bankName, cvv, espressoHouse
+

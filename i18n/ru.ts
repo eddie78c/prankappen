@@ -10,8 +10,12 @@ export const ru = {
   history: "История",
   cards: "Карты",
   profile: "Профиль",
+  settings: "Настройки",
+  account: "Аккаунт",
+  helpAndSupport: "Помощь и поддержка",
+  logOut: "Выйти",
   more: "Ещё",
-  
+
   // Dashboard
   dashboard: "Панель управления",
   overview: "Обзор, проверьте ваш баланс",
@@ -30,7 +34,9 @@ export const ru = {
   contactlessPayment: "Бесконтактная оплата",
   onlinePayment: "Онлайн оплата",
   atmWithdraws: "Снятие в банкомате",
-  
+  physicalCards: "физическая карта",
+  virtualCards: "виртуальная карта",
+
   // Transactions
   today: "СЕГОДНЯ",
   yesterday: "ВЧЕРА",
@@ -50,19 +56,13 @@ export const ru = {
   coffee: "Кофе",
   
   // Settings
-  settings: "Настройки",
   darkMode: "Тёмный режим",
   language: "Язык",
   notifications: "Уведомления",
   security: "Безопасность",
 
-  // Navigation
-  account: "Аккаунт",
-  helpAndSupport: "Помощь и поддержка",
-  logOut: "Выйти",
-  physicalCards: "физическая карта",
-  virtualCards: "виртуальная карта",
-  icaMaxiStockholm: "ICA Maxi Стокгольм",
+  // Mock data translations
+  mainGroceryStore: "Перекресток Москва",
   slCardTopUp: "Пополнение SL карты",
   monthlySalary: "Месячная зарплата",
   espressoHouse: "Espresso House",
@@ -135,15 +135,15 @@ export const ru = {
   expenses: "Расходы",
   selectSound: "Выбрать звук",
 
-  // Country-specific chains (Russia)
-  reweBerlin: "Перекресток Москва",
-  starbucksBerlin: "Шоколадница Москва",
-  walmartNYC: "Ашан Москва",
-  starbucksNYC: "Старбакс Москва",
-  carrefourParis: "Магнит Москва",
-  starbucksParis: "Кофе Хауз Москва",
-  mercadonaMadrid: "М.Видео Москва",
-  starbucksMadrid: "Спортмастер Москва",
-  coopRoma: "Лента Москва",
-  starbucksRoma: "Пятёрочка Москва",
+  // Country-specific chains
+  chain1: "Перекресток Москва",
+  chain2: "Старбакс Москва",
+  chain3: "Ашан Москва",
+  chain4: "Магнит Москва",
+  chain5: "Лента Москва",
+  chain6: "М.Видео Москва",
+  chain7: "Спортмастер Москва",
+  chain8: "Пятёрочка Москва",
+  chain9: "Кофе Хауз Москва",
+  chain10: "Шоколадница Москва"
 };

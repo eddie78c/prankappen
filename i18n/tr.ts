@@ -58,12 +58,12 @@ export const tr = {
 
   // Navigation
   account: "Hesap",
-  helpAndSupport: "Help & Support",
-  logOut: "Log Out",
-  physicalCards: "physical card",
-  virtualCards: "virtual card",
-  icaMaxiStockholm: "ICA Maxi Stockholm",
-  slCardTopUp: "SL Card Top-up",
+  helpAndSupport: "Yardım ve destek",
+  logOut: "Çıkış yap",
+  physicalCards: "fiziksel kart",
+  virtualCards: "sanal kart",
+  mainGroceryStore: "Migros İstanbul",
+  slCardTopUp: "İstanbulkart yükleme",
   monthlySalary: "Aylık maaş",
   espressoHouse: "Espresso House",
   housing: "Konut",
@@ -134,16 +134,15 @@ export const tr = {
   income: "Gelir",
   expenses: "Giderler",
   selectSound: "Ses seç",
-
-  // Country-specific chains (Turkey)
-  reweBerlin: "Migros İstanbul",
-  starbucksBerlin: "Starbucks İstanbul",
-  walmartNYC: "Carrefour İstanbul",
-  starbucksNYC: "McDonald's İstanbul",
-  carrefourParis: "BİM İstanbul",
-  starbucksParis: "H&M İstanbul",
-  mercadonaMadrid: "Eczane İstanbul",
-  starbucksMadrid: "Zara İstanbul",
-  coopRoma: "Teknosa İstanbul",
-  starbucksRoma: "Media Markt İstanbul",
+  // Country-specific chains
+  chain1: "Migros İstanbul",
+  chain2: "Starbucks İstanbul",
+  chain3: "Carrefour İstanbul",
+  chain4: "BİM İstanbul",
+  chain5: "A101 İstanbul",
+  chain6: "Media Markt İstanbul",
+  chain7: "Teknosa İstanbul",
+  chain8: "H&M İstanbul",
+  chain9: "Zara İstanbul",
+  chain10: "Costa Coffee İstanbul"
 };

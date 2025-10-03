@@ -4,39 +4,64 @@
 // Country-specific data based on language
 const countryData = {
   sv: {
-    groceryChain: 'icaMaxiStockholm',
-    coffeeChain: 'espressoHouse',
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
     location: 'Stockholm, Sweden'
   },
   de: {
-    groceryChain: 'reweBerlin',
-    coffeeChain: 'starbucksBerlin',
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
     location: 'Berlin, Germany'
   },
   en: {
-    groceryChain: 'walmartNYC',
-    coffeeChain: 'starbucksNYC',
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
     location: 'New York, USA'
   },
   fr: {
-    groceryChain: 'carrefourParis',
-    coffeeChain: 'starbucksParis',
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
     location: 'Paris, France'
   },
   es: {
-    groceryChain: 'mercadonaMadrid',
-    coffeeChain: 'starbucksMadrid',
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
     location: 'Madrid, Spain'
   },
   it: {
-    groceryChain: 'coopRoma',
-    coffeeChain: 'starbucksRoma',
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
     location: 'Rome, Italy'
+  },
+  el: {
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
+    location: 'Athens, Greece'
+  },
+  hu: {
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
+    location: 'Budapest, Hungary'
+  },
+  ro: {
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
+    location: 'Bucharest, Romania'
+  },
+  cs: {
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
+    location: 'Prague, Czech Republic'
+  },
+  fi: {
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
+    location: 'Helsinki, Finland'
   },
   // Default fallback
   default: {
-    groceryChain: 'icaMaxiStockholm',
-    coffeeChain: 'espressoHouse',
+    groceryChain: 'chain1',
+    coffeeChain: 'chain2',
     location: 'Stockholm, Sweden'
   }
 };
@@ -56,7 +81,7 @@ export const getMockUserData = (language: string = 'en', userName?: string) => {
       {
         id: '1',
         typeKey: 'physicalCard',
-        number: '**** **** **** 2864',
+        number: '4532 1234 5678 2864',
         holder: defaultName,
         expiry: '08/27',
         cvv: '826',
@@ -66,7 +91,7 @@ export const getMockUserData = (language: string = 'en', userName?: string) => {
       {
         id: '2',
         typeKey: 'virtualCard',
-        number: '**** **** **** 4521',
+        number: '4532 8765 4321 4521',
         holder: defaultName,
         expiry: '12/28',
         cvv: '394',

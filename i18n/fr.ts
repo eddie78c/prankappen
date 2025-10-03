@@ -1,7 +1,7 @@
 export const fr = {
   // Welcome & Auth
   welcome: "Bienvenue dans",
-  bankName: "PREMIUM BANK",
+  bankName: "BANQUE PREMIUM",
   enterPin: "Entrez votre code PIN",
   wrongPin: "Code PIN erroné. Réessayez.",
   
@@ -137,10 +137,10 @@ export const fr = {
   appearance: "Apparence",
   prankSettings: "Paramètres prank",
   services: "Services",
-  support: "Support",
+  support: "Assistance",
 
   // Mock data translations
-  icaMaxiStockholm: "ICA Maxi Stockholm",
+  mainGroceryStore: "Carrefour Paris",
   slCardTopUp: "Recharge carte SL",
   monthlySalary: "Salaire mensuel",
   espressoHouse: "Espresso House",
@@ -148,14 +148,15 @@ export const fr = {
   food: "Nourriture",
   entertainment: "Divertissement",
   budgetOverview: "Aperçu budgétaire",
-  reweBerlin: "Carrefour Paris",
-  starbucksBerlin: "Starbucks Paris",
-  walmartNYC: "Auchan Paris",
-  starbucksNYC: "McDonald's Paris",
-  carrefourParis: "Monoprix Paris",
-  starbucksParis: "Fnac Paris",
-  mercadonaMadrid: "Pharmacie Paris",
-  starbucksMadrid: "Galeries Lafayette Paris",
-  coopRoma: "Franprix Paris",
-  starbucksRoma: "Tabac Paris"
+  // Country-specific chains
+  chain1: "Carrefour Paris",
+  chain2: "Starbucks Paris",
+  chain3: "Leclerc Paris",
+  chain4: "Auchan Paris",
+  chain5: "Intermarché Paris",
+  chain6: "Fnac Paris",
+  chain7: "Monoprix Paris",
+  chain8: "Darty Paris",
+  chain9: "Boulanger Paris",
+  chain10: "Sephora Paris"
 };

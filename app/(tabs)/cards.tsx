@@ -25,10 +25,18 @@ export default function CardsScreen() {
   const [cards, setCards] = useState(mockData.cards);
 
   const addNewCard = () => {
+    const generateCardNumber = () => {
+      const groups = [];
+      for (let i = 0; i < 4; i++) {
+        groups.push(Math.floor(Math.random() * 9000 + 1000).toString());
+      }
+      return groups.join(' ');
+    };
+
     const newCard = {
       id: (cards.length + 1).toString(),
       typeKey: 'virtualCard',
-      number: `**** **** **** ${(Math.floor(Math.random() * 9000) + 1000).toString()}`,
+      number: generateCardNumber(),
       holder: settings.receiverName || 'Maria Smith',
       expiry: `${(new Date().getMonth() + 1).toString().padStart(2, '0')}/${(new Date().getFullYear() + 2).toString().slice(-2)}`,
       cvv: (Math.floor(Math.random() * 900) + 100).toString(),
@@ -104,11 +112,12 @@ export default function CardsScreen() {
         </View>
         <Switch
           value={cardSettings[key as keyof typeof cardSettings]}
-          onValueChange={(value) => 
+          onValueChange={(value) =>
             setCardSettings(prev => ({ ...prev, [key]: value }))
           }
           trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
-          thumbColor={theme.colors.surface}
+          thumbColor={cardSettings[key as keyof typeof cardSettings] ? theme.colors.secondary : theme.colors.surface}
+          ios_backgroundColor={theme.colors.border}
         />
       </View>
     </Animated.View>
@@ -134,6 +143,7 @@ export default function CardsScreen() {
                   backgroundColor: selectedCard === 0 ? theme.colors.primary : theme.colors.surface,
                 },
               ]}
+              onPress={() => setSelectedCard(0)}
             >
               <Text
                 style={[
@@ -154,6 +164,7 @@ export default function CardsScreen() {
                   backgroundColor: selectedCard === 1 ? theme.colors.primary : theme.colors.surface,
                 },
               ]}
+              onPress={() => setSelectedCard(1)}
             >
               <Text
                 style={[
@@ -169,7 +180,7 @@ export default function CardsScreen() {
 
         {/* Cards Display */}
         <View style={styles.cardsSection}>
-          {cards.map(renderCard)}
+          {cards.filter(card => selectedCard === 0 ? card.typeKey === 'physicalCard' : card.typeKey === 'virtualCard').map(renderCard)}
 
           <Animated.View entering={FadeInDown.delay(600)}>
             <TouchableOpacity style={[styles.addCard, { backgroundColor: theme.colors.surface }]} onPress={addNewCard}>
@@ -208,19 +219,19 @@ export default function CardsScreen() {
           
           {renderSettingItem(
             <CreditCard size={20} color={theme.colors.primary} />,
-            translations.contactlessPayment,
+            translations.contactlessPayment || 'Contactless Payment',
             'contactless',
             0
           )}
           {renderSettingItem(
             <Settings size={20} color={theme.colors.primary} />,
-            translations.onlinePayment,
+            translations.onlinePayment || 'Online Payment',
             'online',
             1
           )}
           {renderSettingItem(
             <CreditCard size={20} color={theme.colors.primary} />,
-            translations.atmWithdraws,
+            translations.atmWithdraws || 'ATM Withdraws',
             'atm',
             2
           )}

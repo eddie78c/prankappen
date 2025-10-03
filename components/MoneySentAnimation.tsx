@@ -11,6 +11,7 @@ import Animated, {
 import { LinearGradient } from 'expo-linear-gradient';
 import { Send } from 'lucide-react-native';
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { formatCurrency } from '../utils/currency';
 
 interface MoneySentAnimationProps {
@@ -27,6 +28,7 @@ export default function MoneySentAnimation({
   onClose 
 }: MoneySentAnimationProps) {
   const { theme } = useTheme();
+  const { translations } = useLanguage();
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
   const iconScale = useSharedValue(0);
@@ -84,7 +86,7 @@ export default function MoneySentAnimation({
             </Animated.View>
             
             <Text style={styles.title}>
-              Money Sent!
+              {translations.moneySent}
             </Text>
             
             <Text style={styles.amount}>

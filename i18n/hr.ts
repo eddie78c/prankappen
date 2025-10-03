@@ -1,7 +1,7 @@
 export const hr = {
   // Welcome & Auth
   welcome: "Dobrodošli u",
-  bankName: "PREMIUM BANK",
+  bankName: "PREMIUM BANKA",
   enterPin: "Unesite svoj PIN",
   wrongPin: "Pogrešan PIN. Pokušajte ponovno.",
   
@@ -10,8 +10,12 @@ export const hr = {
   history: "Povijest",
   cards: "Kartice",
   profile: "Profil",
+  settings: "Postavke",
+  account: "Račun",
+  helpAndSupport: "Pomoć i podrška",
+  logOut: "Odjava",
   more: "Više",
-  
+
   // Dashboard
   dashboard: "Nadzorna ploča",
   overview: "Pregled, pogledajte svoje stanje",
@@ -50,18 +54,15 @@ export const hr = {
   coffee: "Kafić",
   
   // Settings
-  settings: "Postavke",
   darkMode: "Tamni način",
   language: "Jezik",
   notifications: "Obavijesti",
   security: "Sigurnost",
-  account: "Račun",
-  helpAndSupport: "Pomoć i podrška",
-  logOut: "Odjava",
+
   physicalCards: "fizička kartica",
   virtualCards: "virtualna kartica",
-  icaMaxiStockholm: "ICA Maxi Stockholm",
-  slCardTopUp: "SL Card Top-up",
+  mainGroceryStore: "Konzum Zagreb",
+  slCardTopUp: "SL Kartica Dopuna",
   monthlySalary: "Mjesečna plaća",
   espressoHouse: "Espresso House",
   housing: "Stanovanje",
@@ -132,14 +133,15 @@ export const hr = {
   income: "Prihod",
   expenses: "Troškovi",
   selectSound: "Odaberi zvuk",
-  reweBerlin: "Konzum Zagreb",
-  starbucksBerlin: "Starbucks Zagreb",
-  walmartNYC: "Plodine Zagreb",
-  starbucksNYC: "McDonald's Zagreb",
-  carrefourParis: "DM Zagreb",
-  starbucksParis: "H&M Zagreb",
-  mercadonaMadrid: "Ljekarna Zagreb",
-  starbucksMadrid: "Zara Zagreb",
-  coopRoma: "Lidl Zagreb",
-  starbucksRoma: "Tisak Zagreb",
+  // Country-specific chains
+  chain1: "Konzum Zagreb",
+  chain2: "Plodine Zagreb",
+  chain3: "Lidl Zagreb",
+  chain4: "DM Zagreb",
+  chain5: "Ljekarna Zagreb",
+  chain6: "Tisak Zagreb",
+  chain7: "Starbucks Zagreb",
+  chain8: "McDonald's Zagreb",
+  chain9: "H&M Zagreb",
+  chain10: "Zara Zagreb"
 };

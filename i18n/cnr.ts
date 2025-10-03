@@ -1,7 +1,7 @@
 export const cnr = {
   // Welcome & Auth
   welcome: "Dobrodošli u",
-  bankName: "PREMIUM BANK",
+  bankName: "PREMIUM BANKA",
   enterPin: "Unesite vaš PIN",
   wrongPin: "Pogrešan PIN. Pokušajte ponovo.",
   
@@ -10,8 +10,12 @@ export const cnr = {
   history: "Istorija",
   cards: "Kartice",
   profile: "Profil",
+  settings: "Postavke",
+  account: "Račun",
+  helpAndSupport: "Pomoć i podrška",
+  logOut: "Odjava",
   more: "Više",
-  
+
   // Dashboard
   dashboard: "Kontrolna tabla",
   overview: "Pregled, pogledajte svoje stanje",
@@ -50,19 +54,14 @@ export const cnr = {
   coffee: "Kafić",
   
   // Settings
-  settings: "Postavke",
   darkMode: "Tamni režim",
   language: "Jezik",
   notifications: "Obavještenja",
   security: "Sigurnost",
 
-  // Navigation
-  account: "Račun",
-  helpAndSupport: "Pomoć i podrška",
-  logOut: "Odjava",
   physicalCards: "fizička kartica",
   virtualCards: "virtualna kartica",
-  icaMaxiStockholm: "ICA Maxi Stockholm",
+  mainGroceryStore: "Voli Podgorica",
   slCardTopUp: "SL kartica dopuna",
   monthlySalary: "Mjesečna plata",
   espressoHouse: "Espresso House",
@@ -92,7 +91,7 @@ export const cnr = {
   saveSettings: "Sačuvaj postavke",
   close: "Zatvori",
   version: "Verzija 1.0.0",
-  copyright: "© 2024 Premium Bank. Sva prava zadržana.",
+  copyright: "© 2025 Premium Bank. Sva prava zadržana.",
   madeWith: "Napravljeno sa ❤️ za sigurno bankarstvo",
   permissionNeeded: "Potrebna dozvola",
   cameraPermission: "Potrebne su nam dozvole za kameru da bismo odabrali fotografiju.",
@@ -134,14 +133,15 @@ export const cnr = {
   income: "Prihod",
   expenses: "Troškovi",
   selectSound: "Odaberi zvuk",
-  reweBerlin: "Voli Podgorica",
-  starbucksBerlin: "Starbucks Podgorica",
-  walmartNYC: "Idea Podgorica",
-  starbucksNYC: "McDonald's Podgorica",
-  carrefourParis: "Aman Podgorica",
-  starbucksParis: "H&M Podgorica",
-  mercadonaMadrid: "Apoteka Podgorica",
-  starbucksMadrid: "Zara Podgorica",
-  coopRoma: "Lidl Podgorica",
-  starbucksRoma: "Tisak Podgorica",
+  // Country-specific chains
+  chain1: "Voli Podgorica",
+  chain2: "Idea Podgorica",
+  chain3: "Lidl Podgorica",
+  chain4: "Aman Podgorica",
+  chain5: "Apoteka Podgorica",
+  chain6: "Tisak Podgorica",
+  chain7: "Starbucks Podgorica",
+  chain8: "McDonald's Podgorica",
+  chain9: "H&M Podgorica",
+  chain10: "Zara Podgorica"
 };

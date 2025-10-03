@@ -1,7 +1,7 @@
 export const es = {
   // Welcome & Auth
   welcome: "Bienvenido a",
-  bankName: "PREMIUM BANK",
+  bankName: "BANCO PREMIUM",
   enterPin: "Ingrese su PIN",
   wrongPin: "PIN incorrecto. Inténtelo de nuevo.",
   
@@ -121,7 +121,7 @@ export const es = {
   saveSettings: "Guardar configuración",
   close: "Cerrar",
   version: "Versión 1.0.0",
-  copyright: "© 2024 Premium Bank. Todos los derechos reservados.",
+  copyright: "© 2025 Premium Bank. Todos los derechos reservados.",
   madeWith: "Hecho con ❤️ para banca segura",
   permissionNeeded: "Permiso requerido",
   cameraPermission: "Necesitamos permisos de carrete para seleccionar una foto.",
@@ -140,7 +140,7 @@ export const es = {
   support: "Soporte",
 
   // Mock data translations
-  icaMaxiStockholm: "ICA Maxi Stockholm",
+  mainGroceryStore: "Mercadona Madrid",
   slCardTopUp: "Recarga tarjeta SL",
   monthlySalary: "Salario mensual",
   espressoHouse: "Espresso House",
@@ -148,14 +148,15 @@ export const es = {
   food: "Comida",
   entertainment: "Entretenimiento",
   budgetOverview: "Resumen presupuestario",
-  reweBerlin: "Mercadona Madrid",
-  starbucksBerlin: "Starbucks Madrid",
-  walmartNYC: "Carrefour Madrid",
-  starbucksNYC: "McDonald's Madrid",
-  carrefourParis: "El Corte Inglés Madrid",
-  starbucksParis: "Primark Madrid",
-  mercadonaMadrid: "DM Madrid",
-  starbucksMadrid: "Zara Madrid",
-  coopRoma: "Supermercados DIA Madrid",
-  starbucksRoma: "Farmacia Madrid"
+  // Country-specific chains
+  chain1: "Mercadona Madrid",
+  chain2: "Starbucks Madrid",
+  chain3: "Carrefour Madrid",
+  chain4: "Lidl Madrid",
+  chain5: "El Corte Inglés Madrid",
+  chain6: "Zara Madrid",
+  chain7: "DIA Madrid",
+  chain8: "FNAC Madrid",
+  chain9: "MediaMarkt Madrid",
+  chain10: "Eroski Madrid"
 };

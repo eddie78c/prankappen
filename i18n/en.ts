@@ -14,7 +14,8 @@ export const en = {
   account: "Account",
   helpAndSupport: "Help & Support",
   logOut: "Log Out",
-  
+  more: "More",
+
   // Dashboard
   dashboard: "Dashboard",
   overview: "Overview, look at your balance",
@@ -61,7 +62,7 @@ export const en = {
   security: "Security",
 
   // Mock data translations
-  icaMaxiStockholm: "ICA Maxi Stockholm",
+  mainGroceryStore: "Walmart NYC",
   slCardTopUp: "SL Card Top-up",
   monthlySalary: "Monthly Salary",
   espressoHouse: "Espresso House",
@@ -93,7 +94,7 @@ export const en = {
   saveSettings: "Save Settings",
   close: "Close",
   version: "Version 1.0.0",
-  copyright: "© 2024 Premium Bank. All rights reserved.",
+  copyright: "© 2025 Premium Bank. All rights reserved.",
   madeWith: "Made with ❤️ for secure banking",
   permissionNeeded: "Permission needed",
   cameraPermission: "We need camera roll permissions to select a photo.",
@@ -145,18 +146,21 @@ export const en = {
   income: "Income",
   expenses: "Expenses",
 
+  // Delete
+  delete: "Delete",
+
   // Sound
   selectSound: "Select Sound",
 
   // Country-specific chains
-  reweBerlin: "REWE Berlin",
-  starbucksBerlin: "Starbucks Berlin",
-  walmartNYC: "Walmart NYC",
-  starbucksNYC: "Starbucks NYC",
-  carrefourParis: "Carrefour Paris",
-  starbucksParis: "Starbucks Paris",
-  mercadonaMadrid: "Mercadona Madrid",
-  starbucksMadrid: "Starbucks Madrid",
-  coopRoma: "Coop Roma",
-  starbucksRoma: "Starbucks Roma"
+  chain1: "Walmart NYC",
+  chain2: "Starbucks NYC",
+  chain3: "Target NYC",
+  chain4: "Whole Foods NYC",
+  chain5: "Costco NYC",
+  chain6: "Trader Joe's NYC",
+  chain7: "Macy's NYC",
+  chain8: "Best Buy NYC",
+  chain9: "Home Depot NYC",
+  chain10: "Lowe's NYC"
 };

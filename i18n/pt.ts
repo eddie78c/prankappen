@@ -62,7 +62,7 @@ export const pt = {
   logOut: "Sair",
   physicalCards: "cartão físico",
   virtualCards: "cartão virtual",
-  icaMaxiStockholm: "ICA Maxi Estocolmo",
+  mainGroceryStore: "Continente Lisboa",
   slCardTopUp: "Recarga cartão SL",
   monthlySalary: "Salário mensal",
   espressoHouse: "Espresso House",
@@ -135,15 +135,15 @@ export const pt = {
   expenses: "Despesas",
   selectSound: "Selecionar som",
 
-  // Country-specific chains (Portugal)
-  reweBerlin: "Continente Lisboa",
-  starbucksBerlin: "Nespresso Lisboa",
-  walmartNYC: "Pingo Doce Lisboa",
-  starbucksNYC: "Starbucks Lisboa",
-  carrefourParis: "El Corte Inglés Lisboa",
-  starbucksParis: "Delta Lisboa",
-  mercadonaMadrid: "Fnac Lisboa",
-  starbucksMadrid: " Worten Lisboa",
-  coopRoma: "Jumbo Lisboa",
-  starbucksRoma: "Livraria Bertrand Lisboa",
+  // Country-specific chains
+  chain1: "Continente Lisboa",
+  chain2: "Starbucks Lisboa",
+  chain3: "Pingo Doce Lisboa",
+  chain4: "Jumbo Lisboa",
+  chain5: "El Corte Inglés Lisboa",
+  chain6: "Fnac Lisboa",
+  chain7: " Worten Lisboa",
+  chain8: "Delta Lisboa",
+  chain9: "Livraria Bertrand Lisboa",
+  chain10: "Nespresso Lisboa"
 };

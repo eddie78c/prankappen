@@ -1,18 +1,22 @@
 export const nl = {
   // Welcome & Auth
   welcome: "Welkom bij",
-  bankName: "PREMIUM BANK",
+  bankName: "PREMIUMBANK",
   enterPin: "Voer uw PIN in",
   wrongPin: "Verkeerde PIN. Probeer het opnieuw.",
-  
   // Navigation
-  home: "Home",
+  home: "Thuis",
   history: "Geschiedenis",
   cards: "Kaarten",
   profile: "Profiel",
+  settings: "Instellingen",
+  account: "Rekening",
+  helpAndSupport: "Hulp en ondersteuning",
+  logOut: "Uitloggen",
   more: "Meer",
+
   // Dashboard
-  dashboard: "Dashboard",
+  dashboard: "Overzicht",
   overview: "Overzicht, bekijk uw saldo",
   totalBalance: "Totaal saldo",
   availableBalance: "Beschikbaar saldo",
@@ -49,12 +53,20 @@ export const nl = {
   coffee: "Koffie",
   
   // Settings
-  settings: "Instellingen",
   darkMode: "Donkere modus",
   language: "Taal",
   notifications: "Meldingen",
   security: "Beveiliging",
 
+  // Mock data translations
+  mainGroceryStore: "Albert Heijn Amsterdam",
+  slCardTopUp: "SL-kaart opladen",
+  monthlySalary: "Maandsalaris",
+  espressoHouse: "Espresso House",
+  housing: "Wonen",
+  food: "Eten",
+  entertainment: "Vermaak",
+  budgetOverview: "Budgetoverzicht",
   // Modal translations
   sendMoney: "Geld verzenden",
   phoneNumber: "Telefoonnummer",
@@ -91,6 +103,9 @@ export const nl = {
   income: "Inkomen",
   expenses: "Uitgaven",
 
+  // Sound
+  selectSound: "Selecteer geluid",
+
   // More screen translations
   selectLanguage: "Selecteer taal",
   selectCurrency: "Selecteer valuta",
@@ -114,7 +129,7 @@ export const nl = {
   saveSettings: "Instellingen opslaan",
   close: "Sluiten",
   version: "Versie 1.0.0",
-  copyright: "© 2024 Premium Bank. Alle rechten voorbehouden.",
+  copyright: "© 2025 Premium Bank. Alle rechten voorbehouden.",
   madeWith: "Gemaakt met ❤️ voor veilige bankieren",
   permissionNeeded: "Toestemming nodig",
   cameraPermission: "We hebben camerapermissions nodig om een foto te selecteren.",
@@ -132,31 +147,15 @@ export const nl = {
   services: "Diensten",
   support: "Ondersteuning",
 
-  // Mock data translations
-  icaMaxiStockholm: "ICA Maxi Stockholm",
-  slCardTopUp: "SL kaart bijvullen",
-  monthlySalary: "Maandelijks salaris",
-  espressoHouse: "Espresso House",
-  housing: "Woning",
-  food: "Voedsel",
-  entertainment: "Entertainment",
-  budgetOverview: "Budgetoverzicht",
-  reweBerlin: "Albert Heijn Amsterdam",
-  starbucksBerlin: "Starbucks Amsterdam",
-  walmartNYC: "Jumbo Amsterdam",
-  starbucksNYC: "McDonald's Amsterdam",
-  carrefourParis: "H&M Amsterdam",
-  starbucksParis: "MediaMarkt Amsterdam",
-  mercadonaMadrid: "Etos Amsterdam",
-  starbucksMadrid: "Zara Amsterdam",
-  coopRoma: "Lidl Amsterdam",
-  starbucksRoma: "AH to Go Amsterdam",
-
-  // Navigation
-  account: "Account",
-  helpAndSupport: "Hulp en ondersteuning",
-  logOut: "Uitloggen",
-
-  // Sound
-  selectSound: "Selecteer geluid"
+  // Country-specific chains
+  chain1: "Albert Heijn Amsterdam",
+  chain2: "Jumbo Amsterdam",
+  chain3: "Lidl Amsterdam",
+  chain4: "H&M Amsterdam",
+  chain5: "MediaMarkt Amsterdam",
+  chain6: "Etos Amsterdam",
+  chain7: "Zara Amsterdam",
+  chain8: "Starbucks Amsterdam",
+  chain9: "McDonald's Amsterdam",
+  chain10: "AH to Go Amsterdam"
 };

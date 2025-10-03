@@ -1,9 +1,9 @@
- import React from 'react';
+import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Settings, Bell, Shield, HelpCircle as CircleHelp, LogOut, ChevronRight } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
-// import avatarPlaceholder from '../../assets/images/avatar.jpg'; // Commented out as it may not exist
+const avatarPlaceholder = require('../../assets/images/avatar.jpg');
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { useAuth } from '../../contexts/AuthContext';
@@ -47,7 +47,7 @@ export default function ProfileScreen() {
     },
   ];
 
-  const renderMenuItem = (item: any, index: number) => (
+  const renderMenuItem = (item: any, index: any) => (
     <Animated.View
       key={index}
       entering={FadeInDown.delay(index * 100).springify()}
@@ -72,27 +72,34 @@ export default function ProfileScreen() {
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
-      <LinearGradient
-        colors={theme.colors.gradient}
-        style={styles.header}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-      >
-        <Animated.View entering={FadeInDown.delay(200)} style={styles.profileInfo}>
-          <Image
-            source={settings.receiverPhoto ? { uri: settings.receiverPhoto } : { uri: 'https://via.placeholder.com/80x80/cccccc/ffffff?text=Avatar' }}
-            style={styles.avatar}
-          />
-          <Text style={[styles.name, { color: theme.colors.surface }]}>
-            {settings.receiverName || 'John Doe'}
-          </Text>
-          <Text style={[styles.location, { color: theme.colors.surface }]}>
-            {settings.profileLocation}
-          </Text>
-        </Animated.View>
-      </LinearGradient>
+      <View style={[styles.header, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
+        <Text style={[styles.title, { color: theme.colors.text }]}>
+          {translations.account}
+        </Text>
+      </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        <View style={styles.contentPadding}>
+        {/* Profile Info */}
+        <LinearGradient
+          colors={theme.colors.gradient}
+          style={styles.profileHeader}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+        >
+          <Animated.View entering={FadeInDown.delay(200)} style={styles.profileInfo}>
+            <Image
+              source={settings.receiverPhoto ? { uri: settings.receiverPhoto } : avatarPlaceholder}
+              style={styles.avatar}
+            />
+            <Text style={[styles.name, { color: theme.colors.surface }]}>
+              {settings.receiverName || 'John Doe'}
+            </Text>
+            <Text style={[styles.location, { color: theme.colors.surface }]}>
+              {settings.profileLocation}
+            </Text>
+          </Animated.View>
+        </LinearGradient>
         {/* Balance Section */}
         <Animated.View entering={FadeInDown.delay(600)} style={styles.balanceSection}>
           <GlassCard style={styles.balanceCard}>
@@ -144,12 +151,6 @@ export default function ProfileScreen() {
           </View>
         </Animated.View>
 
-        {/* Menu Items */}
-        <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-            {translations.account}
-          </Text>
-          {menuItems.map(renderMenuItem)}
         </View>
       </ScrollView>
     </View>
@@ -161,38 +162,62 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 48,
     paddingTop: 0,
     paddingHorizontal: 20,
-    paddingBottom: 16,
-    height: 48,
     justifyContent: 'flex-end',
+    paddingBottom: 12,
+    zIndex: 100,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    borderBottomWidth: 1,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    flex: 1,
+  },
+  profileHeader: {
+    marginTop: 0,
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
   },
   profileInfo: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
   },
   avatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    marginBottom: 12,
-    borderWidth: 3,
+    width: 72,
+    height: 72,
+    borderRadius: 36,
+    marginBottom: 10,
+    borderWidth: 2,
     borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   name: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   location: {
     fontSize: 14,
     opacity: 0.9,
   },
   balanceSection: {
-    marginBottom: 20,
+    marginTop: 12,
+    marginBottom: 16,
   },
   balanceCard: {
-    padding: 20,
+    padding: 16,
   },
   balanceContainer: {
     alignItems: 'center',
@@ -208,22 +233,25 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
+    marginTop: 48,
+  },
+  contentPadding: {
+    paddingHorizontal: 16,
   },
   section: {
-    marginVertical: 20,
+    marginVertical: 16,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: 'bold',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   budgetContainer: {
-    gap: 12,
+    gap: 8,
   },
   budgetItem: {
-    padding: 16,
-    borderRadius: 12,
+    padding: 12,
+    borderRadius: 10,
     elevation: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
@@ -234,20 +262,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 8,
-  },
-  budgetName: {
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  budgetPercentage: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    marginBottom: 6,
   },
   progressBar: {
     height: 6,
     borderRadius: 3,
     marginBottom: 8,
+  },
+  budgetPercentage: {
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   progressFill: {
     height: '100%',
@@ -256,33 +280,43 @@ const styles = StyleSheet.create({
   budgetAmount: {
     fontSize: 12,
   },
+  budgetName: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  menuGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 8,
+    padding: 12,
+    borderRadius: 10,
+    marginBottom: 6,
     elevation: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
+    width: '100%',
   },
   menuLeft: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   menuIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 10,
   },
   menuTitle: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
   },
 });

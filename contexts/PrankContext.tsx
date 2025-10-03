@@ -5,7 +5,8 @@ interface Transaction {
   id?: string;
   titleKey?: string;
   title?: string;
-  description: string;
+  description?: string;
+  descriptionKey?: string;
   amount: number;
   date: string;
   category: string;
@@ -79,42 +80,42 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
   const [transactions, setTransactions] = useState<Transaction[]>([
     {
       id: '1',
-      title: 'Grocery',
-      description: 'ICA Maxi Stockholm',
+      titleKey: 'grocery',
+      descriptionKey: 'mainGroceryStore',
       amount: -50.68,
       date: 'Aug 26',
       category: 'food',
-      icon: '🛒',
+      icon: 'basket',
       color: '#FF6B6B'
     },
     {
       id: '2',
-      title: 'Transport',
-      description: 'SL Card Top-up',
+      titleKey: 'transport',
+      descriptionKey: 'slCardTopUp',
       amount: -86.00,
       date: 'Aug 25',
       category: 'transport',
-      icon: '🚌',
+      icon: 'car',
       color: '#4ECDC4'
     },
     {
       id: '3',
-      title: 'Salary',
-      description: 'Monthly Salary',
+      titleKey: 'salary',
+      descriptionKey: 'monthlySalary',
       amount: 6500.00,
       date: 'Aug 25',
       category: 'income',
-      icon: '💰',
+      icon: 'cash',
       color: '#10B981'
     },
     {
       id: '4',
-      title: 'Coffee Shop',
-      description: 'Espresso House',
+      titleKey: 'coffee',
+      descriptionKey: 'espressoHouse',
       amount: -45.00,
       date: 'Aug 24',
       category: 'food',
-      icon: '☕',
+      icon: 'cafe',
       color: '#FF6B6B'
     }
   ]);

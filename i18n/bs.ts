@@ -1,7 +1,7 @@
 export const bs = {
   // Welcome & Auth
   welcome: "Dobrodošli u",
-  bankName: "PREMIUM BANK",
+  bankName: "PREMIUM BANKA",
   enterPin: "Unesite vaš PIN",
   wrongPin: "Pogrešan PIN. Pokušajte ponovo.",
   
@@ -10,8 +10,12 @@ export const bs = {
   history: "Istorija",
   cards: "Kartice",
   profile: "Profil",
+  settings: "Postavke",
+  account: "Račun",
+  helpAndSupport: "Pomoć i podrška",
+  logOut: "Odjava",
   more: "Više",
-  
+
   // Dashboard
   dashboard: "Kontrolna tabla",
   overview: "Pregled, pogledajte svoje stanje",
@@ -50,23 +54,16 @@ export const bs = {
   coffee: "Kafić",
   
   // Settings
-  settings: "Postavke",
   darkMode: "Tamni režim",
   language: "Jezik",
   notifications: "Obavještenja",
   security: "Sigurnost",
 
-  // Navigation
-  account: "Račun",
-  helpAndSupport: "Pomoć i podrška",
-  logOut: "Odjava",
-
-  // Cards
   physicalCards: "fizička kartica",
   virtualCards: "virtualna kartica",
 
   // Mock data translations
-  icaMaxiStockholm: "ICA Maxi Stockholm",
+  mainGroceryStore: "Konzum Sarajevo",
   slCardTopUp: "SL kartica dopuna",
   monthlySalary: "Mjesečna plata",
   espressoHouse: "Espresso House",
@@ -98,7 +95,7 @@ export const bs = {
   saveSettings: "Sačuvaj postavke",
   close: "Zatvori",
   version: "Verzija 1.0.0",
-  copyright: "© 2024 Premium Bank. Sva prava zadržana.",
+  copyright: "© 2025 Premium Bank. Sva prava zadržana.",
   madeWith: "Napravljeno sa ❤️ za sigurno bankarstvo",
   permissionNeeded: "Potrebna dozvola",
   cameraPermission: "Potrebne su nam dozvole za kameru da bismo odabrali fotografiju.",
@@ -151,15 +148,15 @@ export const bs = {
   // Sound
   selectSound: "Odaberi zvuk",
 
-  // Country-specific chains (Bosnia and Herzegovina)
-  reweBerlin: "Konzum Sarajevo",  // Local Bosnian grocery chain
-  starbucksBerlin: "BH Telecom",   // Local Bosnian telecom/service
-  walmartNYC: "Merkator",          // Regional grocery chain in Balkans
-  starbucksNYC: "Sarajevska pivara", // Local Bosnian brewery/cafe
-  carrefourParis: "Bingo",        // Local Bosnian hypermarket
-  starbucksParis: "Top Shop",      // Local Bosnian fashion chain
-  mercadonaMadrid: "Fresh Market", // Local Bosnian supermarket
-  starbucksMadrid: "Pekara",       // Local Bosnian bakery
-  coopRoma: "Zara",                // Local Bosnian clothing store
-  starbucksRoma: "Bosnalijek"      // Local Bosnian pharmacy
+  // Country-specific chains
+  chain1: "Walter Sarajevo",
+  chain2: "Merkator",
+  chain3: "Bingo",
+  chain4: "BH Telecom",
+  chain5: "Cefe Music",
+  chain6: "Top Shop",
+  chain7: "Fresh Market",
+  chain8: "Pekara",
+  chain9: "AQUA Club",
+  chain10: "Bosnalijek"
 };

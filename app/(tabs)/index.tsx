@@ -196,7 +196,8 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: '#0160f8' }]}>
+    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+
       {/* Fixed Header */}
       <View style={[styles.fixedHeader, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
         <View style={styles.headerTop}>

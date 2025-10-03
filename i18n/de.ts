@@ -1,7 +1,7 @@
 export const de = {
   // Welcome & Auth
   welcome: "Willkommen bei",
-  bankName: "PREMIUM BANK",
+  bankName: "PRÄMIUMBANK",
   enterPin: "PIN eingeben",
   wrongPin: "Falsche PIN. Versuchen Sie es erneut.",
   
@@ -14,9 +14,10 @@ export const de = {
   account: "Konto",
   helpAndSupport: "Hilfe & Support",
   logOut: "Abmelden",
-  
+  more: "Mehr",
+
   // Dashboard
-  dashboard: "Dashboard",
+  dashboard: "Übersicht",
   overview: "Übersicht, schauen Sie sich Ihr Guthaben an",
   totalBalance: "Gesamtguthaben",
   availableBalance: "Verfügbares Guthaben",
@@ -61,13 +62,14 @@ export const de = {
   security: "Sicherheit",
 
   // Mock data translations
-  icaMaxiStockholm: "ICA Maxi Stockholm",
+  mainGroceryStore: "REWE Berlin",
   slCardTopUp: "SL Card Aufladung",
   monthlySalary: "Monatsgehalt",
   espressoHouse: "Espresso House",
   housing: "Wohnen",
   food: "Essen",
   entertainment: "Unterhaltung",
+  budgetOverview: "Budgetübersicht",
 
   // More screen translations
   selectLanguage: "Sprache auswählen",
@@ -91,8 +93,8 @@ export const de = {
   saveProfile: "Profil speichern",
   saveSettings: "Einstellungen speichern",
   close: "Schließen",
-  version: "Version 2.1.0",
-  copyright: "© 2024 Premium Bank. Alle Rechte vorbehalten.",
+  version: "Version 1.0.0",
+  copyright: "© 2025 Premium Bank. Alle Rechte vorbehalten.",
   madeWith: "Mit ❤️ für sicheres Banking gemacht",
   permissionNeeded: "Berechtigung erforderlich",
   cameraPermission: "Wir benötigen Kameraroll-Berechtigung zum Foto-Auswählen.",
@@ -108,7 +110,7 @@ export const de = {
   appearance: "Aussehen",
   prankSettings: "Prank-Einstellungen",
   services: "Dienstleistungen",
-  support: "Support",
+  support: "Unterstützung",
 
   // Modal translations
   sendMoney: "Geld senden",
@@ -145,5 +147,17 @@ export const de = {
   expenses: "Ausgaben",
 
   // Sound
-  selectSound: "Ton auswählen"
+  selectSound: "Ton auswählen",
+
+  // Country-specific chains
+  chain1: "REWE Berlin",
+  chain2: "Starbucks Berlin",
+  chain3: "Lidl Berlin",
+  chain4: "Aldi Berlin",
+  chain5: "Edeka Berlin",
+  chain6: "Kaufland Berlin",
+  chain7: "dm Berlin",
+  chain8: "Rossmann Berlin",
+  chain9: "Saturn Berlin",
+  chain10: "Tchibo Berlin",
 };
