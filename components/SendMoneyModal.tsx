@@ -20,18 +20,18 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
 
   const handleSend = () => {
     if (!phoneNumber.trim()) {
-      Alert.alert('Error', 'Please enter a phone number');
+      Alert.alert(translations.error, translations.pleaseEnterPhone);
       return;
     }
-    
+
     const numericAmount = parseFloat(amount);
     if (!numericAmount || numericAmount <= 0) {
-      Alert.alert('Error', 'Please enter a valid amount');
+      Alert.alert(translations.error, translations.pleaseEnterValidAmount);
       return;
     }
-    
+
     if (numericAmount > settings.profileBalance) {
-      Alert.alert('Insufficient Balance', 'You cannot send more money than your current balance');
+      Alert.alert(translations.insufficientBalance, translations.cannotSendMore);
       return;
     }
 
@@ -58,7 +58,7 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
         <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
           <View style={styles.header}>
             <Text style={[styles.title, { color: theme.colors.text }]}>
-              {translations.send} Money
+              {translations.sendMoney}
             </Text>
             <TouchableOpacity 
               style={[styles.closeButton, { backgroundColor: theme.colors.background }]}
@@ -71,17 +71,19 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
           <View style={styles.content}>
             <View style={styles.inputContainer}>
               <Text style={[styles.label, { color: theme.colors.text }]}>
-                Phone Number
+                {translations.phoneNumber}
               </Text>
               <TextInput
-                style={[styles.input, { 
-                  backgroundColor: theme.colors.background,
-                  color: theme.colors.text,
-                  borderColor: theme.colors.border,
-                }]}
+                style={[
+                  styles.input, {
+                    backgroundColor: theme.colors.background,
+                    color: theme.colors.text,
+                    borderColor: theme.colors.border,
+                  }
+                ]}
                 value={phoneNumber}
                 onChangeText={setPhoneNumber}
-                placeholder="Enter phone number"
+                placeholder={translations.enterPhoneNumber}
                 placeholderTextColor={theme.colors.textSecondary}
                 keyboardType="phone-pad"
               />
@@ -89,17 +91,19 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
             
             <View style={styles.inputContainer}>
               <Text style={[styles.label, { color: theme.colors.text }]}>
-                Amount
+                {translations.amount}
               </Text>
               <TextInput
-                style={[styles.input, { 
-                  backgroundColor: theme.colors.background,
-                  color: theme.colors.text,
-                  borderColor: theme.colors.border,
-                }]}
+                style={[
+                  styles.input, {
+                    backgroundColor: theme.colors.background,
+                    color: theme.colors.text,
+                    borderColor: theme.colors.border,
+                  }
+                ]}
                 value={amount}
                 onChangeText={setAmount}
-                placeholder="Enter amount"
+                placeholder={translations.enterAmount}
                 placeholderTextColor={theme.colors.textSecondary}
                 keyboardType="numeric"
               />
@@ -112,7 +116,7 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
               onPress={handleClose}
             >
               <Text style={[styles.cancelButtonText, { color: theme.colors.text }]}>
-                Cancel
+                {translations.cancel}
               </Text>
             </TouchableOpacity>
             

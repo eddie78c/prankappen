@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown } from 'react-native-reanimated';
@@ -14,10 +14,37 @@ export default function HistoryScreen() {
   const { settings } = usePrank();
   const [selectedFilter, setSelectedFilter] = useState('all');
 
+  // Generate dynamic dates
+  const dynamicTransactions = useMemo(() => {
+    const now = new Date();
+    const today = new Date(now);
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    const dayBeforeYesterday = new Date(now);
+    dayBeforeYesterday.setDate(now.getDate() - 2);
+    const lastWeek = new Date(now);
+    lastWeek.setDate(now.getDate() - 7);
+
+    const formatDate = (date: Date) => {
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
+
+    return mockUserData.recentTransactions.map((transaction, index) => {
+      let date;
+      if (index === 0) date = formatDate(today);
+      else if (index === 1) date = formatDate(yesterday);
+      else if (index === 2) date = formatDate(yesterday);
+      else if (index === 3) date = formatDate(dayBeforeYesterday);
+      else date = formatDate(lastWeek);
+
+      return { ...transaction, date };
+    });
+  }, []);
+
   const filters = [
-    { key: 'all', label: 'All' },
-    { key: 'income', label: 'Income' },
-    { key: 'expenses', label: 'Expenses' }
+    { key: 'all', label: translations.all },
+    { key: 'income', label: translations.income },
+    { key: 'expenses', label: translations.expenses }
   ];
 
   const renderTransaction = (transaction: any, index: number) => (
@@ -31,10 +58,10 @@ export default function HistoryScreen() {
         </View>
         <View style={styles.transactionDetails}>
           <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
-            {transaction.title}
+            {translations[transaction.titleKey as keyof typeof translations]}
           </Text>
           <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
-            {transaction.description}
+            {translations[transaction.descriptionKey as keyof typeof translations]}
           </Text>
         </View>
         <View style={styles.transactionAmount}>
@@ -113,17 +140,17 @@ export default function HistoryScreen() {
           <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
             {translations.today}
           </Text>
-          {mockUserData.recentTransactions.slice(0, 2).map((transaction, index) => renderTransaction(transaction, index))}
-          
+          {dynamicTransactions.filter(t => t.date === dynamicTransactions[0].date).map((transaction, index) => renderTransaction(transaction, index))}
+
           <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
             {translations.yesterday}
           </Text>
-          {mockUserData.recentTransactions.slice(2, 4).map((transaction, index) => renderTransaction(transaction, index + 2))}
-          
+          {dynamicTransactions.filter(t => t.date === dynamicTransactions[1].date).map((transaction, index) => renderTransaction(transaction, index + 2))}
+
           <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
             {translations.thisWeek}
           </Text>
-          {mockUserData.recentTransactions.slice(0, 4).map((transaction, index) => renderTransaction(transaction, index + 4))}
+          {dynamicTransactions.filter(t => t.date !== dynamicTransactions[0].date && t.date !== dynamicTransactions[1].date).map((transaction, index) => renderTransaction(transaction, index + 4))}
         </View>
       </ScrollView>
     </View>
@@ -138,10 +165,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 60,
+    paddingTop: 0,
     paddingHorizontal: 20,
     paddingBottom: 16,
-    height: 88,
+    height: 48,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

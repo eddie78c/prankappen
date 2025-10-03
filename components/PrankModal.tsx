@@ -114,19 +114,19 @@ export default function PrankModal({ visible, onClose }: PrankModalProps) {
           </View>
           
           <Text style={[styles.title, { color: theme.colors.text }]}>
-            Notification
+            {translations.notification}
           </Text>
-          
+
           <Text style={[styles.message, { color: theme.colors.textSecondary }]}>
-            This is a prank banking app for entertainment purposes only. No real transactions are being made.
+            {translations.prankMessage}
           </Text>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             style={[styles.button, { backgroundColor: theme.colors.primary }]}
             onPress={handleClose}
           >
             <Text style={[styles.buttonText, { color: theme.colors.surface }]}>
-              Got it
+              {translations.gotIt}
             </Text>
           </TouchableOpacity>
         </View>

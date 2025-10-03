@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Settings, Bell, Shield, HelpCircle as CircleHelp, LogOut, ChevronRight } from 'lucide-react-native';
@@ -9,12 +9,15 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { usePrank } from '../../contexts/PrankContext';
 import { formatCurrency } from '../../utils/currency';
+import { getMockUserData } from '../../data/mockData';
+import GlassCard from '../../components/GlassCard';
 
 export default function ProfileScreen() {
   const { theme } = useTheme();
-  const { translations } = useLanguage();
+  const { translations, currentLanguage } = useLanguage();
   const { logout } = useAuth();
   const { settings } = usePrank();
+  const mockUserData = getMockUserData(currentLanguage, settings.receiverName);
 
   const menuItems = [
     {
@@ -34,12 +37,12 @@ export default function ProfileScreen() {
     },
     {
       icon: <CircleHelp size={20} color={theme.colors.primary} />,
-      title: 'Help & Support',
+      title: translations.helpAndSupport,
       onPress: () => {},
     },
     {
       icon: <LogOut size={20} color={theme.colors.error} />,
-      title: 'Log Out',
+      title: translations.logOut,
       onPress: logout,
     },
   ];
@@ -87,61 +90,35 @@ export default function ProfileScreen() {
             {settings.profileLocation}
           </Text>
         </Animated.View>
-
-        <Animated.View entering={FadeInDown.delay(400)} style={styles.balanceCard}>
-          <View style={styles.balanceContainer}>
-            <Text style={[styles.balanceLabel, { color: theme.colors.surface }]}>
-              {translations.totalBalance}
-            </Text>
-            <Text style={[styles.balanceAmount, { color: theme.colors.surface }]}>
-              {formatCurrency(settings.profileBalance, settings.currency)}
-            </Text>
-          </View>
-        </Animated.View>
       </LinearGradient>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+        {/* Balance Section */}
+        <Animated.View entering={FadeInDown.delay(600)} style={styles.balanceSection}>
+          <GlassCard style={styles.balanceCard}>
+            <View style={styles.balanceContainer}>
+              <Text style={[styles.balanceLabel, { color: theme.colors.text }]}>
+                {translations.totalBalance}
+              </Text>
+              <Text style={[styles.balanceAmount, { color: theme.colors.text }]}>
+                {formatCurrency(settings.profileBalance, settings.currency)}
+              </Text>
+            </View>
+          </GlassCard>
+        </Animated.View>
+
         {/* Budget Overview */}
-        <Animated.View entering={FadeInDown.delay(600)}>
+        <Animated.View entering={FadeInDown.delay(800)}>
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-              Budget Overview
+              {translations.budgetOverview}
             </Text>
             <View style={styles.budgetContainer}>
-              {[
-                {
-                  name: 'Housing',
-                  budget: 8000,
-                  spent: 7200,
-                  percentage: 90,
-                  color: '#FF6B6B'
-                },
-                {
-                  name: 'Food',
-                  budget: 2000,
-                  spent: 1200,
-                  percentage: 60,
-                  color: '#4ECDC4'
-                },
-                {
-                  name: 'Transport',
-                  budget: 1000,
-                  spent: 650,
-                  percentage: 65,
-                  color: '#45B7D1'
-                },
-                {
-                  name: 'Entertainment',
-                  budget: 1500,
-                  spent: 400,
-                  percentage: 27,
-                  color: '#96CEB4'
-                }
-              ].map((category, index) => (
+              {mockUserData.budgetCategories.map((category, index) => (
                 <View key={index} style={[styles.budgetItem, { backgroundColor: theme.colors.surface }]}>
                   <View style={styles.budgetHeader}>
                     <Text style={[styles.budgetName, { color: theme.colors.text }]}>
-                      {category.name}
+                      {translations[category.nameKey as keyof typeof translations]}
                     </Text>
                     <Text style={[styles.budgetPercentage, { color: category.color }]}>
                       {category.percentage}%
@@ -170,7 +147,7 @@ export default function ProfileScreen() {
         {/* Menu Items */}
         <View style={styles.section}>
           <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-            Account
+            {translations.account}
           </Text>
           {menuItems.map(renderMenuItem)}
         </View>
@@ -184,10 +161,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    paddingTop: 60,
+    paddingTop: 0,
     paddingHorizontal: 20,
     paddingBottom: 16,
-    height: 88,
+    height: 48,
     justifyContent: 'flex-end',
   },
   profileInfo: {
@@ -211,9 +188,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.9,
   },
+  balanceSection: {
+    marginBottom: 20,
+  },
   balanceCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 16,
     padding: 20,
   },
   balanceContainer: {

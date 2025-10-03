@@ -5,13 +5,15 @@ import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
-import { mockUserData } from '../../data/mockData';
+import { usePrank } from '../../contexts/PrankContext';
+import { getMockUserData } from '../../data/mockData';
 import GlassCard from '../../components/GlassCard';
 import { CreditCard, Eye, EyeOff, Plus, Settings } from 'lucide-react-native';
 
 export default function CardsScreen() {
   const { theme } = useTheme();
-  const { translations } = useLanguage();
+  const { translations, currentLanguage } = useLanguage();
+  const { settings } = usePrank();
   const [selectedCard, setSelectedCard] = useState(0);
   const [showCardNumber, setShowCardNumber] = useState(false);
   const [cardSettings, setCardSettings] = useState({
@@ -19,6 +21,22 @@ export default function CardsScreen() {
     online: false,
     atm: true,
   });
+  const mockData = getMockUserData(currentLanguage, settings.receiverName);
+  const [cards, setCards] = useState(mockData.cards);
+
+  const addNewCard = () => {
+    const newCard = {
+      id: (cards.length + 1).toString(),
+      typeKey: 'virtualCard',
+      number: `**** **** **** ${(Math.floor(Math.random() * 9000) + 1000).toString()}`,
+      holder: settings.receiverName || 'Maria Smith',
+      expiry: `${(new Date().getMonth() + 1).toString().padStart(2, '0')}/${(new Date().getFullYear() + 2).toString().slice(-2)}`,
+      cvv: (Math.floor(Math.random() * 900) + 100).toString(),
+      isActive: true,
+      color: '#' + Math.floor(Math.random()*16777215).toString(16)
+    };
+    setCards([...cards, newCard]);
+  };
 
   const renderCard = (card: any, index: number) => (
     <Animated.View
@@ -39,7 +57,7 @@ export default function CardsScreen() {
           end={{ x: 1, y: 1 }}
         >
           <View style={styles.cardHeader}>
-            <Text style={styles.cardType}>{card.type}</Text>
+            <Text style={styles.cardType}>{translations[card.typeKey as keyof typeof translations]}</Text>
             <Text style={styles.visa}>VISA</Text>
           </View>
           
@@ -51,15 +69,15 @@ export default function CardsScreen() {
           
           <View style={styles.cardFooter}>
             <View>
-              <Text style={styles.cardLabel}>CARD HOLDER</Text>
+              <Text style={styles.cardLabel}>{translations.cardHolder}</Text>
               <Text style={styles.cardValue}>{card.holder}</Text>
             </View>
             <View>
-              <Text style={styles.cardLabel}>EXPIRES</Text>
+              <Text style={styles.cardLabel}>{translations.expires}</Text>
               <Text style={styles.cardValue}>{card.expiry}</Text>
             </View>
             <View>
-              <Text style={styles.cardLabel}>CVV</Text>
+              <Text style={styles.cardLabel}>{translations.cvv}</Text>
               <Text style={styles.cardValue}>
                 {showCardNumber ? card.cvv : '***'}
               </Text>
@@ -102,9 +120,6 @@ export default function CardsScreen() {
       <View style={[styles.header, { backgroundColor: theme.colors.surface }]}>
         <Text style={[styles.title, { color: theme.colors.text }]}>
           {translations.yourCards}
-        </Text>
-        <Text style={[styles.subtitle, { color: theme.colors.textSecondary }]}>
-          {mockUserData.cards.length} physical card, 1 virtual card
         </Text>
       </View>
 
@@ -154,13 +169,13 @@ export default function CardsScreen() {
 
         {/* Cards Display */}
         <View style={styles.cardsSection}>
-          {mockUserData.cards.map(renderCard)}
-          
+          {cards.map(renderCard)}
+
           <Animated.View entering={FadeInDown.delay(600)}>
-            <TouchableOpacity style={[styles.addCard, { backgroundColor: theme.colors.surface }]}>
+            <TouchableOpacity style={[styles.addCard, { backgroundColor: theme.colors.surface }]} onPress={addNewCard}>
               <Plus size={24} color={theme.colors.primary} />
               <Text style={[styles.addCardText, { color: theme.colors.primary }]}>
-                Add New Card
+                {translations.addNewCard}
               </Text>
             </TouchableOpacity>
           </Animated.View>
@@ -178,7 +193,7 @@ export default function CardsScreen() {
               <Eye size={20} color={theme.colors.text} />
             )}
             <Text style={[styles.visibilityText, { color: theme.colors.text }]}>
-              {showCardNumber ? 'Hide' : 'Show'} Card Details
+              {showCardNumber ? translations.hideCardDetails : translations.showCardDetails}
             </Text>
           </TouchableOpacity>
         </Animated.View>
@@ -220,10 +235,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    paddingTop: 60,
+    paddingTop: 0,
     paddingHorizontal: 20,
     paddingBottom: 16,
-    height: 88,
+    height: 48,
     justifyContent: 'flex-end',
     elevation: 2,
     shadowColor: '#000',

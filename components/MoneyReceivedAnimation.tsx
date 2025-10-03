@@ -12,6 +12,7 @@ import Animated, {
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowDownLeft } from 'lucide-react-native';
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import { usePrank } from '../contexts/PrankContext';
 import { formatCurrency } from '../utils/currency';
 
@@ -22,13 +23,14 @@ interface MoneyReceivedAnimationProps {
   onClose: () => void;
 }
 
-export default function MoneyReceivedAnimation({ 
-  amount, 
-  currency, 
-  receiver, 
-  onClose 
+export default function MoneyReceivedAnimation({
+  amount,
+  currency,
+  receiver,
+  onClose
 }: MoneyReceivedAnimationProps) {
   const { theme } = useTheme();
+  const { translations } = useLanguage();
   const { settings } = usePrank();
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
@@ -108,7 +110,7 @@ export default function MoneyReceivedAnimation({
             </Animated.View>
             
             <Text style={styles.title}>
-              Money Received!
+              {translations.moneyReceived}
             </Text>
             
             <Text style={styles.amount}>

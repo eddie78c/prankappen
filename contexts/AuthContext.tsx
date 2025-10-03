@@ -1,8 +1,9 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  authenticate: (pin: string) => boolean;
+  authenticate: (pin: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -14,16 +15,48 @@ const MOCK_PIN = '1234';
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const authenticate = (pin: string): boolean => {
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const storedTimestamp = await AsyncStorage.getItem('auth_timestamp');
+        if (storedTimestamp) {
+          const timestamp = parseInt(storedTimestamp);
+          const now = Date.now();
+          const tenMinutes = 10 * 60 * 1000;
+          if (now - timestamp < tenMinutes) {
+            setIsAuthenticated(true);
+          } else {
+            await AsyncStorage.removeItem('auth_timestamp');
+          }
+        }
+      } catch (error) {
+        console.log('Error checking auth status:', error);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
+
+  const authenticate = async (pin: string): Promise<boolean> => {
     if (pin === MOCK_PIN) {
       setIsAuthenticated(true);
+      try {
+        await AsyncStorage.setItem('auth_timestamp', Date.now().toString());
+      } catch (error) {
+        console.log('Error storing auth timestamp:', error);
+      }
       return true;
     }
     return false;
   };
 
-  const logout = () => {
+  const logout = async () => {
     setIsAuthenticated(false);
+    try {
+      await AsyncStorage.removeItem('auth_timestamp');
+    } catch (error) {
+      console.log('Error removing auth timestamp:', error);
+    }
   };
 
   return (

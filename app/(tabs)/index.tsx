@@ -37,7 +37,7 @@ export default function HomeScreen() {
   const [animationType, setAnimationType] = React.useState<'sent' | 'received'>('received');
   const [secretTaps, setSecretTaps] = React.useState(0);
   const [lastTapTime, setLastTapTime] = React.useState(0);
-  const [longPressTimer, setLongPressTimer] = React.useState<NodeJS.Timeout | null>(null);
+  const [longPressTimer, setLongPressTimer] = React.useState<ReturnType<typeof setTimeout> | null>(null);
   const [showPrankModal, setShowPrankModal] = React.useState(false);
   const [showSendModal, setShowSendModal] = React.useState(false);
   const [animationData, setAnimationData] = React.useState<{
@@ -67,7 +67,7 @@ export default function HomeScreen() {
   const handleSendMoney = () => {
     // Add new transaction
     const newTransaction = {
-      title: 'Request Money',
+      titleKey: 'request',
       description: `From ${settings.receiverName}`,
       amount: settings.defaultAmount,
       date: 'Today',
@@ -99,7 +99,7 @@ export default function HomeScreen() {
   const handleSendToPhone = (phoneNumber: string, amount: number) => {
     // Add new transaction
     const newTransaction = {
-      title: 'Sent Money',
+      titleKey: 'send',
       description: `To ${phoneNumber}`,
       amount: -amount,
       date: 'Today',
@@ -196,7 +196,7 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+    <View style={[styles.container, { backgroundColor: '#0160f8' }]}>
       {/* Fixed Header */}
       <View style={[styles.fixedHeader, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
         <View style={styles.headerTop}>
@@ -299,8 +299,8 @@ export default function HomeScreen() {
               </TouchableOpacity>
             </Animated.View>
             
-            {renderQuickAction(<PiggyBank size={24} color={theme.colors.primary} />, translations.loan, 2)}
-            {renderQuickAction(<CreditCard size={24} color={theme.colors.primary} />, translations.topup, 3)}
+            {renderQuickAction(<PiggyBank size={24} color={theme.colors.primary} />, translations.loan || 'Loan', 2)}
+            {renderQuickAction(<CreditCard size={24} color={theme.colors.primary} />, translations.topup || 'Top-up', 3)}
           </View>
 
           {/* Recent Transactions */}
@@ -317,12 +317,12 @@ export default function HomeScreen() {
             </View>
 
             <View style={styles.transactionsList}>
-              <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
+              <Text style={[styles.transactionGroup, { color: theme.colors.text }]}>
                 {translations.today}
               </Text>
               {transactions.filter(t => t.date === 'Today' || t.date === 'Aug 26').map(renderTransaction)}
               
-              <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
+              <Text style={[styles.transactionGroup, { color: theme.colors.text }]}>
                 {translations.yesterday}
               </Text>
               {transactions.filter(t => t.date === 'Aug 25').map(renderTransaction)}
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 88,
+    height: 48,
     paddingTop: 0,
     paddingHorizontal: 20,
     justifyContent: 'flex-end',
@@ -395,7 +395,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   balanceSection: {
-    marginTop: 88,
+    marginTop: 48,
     paddingTop: 20,
     paddingHorizontal: 20,
     paddingBottom: 20,
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
   },
   quickActions: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
     marginBottom: 30,
   },
   quickAction: {

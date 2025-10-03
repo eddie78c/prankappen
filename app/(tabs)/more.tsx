@@ -9,23 +9,27 @@ import { useLanguage } from '../../contexts/LanguageContext';
 import { usePrank } from '../../contexts/PrankContext';
 import { availableCurrencies, getCurrencySymbol } from '../../utils/currency';
 
-// Återanvändbar GridOption komponent
-const GridOption = ({ item, isSelected, onPress, theme, children }: any) => (
-  <Animated.View style={styles.compactGridItem}>
+// Compact List Option component for language/currency selection
+const CompactListOption = ({ item, isSelected, onPress, theme, children }: any) => (
+  <Animated.View entering={FadeInDown.springify()}>
     <TouchableOpacity
       style={[
-        styles.compactOption,
-        { 
+        styles.compactListItem,
+        {
           backgroundColor: theme.colors.surface,
-          borderColor: isSelected ? theme.colors.primary : theme.colors.border,
-          borderWidth: isSelected ? 2 : 1,
+          borderLeftColor: isSelected ? theme.colors.primary : 'transparent',
+          borderLeftWidth: isSelected ? 4 : 0,
         }
       ]}
       onPress={onPress}
     >
-      {children}
+      <View style={styles.listItemContent}>
+        {children}
+      </View>
       {isSelected && (
-        <View style={[styles.compactSelectedIndicator, { backgroundColor: theme.colors.primary }]} />
+        <View style={[styles.selectedCheck, { backgroundColor: theme.colors.primary }]}>
+          <Text style={[styles.checkMark, { color: theme.colors.surface }]}>✓</Text>
+        </View>
       )}
     </TouchableOpacity>
   </Animated.View>
@@ -39,7 +43,7 @@ const InputContainer = ({ label, value, onChangeText, placeholder, keyboardType,
     </Text>
     {children || (
       <TextInput
-        style={[styles.textInput, { 
+        style={[styles.textInput, {
           backgroundColor: theme.colors.background,
           color: theme.colors.text,
           borderColor: theme.colors.border,
@@ -54,11 +58,11 @@ const InputContainer = ({ label, value, onChangeText, placeholder, keyboardType,
   </View>
 );
 
-// Återanvändbar SelectionGrid komponent
-const SelectionGrid = ({ items, selectedValue, onSelect, theme, renderItem }: any) => (
-  <View style={styles.compactGrid}>
+// Compact List component for language/currency selection
+const CompactList = ({ items, selectedValue, onSelect, theme, renderItem }: any) => (
+  <View style={styles.compactList}>
     {items.map((item: any, index: number) => (
-      <GridOption
+      <CompactListOption
         key={item.code || item.file || index}
         item={item}
         isSelected={selectedValue === (item.code || item.file)}
@@ -66,7 +70,7 @@ const SelectionGrid = ({ items, selectedValue, onSelect, theme, renderItem }: an
         theme={theme}
       >
         {renderItem(item)}
-      </GridOption>
+      </CompactListOption>
     ))}
   </View>
 );
@@ -96,7 +100,7 @@ export default function MoreScreen() {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     
     if (status !== 'granted') {
-      Alert.alert('Permission needed', 'We need camera roll permissions to select a photo.');
+      Alert.alert(translations.permissionNeeded, translations.cameraPermission);
       return;
     }
     
@@ -123,7 +127,7 @@ export default function MoreScreen() {
         setTempLaughterSound(result.assets[0].uri);
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to pick custom sound');
+      Alert.alert(translations.error, translations.failedToPickSound);
     }
   };
 
@@ -134,7 +138,7 @@ export default function MoreScreen() {
       laughterSound: tempLaughterSound,
     });
     setShowPrankSettings(false);
-    Alert.alert('Settings Saved', 'Prank settings have been updated!');
+    Alert.alert(translations.settingsSaved, translations.prankSettingsUpdated);
   };
 
   const saveProfileSettings = () => {
@@ -144,7 +148,7 @@ export default function MoreScreen() {
       profileBalance: parseFloat(tempProfileBalance) || settings.profileBalance,
     });
     setShowProfileSettings(false);
-    Alert.alert('Profile Updated', 'Profile settings have been updated!');
+    Alert.alert(translations.profileUpdated, translations.profileUpdated);
   };
 
   const handleCurrencySelect = (currency: string) => {
@@ -154,7 +158,7 @@ export default function MoreScreen() {
 
   const settingsGroups = [
     {
-      title: 'Appearance',
+      title: translations.appearance,
       items: [
         {
           icon: <Ionicons name={isDark ? "moon" : "sunny"} size={24} color={theme.colors.primary} />,
@@ -172,7 +176,7 @@ export default function MoreScreen() {
         },
         {
           icon: <Ionicons name="cash" size={24} color={theme.colors.primary} />,
-          title: 'Currency',
+          title: translations.currency,
           type: 'selector',
           value: `${settings.currency} (${getCurrencySymbol(settings.currency)})`,
           onPress: () => setShowCurrencySelector(!showCurrencySelector),
@@ -180,24 +184,24 @@ export default function MoreScreen() {
       ],
     },
     {
-      title: 'Prank Settings',
+      title: translations.prankSettings,
       items: [
         {
           icon: <Ionicons name="settings" size={24} color={theme.colors.primary} />,
-          title: 'Configure Prank',
+          title: translations.configurePrank,
           type: 'navigation',
           onPress: () => setShowPrankSettings(!showPrankSettings),
         },
         {
           icon: <Ionicons name="person" size={24} color={theme.colors.primary} />,
-          title: 'Profile Settings',
+          title: translations.profileSettings,
           type: 'navigation',
           onPress: () => setShowProfileSettings(!showProfileSettings),
         },
       ],
     },
     {
-      title: 'Services',
+      title: translations.services,
       items: [
         {
           icon: <Ionicons name="shield-checkmark" size={24} color={theme.colors.primary} />,
@@ -214,17 +218,17 @@ export default function MoreScreen() {
       ],
     },
     {
-      title: 'Support',
+      title: translations.support,
       items: [
         {
           icon: <Ionicons name="help-circle" size={24} color={theme.colors.primary} />,
-          title: 'Help Center',
+          title: translations.helpCenter,
           type: 'navigation',
           onPress: () => {},
         },
         {
           icon: <Ionicons name="information-circle" size={24} color={theme.colors.primary} />,
-          title: 'About',
+          title: translations.about,
           type: 'navigation',
           onPress: () => {},
         },
@@ -277,7 +281,7 @@ export default function MoreScreen() {
       {/* Header */}
       <View style={[styles.header, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
         <Text style={[styles.title, { color: theme.colors.text }]}>
-          {translations.more}
+          {translations.settings}
         </Text>
       </View>
 
@@ -293,7 +297,7 @@ export default function MoreScreen() {
                 {translations.bankName}
               </Text>
               <Text style={[styles.bankVersion, { color: theme.colors.textSecondary }]}>
-                Version 2.1.0
+                {translations.version}
               </Text>
             </View>
           </View>
@@ -304,9 +308,9 @@ export default function MoreScreen() {
           <Animated.View entering={FadeInDown.springify()}>
             <View style={styles.section}>
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-                Select Language
+                {translations.selectLanguage}
               </Text>
-              <SelectionGrid
+              <CompactList
                 items={availableLanguages}
                 selectedValue={currentLanguage}
                 onSelect={(code: string) => {
@@ -332,9 +336,9 @@ export default function MoreScreen() {
           <Animated.View entering={FadeInDown.springify()}>
             <View style={styles.section}>
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-                Select Currency
+                {translations.selectCurrency}
               </Text>
-              <SelectionGrid
+              <CompactList
                 items={availableCurrencies}
                 selectedValue={settings.currency}
                 onSelect={handleCurrencySelect}
@@ -343,7 +347,7 @@ export default function MoreScreen() {
                   <>
                     <Text style={styles.compactSymbol}>{currency.symbol}</Text>
                     <Text style={[styles.compactCode, { color: theme.colors.text }]}>
-                      {currency.code}
+                      {currency.code} - {currency.name}
                     </Text>
                   </>
                 )}
@@ -357,57 +361,57 @@ export default function MoreScreen() {
           <Animated.View entering={FadeInDown.springify()}>
             <View style={styles.section}>
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-                {showProfileSettings ? 'Profile Configuration' : 'Prank Configuration'}
+                {showProfileSettings ? translations.profileConfiguration : translations.prankConfiguration}
               </Text>
               
               {showProfileSettings ? (
                 <>
                   <InputContainer
-                    label="Profile Name"
+                    label={translations.profileName}
                     value={tempProfileName}
                     onChangeText={setTempProfileName}
-                    placeholder="Enter profile name"
+                    placeholder={translations.enterProfileName}
                     theme={theme}
                   />
-                  
+
                   <InputContainer
-                    label="Location"
+                    label={translations.location}
                     value={tempProfileLocation}
                     onChangeText={setTempProfileLocation}
-                    placeholder="Enter location"
+                    placeholder={translations.enterLocation}
                     theme={theme}
                   />
-                  
+
                   <InputContainer
-                    label={`Total Balance (${settings.currency})`}
+                    label={`${translations.totalBalance} (${settings.currency})`}
                     value={tempProfileBalance}
                     onChangeText={setTempProfileBalance}
                     keyboardType="numeric"
-                    placeholder="Enter balance"
+                    placeholder={translations.enterBalance}
                     theme={theme}
                   />
                 </>
               ) : (
                 <>
                   <InputContainer
-                    label="Receiver Name"
+                    label={translations.receiverName}
                     value={tempReceiverName}
                     onChangeText={setTempReceiverName}
-                    placeholder="Enter receiver name"
+                    placeholder={translations.enterReceiverName}
                     theme={theme}
                   />
-                  
+
                   <InputContainer
-                    label={`Default Amount (${settings.currency})`}
+                    label={`${translations.defaultAmount} (${settings.currency})`}
                     value={tempAmount}
                     onChangeText={setTempAmount}
                     keyboardType="numeric"
-                    placeholder="Enter amount"
+                    placeholder={translations.enterAmount}
                     theme={theme}
                   />
-                  
+
                   <InputContainer
-                    label="Receiver Photo"
+                    label={translations.receiverPhoto}
                     theme={theme}
                   >
                     <TouchableOpacity onPress={pickImage} style={styles.photoButton}>
@@ -422,17 +426,19 @@ export default function MoreScreen() {
                   </InputContainer>
                   
                   <InputContainer
-                    label="Request Sound"
+                    label={translations.requestSound}
                     theme={theme}
                   >
-                    <TouchableOpacity 
-                      style={[styles.soundButton, { 
-                        backgroundColor: theme.colors.background,
-                        borderColor: theme.colors.border,
-                      }]}
+                    <TouchableOpacity
+                      style={[
+                        styles.soundButton, {
+                          backgroundColor: theme.colors.background,
+                          borderColor: theme.colors.border,
+                        }
+                      ]}
                       onPress={() => {
                         updateSettings({ requestSound: 'a-pay.mp3' });
-                        Alert.alert('Sound Selected', 'A-Pay sound will play on Request');
+                        Alert.alert(translations.soundSelected, translations.aPaySound);
                       }}
                     >
                       <Text style={[styles.soundButtonText, { color: theme.colors.text }]}>
@@ -440,9 +446,9 @@ export default function MoreScreen() {
                       </Text>
                     </TouchableOpacity>
                   </InputContainer>
-                  
+
                   <InputContainer
-                    label="Types of Laughter"
+                    label={translations.typesOfLaughter}
                     theme={theme}
                   >
                     <View style={styles.laughterGrid}>
@@ -495,10 +501,10 @@ export default function MoreScreen() {
                 onPress={showProfileSettings ? saveProfileSettings : savePrankSettings}
               >
                 <Text style={[styles.saveButtonText, { color: theme.colors.surface }]}>
-                  {showProfileSettings ? 'Save Profile' : 'Save Settings'}
+                  {showProfileSettings ? translations.saveProfile : translations.saveSettings}
                 </Text>
               </TouchableOpacity>
-              
+
               <TouchableOpacity
                 style={[styles.closeConfigButton, { backgroundColor: theme.colors.border }]}
                 onPress={() => {
@@ -507,7 +513,7 @@ export default function MoreScreen() {
                 }}
               >
                 <Text style={[styles.closeConfigText, { color: theme.colors.text }]}>
-                  Close
+                  {translations.close}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -535,10 +541,10 @@ export default function MoreScreen() {
             <Animated.View entering={FadeInDown.delay(1000)}>
               <View style={styles.footer}>
                 <Text style={[styles.footerText, { color: theme.colors.textSecondary }]}>
-                  © 2024 Premium Bank. All rights reserved.
+                  {translations.copyright}
                 </Text>
                 <Text style={[styles.footerText, { color: theme.colors.textSecondary }]}>
-                  Made with ❤️ for secure banking
+                  {translations.madeWith}
                 </Text>
               </View>
             </Animated.View>
@@ -558,7 +564,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 88,
+    height: 48,
     paddingTop: 0,
     paddingHorizontal: 20,
     justifyContent: 'flex-end',
@@ -578,7 +584,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    marginTop: 88,
+    marginTop: 48,
     paddingHorizontal: 20,
   },
   bankInfo: {
@@ -667,43 +673,50 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  compactGrid: {
+  compactList: {
+    maxHeight: 300, // Limit height to prevent excessive scrolling
+  },
+  compactListItem: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  compactGridItem: {
-    width: '48%',
-  },
-  compactOption: {
-    padding: 12,
-    borderRadius: 12,
     alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginBottom: 2,
+    borderRadius: 8,
     elevation: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.05,
     shadowRadius: 2,
-    minHeight: 60,
-    justifyContent: 'center',
-    borderWidth: 1,
+  },
+  listItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
   },
   compactSymbol: {
     fontSize: 20,
-    marginBottom: 4,
-  },
-  compactCode: {
-    fontSize: 12,
-    fontWeight: '600',
+    marginRight: 12,
+    width: 24,
     textAlign: 'center',
   },
-  compactSelectedIndicator: {
-    position: 'absolute',
-    top: 4,
-    right: 4,
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+  compactCode: {
+    fontSize: 14,
+    fontWeight: '600',
+    flex: 1,
+  },
+  selectedCheck: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  checkMark: {
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 
   footer: {

@@ -15,8 +15,8 @@ function AuthenticatedApp() {
   const [showSplash, setShowSplash] = useState(true);
   const [showPinError, setShowPinError] = useState(false);
 
-  const handlePinSubmit = (pin: string) => {
-    const success = authenticate(pin);
+  const handlePinSubmit = async (pin: string) => {
+    const success = await authenticate(pin);
     if (!success) {
       setShowPinError(true);
       setTimeout(() => setShowPinError(false), 2000);

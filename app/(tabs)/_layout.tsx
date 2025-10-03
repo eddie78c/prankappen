@@ -1,19 +1,25 @@
 import { Tabs } from 'expo-router';
 import { Platform } from 'react-native';
-import { Chrome as Home, History, CreditCard, User, Menu } from 'lucide-react-native';
+import { Wallet, History, CreditCard, User, Settings } from 'lucide-react-native';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 
 export default function TabLayout() {
   const { theme } = useTheme();
-  const { translations } = useLanguage();
+  const { translations, isRTL } = useLanguage();
 
   return (
     <Tabs
+      initialRouteName="index"
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.textSecondary,
+        tabBarShowLabel: false,
+        tabBarItemStyle: {
+          alignItems: 'center',
+          justifyContent: 'center',
+        },
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.border,
@@ -26,10 +32,7 @@ export default function TabLayout() {
           shadowOffset: { width: 0, height: -2 },
           shadowOpacity: 0.1,
           shadowRadius: 8,
-        },
-        tabBarLabelStyle: {
-          fontSize: 12,
-          fontWeight: '600',
+          flexDirection: isRTL ? 'row-reverse' : 'row',
         },
       }}>
       
@@ -38,7 +41,7 @@ export default function TabLayout() {
         options={{
           title: translations.home,
           tabBarIcon: ({ color, size }) => (
-            <Home size={24} color={color} />
+            <Wallet size={24} color={color} />
           ),
         }}
       />
@@ -76,9 +79,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="more"
         options={{
-          title: translations.more,
+          title: translations.settings,
           tabBarIcon: ({ color, size }) => (
-            <Menu size={24} color={color} />
+            <Settings size={24} color={color} />
           ),
         }}
       />

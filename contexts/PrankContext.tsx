@@ -1,8 +1,10 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Transaction {
   id?: string;
-  title: string;
+  titleKey?: string;
+  title?: string;
   description: string;
   amount: number;
   date: string;
@@ -46,7 +48,7 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<PrankSettings>({
     receiverName: 'John Doe',
     defaultAmount: 500,
-    currency: 'SEK',
+    currency: 'EUR', // Default to EUR for all languages
     profileName: 'Maria Smith',
     profileLocation: 'Stockholm, Sweden',
     profileBalance: 21500.00,
@@ -54,6 +56,23 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     profileTodaySpent: 600.90,
     customSounds: [],
   });
+
+  // Load settings from AsyncStorage on initialization
+  useEffect(() => {
+    const loadSettings = async () => {
+      try {
+        const savedSettings = await AsyncStorage.getItem('prank_settings');
+        if (savedSettings) {
+          const parsedSettings = JSON.parse(savedSettings);
+          setSettings(prev => ({ ...prev, ...parsedSettings }));
+        }
+      } catch (error) {
+        console.log('Error loading prank settings:', error);
+      }
+    };
+
+    loadSettings();
+  }, []);
 
   const [showPrankReveal, setShowPrankReveal] = useState(false);
   const [sendMode, setSendMode] = useState<'send' | 'receive'>('receive');
@@ -100,8 +119,15 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     }
   ]);
 
-  const updateSettings = (newSettings: Partial<PrankSettings>) => {
-    setSettings(prev => ({ ...prev, ...newSettings }));
+  const updateSettings = async (newSettings: Partial<PrankSettings>) => {
+    const updatedSettings = { ...settings, ...newSettings };
+    setSettings(updatedSettings);
+
+    try {
+      await AsyncStorage.setItem('prank_settings', JSON.stringify(updatedSettings));
+    } catch (error) {
+      console.log('Error saving prank settings:', error);
+    }
   };
 
   const addCustomSound = (soundUri: string) => {

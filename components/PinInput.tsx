@@ -56,30 +56,37 @@ export default function PinInput({ onSubmit, showError }: PinInputProps) {
 
   const renderKeypad = () => {
     const numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'];
-    
+
     return (
       <View style={styles.keypad}>
         {numbers.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={[
-              styles.keyButton,
-              { backgroundColor: theme.colors.surface },
-              item === '' && { backgroundColor: 'transparent' },
-            ]}
-            onPress={() => {
-              if (item === '⌫') {
-                handleBackspace();
-              } else if (item !== '') {
-                handleNumberPress(item);
-              }
-            }}
-            disabled={item === ''}
-          >
-            <Text style={[styles.keyText, { color: theme.colors.text }]}>
-              {item}
-            </Text>
-          </TouchableOpacity>
+          item === '' ? (
+            <View key={index} style={styles.keyButton} />
+          ) : (
+            <TouchableOpacity
+              key={index}
+              style={styles.keyButton}
+              onPress={() => {
+                if (item === '⌫') {
+                  handleBackspace();
+                } else {
+                  handleNumberPress(item);
+                }
+              }}
+            >
+              <LinearGradient
+                colors={['rgba(255, 255, 255, 0.2)', 'rgba(255, 255, 255, 0.05)']}
+                style={styles.keyButtonGradient}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+              >
+                <View style={styles.keyButtonHighlight} />
+                <Text style={[styles.keyText, { color: theme.colors.surface }]}>
+                  {item}
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          )
         ))}
       </View>
     );
@@ -203,11 +210,30 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 5,
-    elevation: 2,
+  },
+  keyButtonGradient: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 35,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.2)',
+    elevation: 8,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+  },
+  keyButtonHighlight: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 35,
+    borderTopLeftRadius: 35,
+    borderTopRightRadius: 35,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   keyText: {
     fontSize: 24,
