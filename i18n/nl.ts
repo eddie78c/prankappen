@@ -177,5 +177,6 @@ export const nl = {
   invalidPayoutAmount: "Voer een geldig uitbetalingsbedrag in",
   minimumPayoutAmount: "Het minimum uitbetalingsbedrag is $50. U heeft momenteel $47.00 beschikbaar.",
   insufficientEarnings: "U kunt niet meer aanvragen dan uw beschikbare inkomsten. U heeft $47.00 beschikbaar, maar heeft $[amount] aangevraagd.",
-  copied: "Gekopieerd!"
+  copied: "Gekopieerd!",
+  payoutHistory: "Uitbetalingsgeschiedenis"
 };

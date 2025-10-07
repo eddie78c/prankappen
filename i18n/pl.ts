@@ -162,5 +162,6 @@ export const pl = {
   invalidPayoutAmount: "Wprowadź prawidłową kwotę wypłaty",
   minimumPayoutAmount: "Minimalna kwota wypłaty wynosi 50 $. Obecnie masz 47,00 $ dostępne.",
   insufficientEarnings: "Nie możesz zażądać więcej niż Twoje dostępne zarobki. Masz 47,00 $ dostępne, ale zażądałeś $[amount].",
-  copied: "Skopiowane!"
+  copied: "Skopiowane!",
+  payoutHistory: "Historia wypłat"
 };

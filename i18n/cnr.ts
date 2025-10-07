@@ -163,5 +163,6 @@ export const cnr = {
   invalidPayoutAmount: "Unesite važeći iznos isplate",
   minimumPayoutAmount: "Minimalni iznos isplate je 50 $. Trenutno imate 47.00 $ dostupno.",
   insufficientEarnings: "Ne možete zatražiti više od svojih dostupnih zarada. Imate 47.00 $ dostupno, ali ste zatražili $[amount].",
-  copied: "Kopirano!"
+  copied: "Kopirano!",
+  payoutHistory: "Istorija isplata"
 };

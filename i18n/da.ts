@@ -184,5 +184,6 @@ export const da = {
   invalidPayoutAmount: "Indtast venligst et gyldigt udbetalingsbeløb",
   minimumPayoutAmount: "Minimum udbetalingsbeløb er $50. Du har i øjeblikket $47.00 tilgængelig.",
   insufficientEarnings: "Du kan ikke anmode om mere end dine tilgængelige indtægter. Du har $47.00 tilgængelig, men anmodede om $[amount].",
-  copied: "Kopieret!"
+  copied: "Kopieret!",
+  payoutHistory: "Udbetalingshistorik"
 };

@@ -332,7 +332,7 @@ export default function MoreScreen() {
         },
         {
           icon: <Ionicons name="people" size={24} color={theme.colors.primary} />,
-          title: 'Affiliate Program',
+          title: translations.affiliateProgram,
           type: 'navigation',
           onPress: () => setShowAffiliates(!showAffiliates),
         },
@@ -1221,7 +1221,7 @@ export default function MoreScreen() {
               {/* Payout History */}
               <View style={[styles.affiliateCard, { backgroundColor: theme.colors.surface }]}>
                 <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-                  Payout History
+                  {translations.payoutHistory}
                 </Text>
 
                 <View style={styles.historyList}>

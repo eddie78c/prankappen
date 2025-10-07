@@ -266,5 +266,6 @@ export const en = {
   invalidPayoutAmount: "Please enter a valid payout amount",
   minimumPayoutAmount: "The minimum payout amount is $50. You currently have $47.00 available.",
   insufficientEarnings: "You cannot request more than your available earnings. You have $47.00 available, but requested $[amount].",
-  copied: "Copied!"
+  copied: "Copied!",
+  payoutHistory: "Payout History"
 };

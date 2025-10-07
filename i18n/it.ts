@@ -173,5 +173,6 @@
   invalidPayoutAmount: "Inserisci un importo di pagamento valido",
   minimumPayoutAmount: "L'importo minimo di pagamento è $50. Attualmente hai $47.00 disponibile.",
   insufficientEarnings: "Non puoi richiedere più dei tuoi guadagni disponibili. Hai $47.00 disponibile, ma hai richiesto $[amount].",
-  copied: "Copiato!"
+  copied: "Copiato!",
+  payoutHistory: "Storico pagamenti"
 };

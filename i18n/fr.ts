@@ -178,5 +178,6 @@ export const fr = {
   invalidPayoutAmount: "Veuillez entrer un montant de paiement valide",
   minimumPayoutAmount: "Le montant minimum de paiement est de 50 $. Vous avez actuellement 47,00 $ disponible.",
   insufficientEarnings: "Vous ne pouvez pas demander plus que vos gains disponibles. Vous avez 47,00 $ disponible, mais avez demandé $[amount].",
-  copied: "Copié !"
+  copied: "Copié !",
+  payoutHistory: "Historique des paiements"
 };
