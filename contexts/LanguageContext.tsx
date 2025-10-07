@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { I18nManager } from 'react-native';
-import { LanguageCode, Translations } from '../i18n';
-import { loadLanguage } from '../i18n/lazyLoader';
+import { LanguageCode, Translations, languages } from '../i18n';
 
 interface LanguageContextType {
   currentLanguage: LanguageCode;
@@ -40,16 +39,15 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const loadTranslations = async () => {
+    const loadTranslations = () => {
       setIsLoading(true);
       try {
-        const loadedTranslations = await loadLanguage(currentLanguage);
+        const loadedTranslations = languages[currentLanguage];
         setTranslations(loadedTranslations);
       } catch (error) {
         console.error('Error loading translations:', error);
         // Fallback to English
-        const englishTranslations = await loadLanguage('en');
-        setTranslations(englishTranslations);
+        setTranslations(languages.en);
       } finally {
         setIsLoading(false);
       }

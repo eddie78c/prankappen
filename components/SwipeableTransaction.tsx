@@ -13,6 +13,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { usePrank } from '../contexts/PrankContext';
 import { formatCurrency } from '../utils/currency';
 import TransactionIcon from './TransactionIcon';
+import GlassCard from './GlassCard';
 
 interface SwipeableTransactionProps {
   transaction: any;
@@ -20,6 +21,11 @@ interface SwipeableTransactionProps {
   onDelete: () => void;
   canDelete: boolean;
 }
+
+const SWIPE_THRESHOLD = 100;
+const DELETE_POSITION = -300;
+const ANIMATION_DURATION = 200;
+const DELETE_OPACITY_THRESHOLD = -50;
 
 export default function SwipeableTransaction({
   transaction,
@@ -46,9 +52,9 @@ export default function SwipeableTransaction({
     .onEnd(() => {
       'worklet';
       if (canDelete) {
-        if (translateX.value < -100) {
+        if (translateX.value < -SWIPE_THRESHOLD) {
           // Delete the transaction
-          translateX.value = withTiming(-300, { duration: 200 });
+          translateX.value = withTiming(DELETE_POSITION, { duration: ANIMATION_DURATION });
           runOnJS(onDelete)();
         } else {
           // Snap back
@@ -65,9 +71,48 @@ export default function SwipeableTransaction({
 
   const deleteIndicatorStyle = useAnimatedStyle(() => {
     return {
-      opacity: translateX.value < -50 ? 1 : 0,
+      opacity: translateX.value < DELETE_OPACITY_THRESHOLD ? 1 : 0,
     };
   });
+
+  const TransactionContent = () => (
+    <TouchableOpacity
+      style={[styles.transactionItem, {
+        backgroundColor: theme.colors.surface,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 4,
+      }]}
+    >
+      <TransactionIcon
+        icon={transaction.icon}
+        color={transaction.color}
+        size={20}
+        theme={theme}
+      />
+      <View style={styles.transactionDetails}>
+        <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
+          {transaction.titleKey ? translations[transaction.titleKey as keyof typeof translations] : transaction.title}
+        </Text>
+        <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
+          {transaction.descriptionKey ? translations[transaction.descriptionKey as keyof typeof translations] : transaction.description}
+        </Text>
+      </View>
+      <View style={styles.transactionAmount}>
+        <Text style={[
+          styles.amountText,
+          { color: transaction.amount > 0 ? theme.colors.success : theme.colors.text }
+        ]}>
+          {formatCurrency(transaction.amount, settings.currency)}
+        </Text>
+        <Text style={[styles.transactionDate, { color: theme.colors.textSecondary }]}>
+          {transaction.date}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <Animated.View
@@ -77,67 +122,11 @@ export default function SwipeableTransaction({
       {Platform.OS !== 'web' ? (
         <GestureDetector gesture={panGesture}>
           <Animated.View style={[animatedStyle]}>
-            <TouchableOpacity
-              style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
-            >
-              <TransactionIcon
-                icon={transaction.icon}
-                color={transaction.color}
-                size={20}
-                theme={theme}
-              />
-              <View style={styles.transactionDetails}>
-                <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
-                  {transaction.titleKey ? translations[transaction.titleKey as keyof typeof translations] : transaction.title}
-                </Text>
-                <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
-                  {transaction.descriptionKey ? translations[transaction.descriptionKey as keyof typeof translations] : transaction.description}
-                </Text>
-              </View>
-              <View style={styles.transactionAmount}>
-                <Text style={[
-                  styles.amountText,
-                  { color: transaction.amount > 0 ? theme.colors.success : theme.colors.text }
-                ]}>
-                  {formatCurrency(transaction.amount, settings.currency)}
-                </Text>
-                <Text style={[styles.transactionDate, { color: theme.colors.textSecondary }]}>
-                  {transaction.date}
-                </Text>
-              </View>
-            </TouchableOpacity>
+            <TransactionContent />
           </Animated.View>
         </GestureDetector>
       ) : (
-        <TouchableOpacity 
-          style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}
-        >
-          <TransactionIcon
-            icon={transaction.icon}
-            color={transaction.color}
-            size={20}
-            theme={theme}
-          />
-          <View style={styles.transactionDetails}>
-            <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
-              {transaction.titleKey ? translations[transaction.titleKey as keyof typeof translations] : transaction.title}
-            </Text>
-            <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
-              {transaction.descriptionKey ? translations[transaction.descriptionKey as keyof typeof translations] : transaction.description}
-            </Text>
-          </View>
-          <View style={styles.transactionAmount}>
-            <Text style={[
-              styles.amountText,
-              { color: transaction.amount > 0 ? theme.colors.success : theme.colors.text }
-            ]}>
-              {formatCurrency(transaction.amount, settings.currency)}
-            </Text>
-            <Text style={[styles.transactionDate, { color: theme.colors.textSecondary }]}>
-              {transaction.date}
-            </Text>
-          </View>
-        </TouchableOpacity>
+        <TransactionContent />
       )}
       
       {canDelete && (
@@ -156,14 +145,14 @@ const styles = StyleSheet.create({
   transactionItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 12,
+    padding: 16,
     borderRadius: 12,
-    marginBottom: 2,
-    elevation: 1,
+    marginBottom: 4,
+    elevation: 2,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 4,
   },
   transactionDetails: {
     flex: 1,

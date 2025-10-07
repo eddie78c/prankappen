@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, Animated as RNAnimated } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, Animated as RNAnimated, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Send, Plus, CreditCard, PiggyBank, TrendingUp, Bell } from 'lucide-react-native';
-import Animated, { FadeInDown, FadeInRight, useSharedValue, useAnimatedStyle, withTiming, runOnJS } from 'react-native-reanimated';
-import { PanGestureHandler, State } from 'react-native-gesture-handler';
+import { Send, Plus, CreditCard, PiggyBank, Bell, X, Wind, DoorOpen } from 'lucide-react-native';
+import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import { Audio } from 'expo-av';
+import { useRouter } from 'expo-router';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { usePrank } from '../../contexts/PrankContext';
@@ -19,20 +19,22 @@ import SwipeableTransaction from '../../components/SwipeableTransaction';
 import { formatCurrency } from '../../utils/currency';
 
 export default function HomeScreen() {
-  const { theme } = useTheme();
-  const { translations } = useLanguage();
-  const { 
-    settings, 
-    updateSettings,
-    showPrankReveal, 
-    setShowPrankReveal, 
-    transactions, 
-    addTransaction,
-    deleteTransaction,
-    updateMonthlyIncome,
-    sendMode,
-    setSendMode 
-  } = usePrank();
+    const { theme } = useTheme();
+    const { translations } = useLanguage();
+    const router = useRouter();
+    const {
+      settings,
+      updateSettings,
+      showPrankReveal,
+      setShowPrankReveal,
+      transactions,
+      addTransaction,
+      deleteTransaction,
+      updateMonthlyIncome,
+      sendMode,
+      setSendMode
+    } = usePrank();
+    const { height } = Dimensions.get('window');
   const [showAnimation, setShowAnimation] = React.useState(false);
   const [animationType, setAnimationType] = React.useState<'sent' | 'received'>('received');
   const [secretTaps, setSecretTaps] = React.useState(0);
@@ -45,6 +47,7 @@ export default function HomeScreen() {
     currency: string;
     receiver: string;
   } | null>(null);
+  const [showMenu, setShowMenu] = React.useState(false);
 
   const playRequestSound = async () => {
     try {
@@ -64,6 +67,16 @@ export default function HomeScreen() {
     }
   };
 
+  const createAnimationData = (amount: number, receiver: string, type: 'sent' | 'received') => {
+    setAnimationData({
+      amount: Math.abs(amount),
+      currency: settings.currency,
+      receiver
+    });
+    setAnimationType(type);
+    setShowAnimation(true);
+  };
+
   const handleSendMoney = () => {
     // Add new transaction
     const newTransaction = {
@@ -75,25 +88,19 @@ export default function HomeScreen() {
       icon: 'arrow-down-left',
       color: '#10B981'
     };
-    
+
     addTransaction(newTransaction);
-    
+
     // Update balance and monthly income
-    updateSettings({ 
-      profileBalance: settings.profileBalance + settings.defaultAmount 
+    updateSettings({
+      profileBalance: settings.profileBalance + settings.defaultAmount
     });
     updateMonthlyIncome(settings.defaultAmount);
-    
+
     // Play sound
     playRequestSound();
-    
-    setAnimationData({
-      amount: settings.defaultAmount,
-      currency: settings.currency,
-      receiver: `From ${settings.receiverName}`
-    });
-    setAnimationType('received');
-    setShowAnimation(true);
+
+    createAnimationData(settings.defaultAmount, `From ${settings.receiverName}`, 'received');
   };
 
   const handleSendToPhone = (phoneNumber: string, amount: number) => {
@@ -107,22 +114,16 @@ export default function HomeScreen() {
       icon: 'arrow-up-right',
       color: '#FF6B6B'
     };
-    
+
     addTransaction(newTransaction);
-    
+
     // Update balance and today spent
-    updateSettings({ 
+    updateSettings({
       profileBalance: settings.profileBalance - amount,
       profileTodaySpent: settings.profileTodaySpent + amount
     });
-    
-    setAnimationData({
-      amount: amount,
-      currency: settings.currency,
-      receiver: phoneNumber
-    });
-    setAnimationType('sent');
-    setShowAnimation(true);
+
+    createAnimationData(amount, phoneNumber, 'sent');
   };
 
   const handleSecretTap = () => {
@@ -158,20 +159,22 @@ export default function HomeScreen() {
     }
   };
 
+  const getQuickActionPressHandler = (label: string) => () => {
+    if (label === translations.send && sendMode === 'send') {
+      handleSendMoney();
+    } else if (label === translations.send && sendMode === 'receive') {
+      setShowSendModal(true);
+    }
+  };
+
   const renderQuickAction = (icon: React.ReactNode, label: string, index: number) => (
     <Animated.View
       key={label}
       entering={FadeInRight.delay(index * 200).springify()}
     >
-      <TouchableOpacity 
+      <TouchableOpacity
         style={[styles.quickAction, { backgroundColor: theme.colors.surface }]}
-        onPress={() => {
-          if (label === translations.send && sendMode === 'send') {
-            handleSendMoney();
-          } else if (label === translations.send && sendMode === 'receive') {
-            setShowSendModal(true);
-          }
-        }}
+        onPress={getQuickActionPressHandler(label)}
       >
         <View style={[styles.actionIcon, { backgroundColor: theme.colors.primary + '20' }]}>
           {icon}
@@ -200,32 +203,30 @@ export default function HomeScreen() {
 
       {/* Fixed Header */}
       <View style={[styles.fixedHeader, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
-        <View style={styles.headerTop}>
-          <TouchableOpacity style={styles.menuButton}>
-            <Text style={[styles.menuLines, { color: theme.colors.text }]}>☰</Text>
-          </TouchableOpacity>
-          <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
-            {translations.dashboard}
-          </Text>
-          <TouchableOpacity onPress={() => setShowPrankModal(true)}>
-            <Bell size={24} color={theme.colors.text} />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity style={[styles.menuButton, { position: 'absolute', left: 20, top: 0, bottom: 0, justifyContent: 'center' }]} onPress={() => setShowMenu(true)}>
+          <Text style={[styles.menuLines, { color: theme.colors.text }]}>☰</Text>
+        </TouchableOpacity>
+        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
+          {translations.dashboard}
+        </Text>
+        <TouchableOpacity onPress={() => setShowPrankModal(true)} style={[styles.menuButton, { position: 'absolute', right: 20, top: 0, bottom: 0, justifyContent: 'center' }]}>
+          <Bell size={24} color={theme.colors.text} />
+        </TouchableOpacity>
       </View>
 
       {/* Secret spots for prank reveal */}
-      <TouchableOpacity 
+      <TouchableOpacity
         style={styles.secretSpot}
         onPressIn={handleLongPressStart}
         onPressOut={handleLongPressEnd}
       />
-      
-      <TouchableOpacity 
+
+      <TouchableOpacity
         style={styles.secretTapSpot}
         onPress={handleSecretTap}
       />
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 48 }} contentContainerStyle={{ flexGrow: 1 }}>
         {/* Balance Section */}
         <LinearGradient
           colors={theme.colors.gradient}
@@ -269,7 +270,7 @@ export default function HomeScreen() {
           </Animated.View>
         </LinearGradient>
 
-        <View style={styles.content}>
+        <View style={{ paddingHorizontal: 16, paddingVertical: 20 }}>
           {/* Quick Actions */}
           <View style={styles.quickActions}>
             <Animated.View entering={FadeInRight.delay(0 * 200).springify()}>
@@ -369,6 +370,33 @@ export default function HomeScreen() {
         onClose={() => setShowSendModal(false)}
         onSend={handleSendToPhone}
       />
+
+      {showMenu && (
+        <>
+          <TouchableOpacity style={styles.menuOverlay} onPress={() => setShowMenu(false)} />
+          <View style={[styles.menu, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: theme.colors.border, paddingVertical: 8, marginBottom: 8 }}>
+              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>Menu</Text>
+              <TouchableOpacity
+                onPress={() => setShowMenu(false)}
+                hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
+                accessibilityRole="button"
+                style={{ paddingHorizontal: 4, paddingVertical: 2 }}
+              >
+                <X size={18} color={theme.colors.text} />
+              </TouchableOpacity>
+            </View>
+            <TouchableOpacity style={[styles.menuItem, { flexDirection: 'row', alignItems: 'center', gap: 8, borderBottomColor: theme.colors.border }]} onPress={() => { setShowMenu(false); router.push('/farts'); }}>
+              <Wind size={18} color={theme.colors.text} />
+              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>Farts</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={[styles.menuItem, { flexDirection: 'row', alignItems: 'center', gap: 8, borderBottomColor: theme.colors.border }]} onPress={() => { setShowMenu(false); router.push('/knock'); }}>
+              <DoorOpen size={18} color={theme.colors.text} />
+              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>Knock</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </View>
   );
 }
@@ -383,12 +411,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 48,
+    marginTop: 0,
     paddingTop: 0,
-    paddingHorizontal: 20,
-    justifyContent: 'flex-end',
-    paddingBottom: 12,
-    zIndex: 100,
-    elevation: 2,
+    paddingHorizontal: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 0,
+    zIndex: 1000,
+    elevation: 6,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -396,16 +426,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   balanceSection: {
-    marginTop: 48,
+    marginTop: 0,
     paddingTop: 20,
-    paddingHorizontal: 20,
     paddingBottom: 20,
-  },
-  headerTop: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 40,
+    paddingHorizontal: 16,
   },
   menuButton: {
     width: 40,
@@ -418,10 +442,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headerTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 1,
+    lineHeight: 48,
   },
   subtitle: {
     fontSize: 14,
@@ -430,6 +455,7 @@ const styles = StyleSheet.create({
   },
   balanceCard: {
     marginTop: 10,
+    padding: 16,
   },
   balanceLabel: {
     fontSize: 14,
@@ -458,12 +484,14 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   content: {
-    padding: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 20,
   },
   quickActions: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginBottom: 30,
+    gap: 12,
   },
   quickAction: {
     alignItems: 'center',
@@ -490,7 +518,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -499,15 +527,18 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   seeAll: {
     fontSize: 14,
     fontWeight: '600',
   },
   transactionsList: {
-    gap: 8,
+    gap: 2,
   },
   transactionGroup: {
     fontSize: 12,
@@ -516,58 +547,6 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     textTransform: 'uppercase',
     letterSpacing: 1,
-  },
-  transactionItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-    borderRadius: 12,
-    marginBottom: 2,
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-  },
-  transactionDetails: {
-    flex: 1,
-    marginLeft: 12,
-  },
-  transactionTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-    marginBottom: 2,
-  },
-  transactionDescription: {
-    fontSize: 13,
-    opacity: 0.7,
-  },
-  transactionAmount: {
-    alignItems: 'flex-end',
-  },
-  amountText: {
-    fontSize: 15,
-    fontWeight: 'bold',
-  },
-  transactionDate: {
-    fontSize: 11,
-    marginTop: 2,
-  },
-  deleteIndicator: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    bottom: 0,
-    width: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderTopRightRadius: 12,
-    borderBottomRightRadius: 12,
-  },
-  deleteText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: '600',
   },
   secretSpot: {
     position: 'absolute',
@@ -584,5 +563,40 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     zIndex: 10,
+  },
+  menuOverlay: {
+    position: 'absolute',
+    top: 48,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 998,
+    elevation: 4,
+  },
+  menu: {
+    position: 'absolute',
+    top: 48,
+    left: 20,
+    width: 240,
+    minHeight: 120,
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    zIndex: 999,
+  },
+  menuItem: {
+    padding: 12,
+    borderBottomWidth: 1,
+    // borderBottomColor sätts via inline-styles för att använda theme.colors.border
+  },
+  menuItemText: {
+    fontSize: 16,
+    fontWeight: '500',
   },
 });

@@ -44,6 +44,7 @@ function AuthenticatedApp() {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="+not-found" />
+      {/* Removed farts and knock from the main stack */}
     </Stack>
   );
 }

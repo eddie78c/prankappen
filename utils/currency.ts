@@ -49,7 +49,6 @@ export const availableCurrencies = [
   // Other major currencies
   { code: 'AUD', symbol: 'A$', name: 'Australian Dollar' },
   { code: 'NZD', symbol: 'NZ$', name: 'New Zealand Dollar' },
-  { code: 'ZAR', symbol: 'R', name: 'South African Rand' },
 ];
 
 export function getCurrencySymbol(currencyCode: string): string {

@@ -1,39 +1,15 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, TextInput, Image, Alert } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, TextInput, Image, Alert, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
+import * as Haptics from 'expo-haptics';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { usePrank } from '../../contexts/PrankContext';
+import { useAuth } from '../../contexts/AuthContext';
 import { availableCurrencies, getCurrencySymbol } from '../../utils/currency';
-
-// Compact List Option component for language/currency selection
-const CompactListOption = ({ item, isSelected, onPress, theme, children }: any) => (
-  <Animated.View entering={FadeInDown.springify()}>
-    <TouchableOpacity
-      style={[
-        styles.compactListItem,
-        {
-          backgroundColor: theme.colors.surface,
-          borderLeftColor: isSelected ? theme.colors.primary : 'transparent',
-          borderLeftWidth: isSelected ? 4 : 0,
-        }
-      ]}
-      onPress={onPress}
-    >
-      <View style={styles.listItemContent}>
-        {children}
-      </View>
-      {isSelected && (
-        <View style={[styles.selectedCheck, { backgroundColor: theme.colors.primary }]}>
-          <Text style={[styles.checkMark, { color: theme.colors.surface }]}>✓</Text>
-        </View>
-      )}
-    </TouchableOpacity>
-  </Animated.View>
-);
 
 // Återanvändbar InputContainer komponent
 const InputContainer = ({ label, value, onChangeText, placeholder, keyboardType, theme, children }: any) => (
@@ -58,27 +34,148 @@ const InputContainer = ({ label, value, onChangeText, placeholder, keyboardType,
   </View>
 );
 
-// Compact List component for language/currency selection
-const CompactList = ({ items, selectedValue, onSelect, theme, renderItem }: any) => (
-  <View style={styles.compactList}>
-    {items.map((item: any, index: number) => (
-      <CompactListOption
-        key={item.code || item.file || index}
-        item={item}
-        isSelected={selectedValue === (item.code || item.file)}
-        onPress={() => onSelect(item.code || item.file || item)}
-        theme={theme}
+// Wheel Picker component for mobile-style selection
+const WheelPicker = ({ items, selectedValue, onSelect, theme, renderItem, onClose }: any) => {
+  const ITEM_HEIGHT = 60;
+  const VISIBLE_ITEMS = 5;
+  const CONTAINER_HEIGHT = ITEM_HEIGHT * VISIBLE_ITEMS;
+
+  const scrollViewRef = useRef<ScrollView>(null);
+  const [currentSelectedIndex, setCurrentSelectedIndex] = useState(0);
+
+  // Find current index based on selectedValue
+  const currentIndex = Math.max(0, items.findIndex((item: any) =>
+    (item.code || item.file || item) === selectedValue
+  ));
+
+  React.useEffect(() => {
+    // Update selected index when selectedValue changes
+    setCurrentSelectedIndex(currentIndex);
+
+    // Scroll to selected item when it changes
+    if (scrollViewRef.current && currentIndex >= 0) {
+      setTimeout(() => {
+        scrollViewRef.current?.scrollTo({
+          y: currentIndex * ITEM_HEIGHT,
+          animated: true,
+        });
+      }, 100);
+    }
+  }, [currentIndex, selectedValue]);
+
+  const handleMomentumScrollEnd = (event: any) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const selectedIndex = Math.round(offsetY / ITEM_HEIGHT);
+    const clampedIndex = Math.max(0, Math.min(items.length - 1, selectedIndex));
+
+    // Only update if the selection actually changed
+    if (clampedIndex !== currentSelectedIndex) {
+      setCurrentSelectedIndex(clampedIndex);
+
+      // Provide haptic feedback
+      if (Platform.OS !== 'web') {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
+
+      // Call onSelect with the selected item
+      const selectedItem = items[clampedIndex];
+      if (selectedItem) {
+        onSelect(selectedItem.code || selectedItem.file || selectedItem);
+      }
+    }
+
+    // Snap to the nearest item
+    scrollViewRef.current?.scrollTo({
+      y: clampedIndex * ITEM_HEIGHT,
+      animated: true,
+    });
+  };
+
+  const handleItemPress = (index: number) => {
+    setCurrentSelectedIndex(index);
+
+    // Provide haptic feedback
+    if (Platform.OS !== 'web') {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    }
+
+    // Scroll to the selected item
+    scrollViewRef.current?.scrollTo({
+      y: index * ITEM_HEIGHT,
+      animated: true,
+    });
+
+    // Call onSelect with the selected item
+    const selectedItem = items[index];
+    if (selectedItem) {
+      onSelect(selectedItem.code || selectedItem.file || selectedItem);
+    }
+  };
+
+  const renderPickerItem = ({ item, index }: any) => {
+    const isSelected = index === currentSelectedIndex;
+    const isNearCenter = Math.abs(index - currentSelectedIndex) <= 1;
+
+    return (
+      <TouchableOpacity
+        style={styles.pickerItem}
+        onPress={() => handleItemPress(index)}
+        activeOpacity={0.8}
       >
-        {renderItem(item)}
-      </CompactListOption>
-    ))}
-  </View>
-);
+        <View style={[
+          styles.pickerItemContent,
+          {
+            opacity: isSelected ? 1 : isNearCenter ? 0.7 : 0.4,
+            transform: [{ scale: isSelected ? 1.05 : 1 }]
+          }
+        ]}>
+          {renderItem(item, isSelected)}
+          {isSelected && (
+            <View style={styles.selectedHighlight}>
+              <View style={[styles.selectedIndicator, { backgroundColor: theme.colors.success }]}>
+                <Ionicons name="checkmark" size={16} color={theme.colors.surface} />
+              </View>
+            </View>
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <View style={styles.pickerContainer}>
+      <View style={[styles.pickerMask, { height: CONTAINER_HEIGHT }]}>
+        <ScrollView
+          ref={scrollViewRef}
+          showsVerticalScrollIndicator={false}
+          snapToInterval={ITEM_HEIGHT}
+          decelerationRate="fast"
+          onMomentumScrollEnd={handleMomentumScrollEnd}
+          contentContainerStyle={styles.pickerContent}
+        >
+          {items.map((item: any, index: number) => (
+            <View key={`${item.code || item.file || 'item'}-${index}`}>
+              {renderPickerItem({ item, index })}
+            </View>
+          ))}
+        </ScrollView>
+        {/* Selection indicator lines */}
+        <View style={[styles.selectionIndicator, { top: ITEM_HEIGHT * 2 }]}>
+          <View style={[styles.indicatorLine, { backgroundColor: theme.colors.primary }]} />
+        </View>
+        <View style={[styles.selectionIndicator, { bottom: ITEM_HEIGHT * 2 }]}>
+          <View style={[styles.indicatorLine, { backgroundColor: theme.colors.primary }]} />
+        </View>
+      </View>
+    </View>
+  );
+};
 
 export default function MoreScreen() {
   const { theme, toggleTheme, isDark } = useTheme();
   const { translations, currentLanguage, setLanguage, availableLanguages } = useLanguage();
   const { settings, updateSettings } = usePrank();
+  const { logout } = useAuth();
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const [showPrankSettings, setShowPrankSettings] = useState(false);
   const [showCurrencySelector, setShowCurrencySelector] = useState(false);
@@ -100,7 +197,7 @@ export default function MoreScreen() {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
     
     if (status !== 'granted') {
-      Alert.alert(translations.permissionNeeded, translations.cameraPermission);
+      Alert.alert(translations.permissionNeeded || 'Permission needed', translations.cameraPermission || 'Camera permission is required');
       return;
     }
     
@@ -127,7 +224,7 @@ export default function MoreScreen() {
         setTempLaughterSound(result.assets[0].uri);
       }
     } catch (error) {
-      Alert.alert(translations.error, translations.failedToPickSound);
+      Alert.alert(translations.error || 'Error', translations.failedToPickSound || 'Failed to pick sound');
     }
   };
 
@@ -138,7 +235,7 @@ export default function MoreScreen() {
       laughterSound: tempLaughterSound,
     });
     setShowPrankSettings(false);
-    Alert.alert(translations.settingsSaved, translations.prankSettingsUpdated);
+    Alert.alert(translations.settingsSaved || 'Settings saved', translations.prankSettingsUpdated || 'Prank settings updated');
   };
 
   const saveProfileSettings = () => {
@@ -148,12 +245,12 @@ export default function MoreScreen() {
       profileBalance: parseFloat(tempProfileBalance) || settings.profileBalance,
     });
     setShowProfileSettings(false);
-    Alert.alert(translations.profileUpdated, translations.profileUpdated);
+    Alert.alert(translations.profileUpdated || 'Profile updated', translations.profileUpdated || 'Profile updated');
   };
 
   const handleCurrencySelect = (currency: string) => {
     updateSettings({ currency });
-    setShowCurrencySelector(false);
+    // Don't close automatically - let user close with back button
   };
 
   const settingsGroups = [
@@ -269,19 +366,36 @@ export default function MoreScreen() {
             trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
             thumbColor={theme.colors.surface}
           />
-        ) : (
-          <Text style={[styles.chevron, { color: theme.colors.textSecondary }]}>›</Text>
-        )}
+        ) : null}
       </TouchableOpacity>
     </Animated.View>
   );
+
+  const showBackButton = showLanguageSelector || showCurrencySelector || showProfileSettings || showPrankSettings;
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
       <View style={[styles.header, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
+        {showBackButton && (
+          <TouchableOpacity
+            style={[styles.backButton, { position: 'absolute', left: 16, top: 0, bottom: 0, justifyContent: 'center' }]}
+            onPress={() => {
+              setShowLanguageSelector(false);
+              setShowCurrencySelector(false);
+              setShowProfileSettings(false);
+              setShowPrankSettings(false);
+            }}
+          >
+            <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
+          </TouchableOpacity>
+        )}
         <Text style={[styles.title, { color: theme.colors.text }]}>
-          {translations.settings}
+          {showLanguageSelector ? translations.selectLanguage :
+           showCurrencySelector ? translations.selectCurrency :
+           showProfileSettings ? translations.profileConfiguration :
+           showPrankSettings ? translations.prankConfiguration :
+           translations.settings}
         </Text>
       </View>
 
@@ -310,18 +424,27 @@ export default function MoreScreen() {
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                 {translations.selectLanguage}
               </Text>
-              <CompactList
+              <WheelPicker
                 items={availableLanguages}
                 selectedValue={currentLanguage}
                 onSelect={(code: string) => {
                   setLanguage(code as any);
-                  setShowLanguageSelector(false);
+                  // Don't close automatically - let user close with back button
                 }}
                 theme={theme}
-                renderItem={(language: any) => (
+                renderItem={(language: any, isSelected: boolean) => (
                   <>
-                    <Text style={styles.compactSymbol}>{language.flag}</Text>
-                    <Text style={[styles.compactCode, { color: theme.colors.text }]}>
+                    <Text style={[styles.pickerSymbol, { color: isSelected ? theme.colors.primary : theme.colors.textSecondary }]}>
+                      {language.flag}
+                    </Text>
+                    <Text style={[
+                      styles.pickerText,
+                      {
+                        color: isSelected ? theme.colors.primary : theme.colors.text,
+                        fontWeight: isSelected ? '700' : '600',
+                        fontSize: isSelected ? 20 : 18
+                      }
+                    ]}>
                       {language.name}
                     </Text>
                   </>
@@ -338,15 +461,24 @@ export default function MoreScreen() {
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                 {translations.selectCurrency}
               </Text>
-              <CompactList
+              <WheelPicker
                 items={availableCurrencies}
                 selectedValue={settings.currency}
                 onSelect={handleCurrencySelect}
                 theme={theme}
-                renderItem={(currency: any) => (
+                renderItem={(currency: any, isSelected: boolean) => (
                   <>
-                    <Text style={styles.compactSymbol}>{currency.symbol}</Text>
-                    <Text style={[styles.compactCode, { color: theme.colors.text }]}>
+                    <Text style={[styles.pickerSymbol, { color: isSelected ? theme.colors.primary : theme.colors.textSecondary }]}>
+                      {currency.symbol}
+                    </Text>
+                    <Text style={[
+                      styles.pickerText,
+                      {
+                        color: isSelected ? theme.colors.primary : theme.colors.text,
+                        fontWeight: isSelected ? '700' : '600',
+                        fontSize: isSelected ? 20 : 18
+                      }
+                    ]}>
                       {currency.code} - {currency.name}
                     </Text>
                   </>
@@ -438,7 +570,7 @@ export default function MoreScreen() {
                       ]}
                       onPress={() => {
                         updateSettings({ requestSound: 'a-pay.mp3' });
-                        Alert.alert(translations.soundSelected, translations.aPaySound);
+                        Alert.alert(translations.soundSelected || 'Sound selected', translations.aPaySound || 'A-Pay sound selected');
                       }}
                     >
                       <Text style={[styles.soundButtonText, { color: theme.colors.text }]}>
@@ -539,7 +671,19 @@ export default function MoreScreen() {
 
             {/* Footer */}
             <Animated.View entering={FadeInDown.delay(1000)}>
-              <View style={styles.footer}>
+              <View style={[styles.footer, { borderTopWidth: 1, borderTopColor: theme.colors.border }] }>
+                <TouchableOpacity
+                  style={[
+                    styles.logoutButton,
+                    { borderColor: 'rgba(239, 68, 68, 0.25)', backgroundColor: 'rgba(239, 68, 68, 0.10)' }
+                  ]}
+                  onPress={logout}
+                >
+                  <Ionicons name="log-out-outline" size={18} color="rgb(220, 38, 38)" style={styles.logoutIcon} />
+                  <Text style={[styles.logoutText, { color: theme.colors.text }]}>
+                    {translations.logout || 'Logga ut'}
+                  </Text>
+                </TouchableOpacity>
                 <Text style={[styles.footerText, { color: theme.colors.textSecondary }]}>
                   {translations.copyright}
                 </Text>
@@ -566,9 +710,10 @@ const styles = StyleSheet.create({
     right: 0,
     height: 48,
     paddingTop: 0,
-    paddingHorizontal: 20,
-    justifyContent: 'flex-end',
-    paddingBottom: 16,
+    paddingHorizontal: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 0,
     zIndex: 100,
     elevation: 2,
     shadowColor: '#000',
@@ -582,10 +727,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  backButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   content: {
     flex: 1,
     marginTop: 48,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   bankInfo: {
     flexDirection: 'row',
@@ -673,51 +824,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  compactList: {
-    maxHeight: 300, // Limit height to prevent excessive scrolling
-  },
-  compactListItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginBottom: 2,
-    borderRadius: 8,
-    elevation: 1,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-  },
-  listItemContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  compactSymbol: {
-    fontSize: 20,
-    marginRight: 12,
-    width: 24,
-    textAlign: 'center',
-  },
-  compactCode: {
-    fontSize: 14,
-    fontWeight: '600',
-    flex: 1,
-  },
-  selectedCheck: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 8,
-  },
-  checkMark: {
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
 
   footer: {
     alignItems: 'center',
@@ -727,6 +833,23 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     marginBottom: 4,
+  },
+  logoutButton: {
+    width: '100%',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingVertical: 12,
+    alignItems: 'center',
+    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  logoutText: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  logoutIcon: {
+    marginRight: 8,
   },
   compactInputContainer: {
     padding: 12,
@@ -830,5 +953,78 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
+  },
+
+  // Wheel Picker styles
+  pickerContainer: {
+    height: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 20,
+  },
+  pickerMask: {
+    overflow: 'hidden',
+    borderRadius: 16,
+    width: '100%',
+    maxWidth: 320,
+  },
+  pickerContent: {
+    paddingTop: 120, // Center the content
+    paddingBottom: 120,
+  },
+  pickerItem: {
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pickerItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    width: '100%',
+    position: 'relative',
+  },
+  selectedHighlight: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    paddingRight: 10,
+  },
+  selectedIndicator: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectionIndicator: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    height: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  indicatorLine: {
+    height: 2,
+    width: '80%',
+    borderRadius: 1,
+  },
+  pickerSymbol: {
+    fontSize: 24,
+    marginRight: 16,
+    width: 32,
+    textAlign: 'center',
+  },
+  pickerText: {
+    fontSize: 18,
+    fontWeight: '600',
+    flex: 1,
+    textAlign: 'center',
   },
 });

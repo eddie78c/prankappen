@@ -19,6 +19,7 @@ export default function TabLayout() {
         tabBarItemStyle: {
           alignItems: 'center',
           justifyContent: 'center',
+          flex: 1,
         },
         tabBarStyle: {
           backgroundColor: theme.colors.surface,

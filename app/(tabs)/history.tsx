@@ -83,21 +83,22 @@ export default function HistoryScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
       <View style={[styles.header, { backgroundColor: theme.colors.surface }]}>
-        <Text style={[styles.title, { color: theme.colors.text }]}>
-          {translations.history}
-        </Text>
-        
-        <View style={styles.headerActions}>
-          <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-            <Ionicons name="search" size={24} color={theme.colors.text} />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-            <Ionicons name="filter" size={24} color={theme.colors.text} />
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-            <Ionicons name="calendar" size={24} color={theme.colors.text} />
-          </TouchableOpacity>
-        </View>
+         <View style={styles.headerSide} />
+         <Text style={[styles.title, { color: theme.colors.text }]}>
+           {translations.history}
+         </Text>
+         
+         <View style={styles.headerActions}>
+           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
+             <Ionicons name="search" size={24} color={theme.colors.text} />
+           </TouchableOpacity>
+           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
+             <Ionicons name="filter" size={24} color={theme.colors.text} />
+           </TouchableOpacity>
+           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
+             <Ionicons name="calendar" size={24} color={theme.colors.text} />
+           </TouchableOpacity>
+         </View>
       </View>
 
       {/* Filters */}
@@ -166,8 +167,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingTop: 0,
-    paddingHorizontal: 20,
-    paddingBottom: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 0,
     height: 48,
     elevation: 2,
     shadowColor: '#000',
@@ -176,7 +177,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
     flex: 1,
@@ -192,9 +193,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  headerSide: {
+    width: 136,
+  },
   filtersContainer: {
     paddingVertical: 16,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   filterButton: {
     paddingHorizontal: 20,
@@ -213,7 +217,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   transactionsList: {
     paddingBottom: 20,

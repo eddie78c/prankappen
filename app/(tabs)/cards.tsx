@@ -247,10 +247,11 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingTop: 0,
-    paddingHorizontal: 20,
-    paddingBottom: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 0,
     height: 48,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -258,10 +259,10 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 4,
+    marginBottom: 0,
   },
   subtitle: {
     fontSize: 14,
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
   },
   cardTabs: {
     flexDirection: 'row',
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingVertical: 16,
     gap: 12,
   },
@@ -290,7 +291,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   cardsSection: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
   },
   cardContainer: {
     marginBottom: 16,
@@ -365,7 +366,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   visibilitySection: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingVertical: 16,
   },
   visibilityButton: {
@@ -386,7 +387,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   settingsSection: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
     paddingBottom: 20,
   },
   sectionTitle: {
