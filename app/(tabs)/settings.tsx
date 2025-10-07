@@ -446,7 +446,7 @@ export default function MoreScreen() {
           {showLanguageSelector ? translations.selectLanguage :
            showCurrencySelector ? translations.selectCurrency :
            showPrankSettings ? translations.prankConfiguration :
-           showAffiliates ? 'Affiliate Program' :
+           showAffiliates ? translations.affiliateProgram :
            showHelpCenter ? translations.helpCenter :
            showAbout ? translations.about :
            showSecurity ? translations.security :
@@ -1068,13 +1068,13 @@ export default function MoreScreen() {
               {/* Earnings Overview */}
               <View style={[styles.affiliateCard, { backgroundColor: theme.colors.surface }]}>
                 <Text style={[styles.earningsTitle, { color: theme.colors.text, textAlign: 'center' }]}>
-                  Total Earned
+                  {translations.totalEarned}
                 </Text>
                 <Text style={[styles.earningsAmount, { color: theme.colors.primary, textAlign: 'center' }]}>
                   $47.00
                 </Text>
                 <Text style={[styles.earningsSubText, { color: theme.colors.textSecondary }]}>
-                  Earn $1 per referral when someone purchases the app
+                  {translations.earnPerReferral}
                 </Text>
               </View>
 
@@ -1083,13 +1083,13 @@ export default function MoreScreen() {
                 <View style={[styles.statCard, { backgroundColor: theme.colors.surface }]}>
                   <Text style={[styles.statCardValue, { color: theme.colors.primary }]}>47</Text>
                   <Text style={[styles.statCardLabel, { color: theme.colors.textSecondary }]}>
-                    Total Referrals
+                    {translations.totalReferrals}
                   </Text>
                 </View>
                 <View style={[styles.statCard, { backgroundColor: theme.colors.surface }]}>
                   <Text style={[styles.statCardValue, { color: theme.colors.success }]}>$5.00</Text>
                   <Text style={[styles.statCardLabel, { color: theme.colors.textSecondary }]}>
-                    Pending Payouts
+                    {translations.pendingPayouts}
                   </Text>
                 </View>
               </View>
@@ -1097,13 +1097,13 @@ export default function MoreScreen() {
               {/* Referral Link */}
               <View style={[styles.affiliateCard, { backgroundColor: theme.colors.surface }]}>
                 <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-                  Referral Link
+                  {translations.referralLink}
                 </Text>
                 <TouchableOpacity
                   style={[styles.linkContainer, { backgroundColor: theme.colors.background }]}
                   onPress={() => {
                     // In a real app, you'd use Clipboard.setStringAsync(link)
-                    Alert.alert('Copied!', 'Referral link copied to clipboard');
+                    Alert.alert(translations.copied || 'Copied!', 'Referral link copied to clipboard');
                     setShowCopiedMessage(true);
                     setTimeout(() => setShowCopiedMessage(false), 2000);
                   }}
@@ -1128,15 +1128,15 @@ export default function MoreScreen() {
               {/* Payout Request */}
               <View style={[styles.affiliateCard, { backgroundColor: theme.colors.surface }]}>
                 <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-                  Request Payout
+                  {translations.requestPayout}
                 </Text>
                 <Text style={[styles.sectionSubtitle, { color: theme.colors.textSecondary }]}>
-                  Minimum payout: $50
+                  {translations.minimumPayout}
                 </Text>
 
                 <View style={styles.inputContainer}>
                   <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                    PayPal Email
+                    {translations.paypalEmail}
                   </Text>
                   <TextInput
                     style={[styles.textInput, {
@@ -1144,7 +1144,7 @@ export default function MoreScreen() {
                       color: theme.colors.text,
                       borderColor: theme.colors.border,
                     }]}
-                    placeholder="Enter PayPal email"
+                    placeholder={translations.enterPaypalEmail}
                     placeholderTextColor={theme.colors.textSecondary}
                     keyboardType="email-address"
                     autoCapitalize="none"
@@ -1155,7 +1155,7 @@ export default function MoreScreen() {
 
                 <View style={styles.inputContainer}>
                   <Text style={[styles.inputLabel, { color: theme.colors.text }]}>
-                    Payout Amount
+                    {translations.payoutAmount}
                   </Text>
                   <TextInput
                     style={[styles.textInput, {
@@ -1163,7 +1163,7 @@ export default function MoreScreen() {
                       color: theme.colors.text,
                       borderColor: theme.colors.border,
                     }]}
-                    placeholder="Enter amount"
+                    placeholder={translations.enterPayoutAmount}
                     placeholderTextColor={theme.colors.textSecondary}
                     keyboardType="numeric"
                     value={payoutAmount}
@@ -1186,26 +1186,26 @@ export default function MoreScreen() {
                     setPayoutError(''); // Clear previous error
 
                     if (!payoutEmail.trim()) {
-                      setPayoutError('Please enter your PayPal email address');
+                      setPayoutError(translations.invalidPaypalEmail || 'Please enter your PayPal email address');
                       return;
                     }
 
                     if (isNaN(amount) || amount <= 0) {
-                      setPayoutError('Please enter a valid payout amount');
+                      setPayoutError(translations.invalidPayoutAmount || 'Please enter a valid payout amount');
                       return;
                     }
 
                     if (amount < 50) {
-                      setPayoutError('The minimum payout amount is $50. You currently have $47.00 available.');
+                      setPayoutError(translations.minimumPayoutAmount || 'The minimum payout amount is $50. You currently have $47.00 available.');
                       return;
                     }
 
                     if (amount > available) {
-                      setPayoutError(`You cannot request more than your available earnings. You have $47.00 available, but requested $${amount}.`);
+                      setPayoutError((translations.insufficientEarnings || 'You cannot request more than your available earnings. You have $47.00 available, but requested $[amount].').replace('$[amount]', `$${amount}`));
                       return;
                     }
 
-                    Alert.alert('Success', 'Payout requested successfully');
+                    Alert.alert('Success', translations.payoutRequested || 'Payout requested successfully');
                     setPayoutEmail('');
                     setPayoutAmount('');
                     setPayoutError('');
@@ -1213,7 +1213,7 @@ export default function MoreScreen() {
                 >
                   <Ionicons name="card" size={18} color={theme.colors.surface} style={styles.buttonIcon} />
                   <Text style={[styles.payoutButtonText, { color: theme.colors.surface }]}>
-                    Request Payout
+                    {translations.requestPayout}
                   </Text>
                 </TouchableOpacity>
               </View>
