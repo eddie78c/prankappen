@@ -180,4 +180,24 @@ export const de = {
   chain8: "Rossmann Berlin",
   chain9: "Saturn Berlin",
   chain10: "Tchibo Berlin",
+
+  // Affiliate Program
+  affiliateProgram: "Affiliate-Programm",
+  totalEarned: "Insgesamt verdient",
+  earnPerReferral: "Verdienen Sie 1 $ pro Empfehlung, wenn jemand die App kauft",
+  totalReferrals: "Gesamt-Empfehlungen",
+  pendingPayouts: "Ausstehende Auszahlungen",
+  referralLink: "Empfehlungslink",
+  requestPayout: "Auszahlung anfordern",
+  minimumPayout: "Mindestauszahlung: 50 $",
+  paypalEmail: "PayPal-E-Mail",
+  enterPaypalEmail: "PayPal-E-Mail eingeben",
+  payoutAmount: "Auszahlungsbetrag",
+  enterPayoutAmount: "Betrag eingeben",
+  payoutRequested: "Auszahlung erfolgreich angefordert",
+  invalidPaypalEmail: "Bitte geben Sie Ihre PayPal-E-Mail-Adresse ein",
+  invalidPayoutAmount: "Bitte geben Sie einen gültigen Auszahlungsbetrag ein",
+  minimumPayoutAmount: "Der Mindestauszahlungsbetrag beträgt 50 $. Sie haben derzeit 47,00 $ verfügbar.",
+  insufficientEarnings: "Sie können nicht mehr anfordern als Ihre verfügbaren Einnahmen. Sie haben 47,00 $ verfügbar, aber $[amount] angefordert.",
+  copied: "Kopiert!"
 };
