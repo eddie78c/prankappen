@@ -164,5 +164,25 @@ export const da = {
   chain7: "Lagkagehuset København",
   chain8: "Lidl København",
   chain9: "Illum København",
-  chain10: "Baresso København"
+  chain10: "Baresso København",
+
+  // Affiliate Program
+  affiliateProgram: "Affiliate program",
+  totalEarned: "Samlet optjent",
+  earnPerReferral: "Tjen $1 per henvisning når nogen køber appen",
+  totalReferrals: "Samlede henvisninger",
+  pendingPayouts: "Afventende udbetalinger",
+  referralLink: "Henvisningslink",
+  requestPayout: "Anmod om udbetaling",
+  minimumPayout: "Minimum udbetaling: $50",
+  paypalEmail: "PayPal email",
+  enterPaypalEmail: "Indtast PayPal email",
+  payoutAmount: "Udbetalingsbeløb",
+  enterPayoutAmount: "Indtast beløb",
+  payoutRequested: "Udbetaling anmodet succesfuldt",
+  invalidPaypalEmail: "Indtast venligst din PayPal email adresse",
+  invalidPayoutAmount: "Indtast venligst et gyldigt udbetalingsbeløb",
+  minimumPayoutAmount: "Minimum udbetalingsbeløb er $50. Du har i øjeblikket $47.00 tilgængelig.",
+  insufficientEarnings: "Du kan ikke anmode om mere end dine tilgængelige indtægter. Du har $47.00 tilgængelig, men anmodede om $[amount].",
+  copied: "Kopieret!"
 };

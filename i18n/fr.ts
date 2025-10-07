@@ -158,5 +158,25 @@ export const fr = {
   chain7: "Monoprix Paris",
   chain8: "Darty Paris",
   chain9: "Boulanger Paris",
-  chain10: "Sephora Paris"
+  chain10: "Sephora Paris",
+
+  // Affiliate Program
+  affiliateProgram: "Programme d'affiliation",
+  totalEarned: "Total gagné",
+  earnPerReferral: "Gagnez 1 $ par parrainage lorsqu'une personne achète l'application",
+  totalReferrals: "Total des parrainages",
+  pendingPayouts: "Paiements en attente",
+  referralLink: "Lien de parrainage",
+  requestPayout: "Demander un paiement",
+  minimumPayout: "Paiement minimum : 50 $",
+  paypalEmail: "Email PayPal",
+  enterPaypalEmail: "Entrez l'email PayPal",
+  payoutAmount: "Montant du paiement",
+  enterPayoutAmount: "Entrez le montant",
+  payoutRequested: "Paiement demandé avec succès",
+  invalidPaypalEmail: "Veuillez entrer votre adresse email PayPal",
+  invalidPayoutAmount: "Veuillez entrer un montant de paiement valide",
+  minimumPayoutAmount: "Le montant minimum de paiement est de 50 $. Vous avez actuellement 47,00 $ disponible.",
+  insufficientEarnings: "Vous ne pouvez pas demander plus que vos gains disponibles. Vous avez 47,00 $ disponible, mais avez demandé $[amount].",
+  copied: "Copié !"
 };

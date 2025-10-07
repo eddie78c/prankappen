@@ -246,5 +246,25 @@ export const en = {
   chain7: "Macy's NYC",
   chain8: "Best Buy NYC",
   chain9: "Home Depot NYC",
-  chain10: "Lowe's NYC"
+  chain10: "Lowe's NYC",
+
+  // Affiliate Program
+  affiliateProgram: "Affiliate Program",
+  totalEarned: "Total Earned",
+  earnPerReferral: "Earn $1 per referral when someone purchases the app",
+  totalReferrals: "Total Referrals",
+  pendingPayouts: "Pending Payouts",
+  referralLink: "Referral Link",
+  requestPayout: "Request Payout",
+  minimumPayout: "Minimum payout: $50",
+  paypalEmail: "PayPal Email",
+  enterPaypalEmail: "Enter PayPal email",
+  payoutAmount: "Payout Amount",
+  enterPayoutAmount: "Enter amount",
+  payoutRequested: "Payout requested successfully",
+  invalidPaypalEmail: "Please enter your PayPal email address",
+  invalidPayoutAmount: "Please enter a valid payout amount",
+  minimumPayoutAmount: "The minimum payout amount is $50. You currently have $47.00 available.",
+  insufficientEarnings: "You cannot request more than your available earnings. You have $47.00 available, but requested $[amount].",
+  copied: "Copied!"
 };

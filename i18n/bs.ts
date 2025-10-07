@@ -158,5 +158,25 @@ export const bs = {
   chain7: "Fresh Market",
   chain8: "Pekara",
   chain9: "AQUA Club",
-  chain10: "Bosnalijek"
+  chain10: "Bosnalijek",
+
+  // Affiliate Program
+  affiliateProgram: "Affiliate program",
+  totalEarned: "Ukupno zaradjeno",
+  earnPerReferral: "Zaradite 1 $ po preporuci kada neko kupi aplikaciju",
+  totalReferrals: "Ukupno preporuka",
+  pendingPayouts: "Isplate na čekanju",
+  referralLink: "Link za preporuku",
+  requestPayout: "Zatraži isplatu",
+  minimumPayout: "Minimalna isplata: 50 $",
+  paypalEmail: "PayPal email",
+  enterPaypalEmail: "Unesite PayPal email",
+  payoutAmount: "Iznos isplate",
+  enterPayoutAmount: "Unesite iznos",
+  payoutRequested: "Isplata uspješno zatražena",
+  invalidPaypalEmail: "Unesite svoju PayPal email adresu",
+  invalidPayoutAmount: "Unesite važeći iznos isplate",
+  minimumPayoutAmount: "Minimalni iznos isplate je 50 $. Trenutno imate 47.00 $ dostupno.",
+  insufficientEarnings: "Ne možete zatražiti više od svojih dostupnih zarada. Imate 47.00 $ dostupno, ali ste zatražili $[amount].",
+  copied: "Kopirano!"
 };

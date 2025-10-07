@@ -154,4 +154,24 @@
   chain8: "Segafredo Roma",
   chain9: "Lavazza Roma",
   chain10: "Illy Milano",
+
+  // Affiliate Program
+  affiliateProgram: "Programma di affiliazione",
+  totalEarned: "Totale guadagnato",
+  earnPerReferral: "Guadagna $1 per referral quando qualcuno acquista l'app",
+  totalReferrals: "Totale referral",
+  pendingPayouts: "Pagamenti in sospeso",
+  referralLink: "Link di referral",
+  requestPayout: "Richiedi pagamento",
+  minimumPayout: "Pagamento minimo: $50",
+  paypalEmail: "Email PayPal",
+  enterPaypalEmail: "Inserisci email PayPal",
+  payoutAmount: "Importo pagamento",
+  enterPayoutAmount: "Inserisci importo",
+  payoutRequested: "Pagamento richiesto con successo",
+  invalidPaypalEmail: "Inserisci il tuo indirizzo email PayPal",
+  invalidPayoutAmount: "Inserisci un importo di pagamento valido",
+  minimumPayoutAmount: "L'importo minimo di pagamento è $50. Attualmente hai $47.00 disponibile.",
+  insufficientEarnings: "Non puoi richiedere più dei tuoi guadagni disponibili. Hai $47.00 disponibile, ma hai richiesto $[amount].",
+  copied: "Copiato!"
 };

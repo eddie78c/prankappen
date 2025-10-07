@@ -164,5 +164,25 @@
   chain7: "إكسترا دبي",
   chain8: "سنتربوينت دبي",
   chain9: "كوستا كوفي دبي",
-  chain10: "تيم هورتنز دبي"
+  chain10: "تيم هورتنز دبي",
+
+  // Affiliate Program
+  affiliateProgram: "برنامج الشركاء",
+  totalEarned: "إجمالي المكتسب",
+  earnPerReferral: "اكسب 1 دولار لكل إحالة عندما يشتري شخص التطبيق",
+  totalReferrals: "إجمالي الإحالات",
+  pendingPayouts: "المدفوعات المعلقة",
+  referralLink: "رابط الإحالة",
+  requestPayout: "طلب دفعة",
+  minimumPayout: "الحد الأدنى للدفعة: 50 دولار",
+  paypalEmail: "البريد الإلكتروني لـ PayPal",
+  enterPaypalEmail: "أدخل البريد الإلكتروني لـ PayPal",
+  payoutAmount: "مبلغ الدفعة",
+  enterPayoutAmount: "أدخل المبلغ",
+  payoutRequested: "تم طلب الدفعة بنجاح",
+  invalidPaypalEmail: "يرجى إدخال عنوان بريدك الإلكتروني PayPal",
+  invalidPayoutAmount: "يرجى إدخال مبلغ دفعة صالح",
+  minimumPayoutAmount: "الحد الأدنى لمبلغ الدفعة هو 50 دولار. لديك حالياً 47.00 دولار متاح.",
+  insufficientEarnings: "لا يمكنك طلب أكثر من أرباحك المتاحة. لديك 47.00 دولار متاح، لكنك طلبت $[amount].",
+  copied: "تم النسخ!"
 };

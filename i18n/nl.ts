@@ -157,5 +157,25 @@ export const nl = {
   chain7: "Zara Amsterdam",
   chain8: "Starbucks Amsterdam",
   chain9: "McDonald's Amsterdam",
-  chain10: "AH to Go Amsterdam"
+  chain10: "AH to Go Amsterdam",
+
+  // Affiliate Program
+  affiliateProgram: "Affiliate programma",
+  totalEarned: "Totaal verdiend",
+  earnPerReferral: "Verdien $1 per verwijzing wanneer iemand de app koopt",
+  totalReferrals: "Totaal verwijzingen",
+  pendingPayouts: "In afwachting van uitbetalingen",
+  referralLink: "Verwijzingslink",
+  requestPayout: "Uitbetaling aanvragen",
+  minimumPayout: "Minimum uitbetaling: $50",
+  paypalEmail: "PayPal e-mail",
+  enterPaypalEmail: "Voer PayPal e-mail in",
+  payoutAmount: "Uitbetalingsbedrag",
+  enterPayoutAmount: "Voer bedrag in",
+  payoutRequested: "Uitbetaling succesvol aangevraagd",
+  invalidPaypalEmail: "Voer uw PayPal e-mailadres in",
+  invalidPayoutAmount: "Voer een geldig uitbetalingsbedrag in",
+  minimumPayoutAmount: "Het minimum uitbetalingsbedrag is $50. U heeft momenteel $47.00 beschikbaar.",
+  insufficientEarnings: "U kunt niet meer aanvragen dan uw beschikbare inkomsten. U heeft $47.00 beschikbaar, maar heeft $[amount] aangevraagd.",
+  copied: "Gekopieerd!"
 };

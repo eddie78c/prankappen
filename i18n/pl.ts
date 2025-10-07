@@ -142,5 +142,25 @@ export const pl = {
   chain7: "Empik Warszawa",
   chain8: "RTV Euro AGD Warszawa",
   chain9: "Costa Coffee Warszawa",
-  chain10: "Green Caffè Nero Warszawa"
+  chain10: "Green Caffè Nero Warszawa",
+
+  // Affiliate Program
+  affiliateProgram: "Program partnerski",
+  totalEarned: "Łącznie zarobione",
+  earnPerReferral: "Zarabiaj 1 $ za polecenie, gdy ktoś kupi aplikację",
+  totalReferrals: "Łącznie poleceń",
+  pendingPayouts: "Oczekujące wypłaty",
+  referralLink: "Link polecający",
+  requestPayout: "Poproś o wypłatę",
+  minimumPayout: "Minimalna wypłata: 50 $",
+  paypalEmail: "Email PayPal",
+  enterPaypalEmail: "Wprowadź email PayPal",
+  payoutAmount: "Kwota wypłaty",
+  enterPayoutAmount: "Wprowadź kwotę",
+  payoutRequested: "Wypłata pomyślnie zażądana",
+  invalidPaypalEmail: "Wprowadź swój adres email PayPal",
+  invalidPayoutAmount: "Wprowadź prawidłową kwotę wypłaty",
+  minimumPayoutAmount: "Minimalna kwota wypłaty wynosi 50 $. Obecnie masz 47,00 $ dostępne.",
+  insufficientEarnings: "Nie możesz zażądać więcej niż Twoje dostępne zarobki. Masz 47,00 $ dostępne, ale zażądałeś $[amount].",
+  copied: "Skopiowane!"
 };
