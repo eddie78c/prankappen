@@ -94,8 +94,8 @@ export const en = {
   saveSettings: "Save Settings",
   close: "Close",
   version: "Version 1.0.0",
-  copyright: "© 2025 Premium Bank. All rights reserved.",
-  madeWith: "Made with ❤️ for secure banking",
+  copyright: "© 2025 Premium Bank Prank. All rights reserved.",
+  madeWith: "Made with ❤️ for secure banking pranking.",
   permissionNeeded: "Permission needed",
   cameraPermission: "We need camera roll permissions to select a photo.",
   error: "Error",
@@ -140,6 +140,90 @@ export const en = {
 
   // Settings
   currency: "Currency",
+
+  // Rating
+  rateUs: "Rate Us",
+  rateAppQuestion: "How would you rate our app?",
+  writeComment: "Write your comment (optional)",
+  submitRating: "Submit Rating",
+  thankYou: "Thank you!",
+  thankYouFeedback: "Thank you for your feedback!",
+
+  // Security
+  setPinCode: "Set your PIN code for app security:",
+  enter4DigitPin: "Enter 4-digit PIN",
+  confirm4DigitPin: "Confirm 4-digit PIN",
+  savePin: "Save PIN",
+  pinSet: "PIN Set",
+  pinDisabled: "PIN Disabled",
+  pinMismatch: "PIN Mismatch",
+  invalidPin: "Invalid PIN",
+  enter4DigitPinOrEmpty: "Please enter a 4-digit PIN or leave empty to disable.",
+  pinsDoNotMatch: "PINs do not match. Please try again.",
+  pinSecuritySubText: "Use this PIN to access sensitive app features. Leave empty to disable PIN. Keep it secure and don't share it with others.",
+
+  // Notifications
+  receiveUpdatesOffers: "Receive updates and offers from Prank Bank",
+  notificationsEnabledText: "You will receive notifications about new features, app updates, and special offers. You can unsubscribe at any time from your device settings.",
+
+  // Help Center
+  welcomeToPrankBank: "Welcome to Prank Bank!",
+  gettingStarted: "Getting Started",
+  settingUpProfile: "1. Setting Up Your Profile",
+  goToSettingsConfigure: "Go to Settings: Configure Prank to customize your prank experience:",
+  bulletReceiverName: "• Receiver Name: Set the name of the person you want to prank",
+  bulletLocation: "• Location: Add a location for authenticity",
+  bulletTotalBalance: "• Total Balance: Set your fake account balance",
+  bulletDefaultAmount: "• Default Amount: Choose the transaction amount for your prank",
+  soundSettings: "2. Sound Settings",
+  makePranksConvincing: "Make your pranks more convincing with custom sounds:",
+  bulletLaughterSounds: "• Laughter Sounds: Choose from Chuckle, Giggle, or Tee-hee",
+  bulletCustomSounds: "• Custom Sounds: Upload your own audio files",
+  bulletRequestSound: "• Request Sound: Set a sound that plays when requesting money",
+  photoSettings: "3. Photo Settings",
+  addReceiverPhoto: "Add a receiver photo to make the prank more realistic. Upload from your camera or gallery.",
+  fartsKnockFeatures: "4. Farts and Knock Features",
+  additionalPrankTools: "Additional prank tools for extra fun:",
+  bulletFarts: "• /farts: Play various fart sounds for comedic effect",
+  bulletKnock: "• /knock: Simulate knocking sounds",
+  howToExecutePrank: "5. How to Execute a Prank",
+  followStepsPerfectPrank: "Follow these steps for the perfect prank:",
+  step1SetupProfile: "1. Set up your profile with realistic details",
+  step2ChooseSounds: "2. Choose appropriate sounds and amounts",
+  step3NavigateMainScreen: "3. Navigate to the main screen and initiate a transaction",
+  step4ShowTransactionScreen: "4. Show the fake transaction screen to your friend",
+  step5EnjoyReaction: "5. Enjoy the reaction and reveal the prank!",
+  importantNote: "⚠️ IMPORTANT NOTE",
+  alwaysPrankResponsibly: "Always prank responsibly. Make sure your victims are good sports and won't be upset. Pranks should be fun for everyone involved.",
+
+  // About
+  aboutDescription: "Prank Bank is a fun prank application designed for entertainment purposes only. All features are intended for humorous pranks among friends and family.",
+  aboutFeatures: "Features include fake bank transactions, prank sounds, fart sounds, knock sounds, and customizable prank scenarios to surprise your friends with harmless fun.",
+  aboutHowItWorks: "How it works: Set up your prank profile with receiver details, choose amounts and sounds, then show the fake transaction screen to your unsuspecting friend!",
+  legalDisclaimer: "LEGAL DISCLAIMER:",
+  legalText1: "This application is for entertainment purposes only. Users are solely responsible for how they use this app. The app should never be used for fraudulent activities, harassment, or any illegal purposes. By using this app, you agree that you will not use it to deceive, harm, or defraud others. The developers are not responsible for any misuse of this application.",
+  legalText2: "Remember: Pranks should be fun and harmless. Always respect others' boundaries and local laws.",
+  legalText3: "The user takes full responsibility for all actions performed with this application. Pranks should only be played on willing participants who understand it's a joke.",
+  legalText4: "This app is provided \"as is\" without warranty of any kind. Use at your own risk.",
+
+  // Menu and Navigation
+  menu: "Menu",
+  farts: "Farts",
+  knock: "Knock",
+
+  // Farts Screen
+  chooseYourFartSound: "Choose your fart sound!",
+  tapToPlayHoldToSchedule: "Tap to play • Hold 2s to schedule",
+  customSounds: "Custom Sounds",
+  scheduledSounds: "Scheduled Sounds",
+  scheduleSound: "Schedule Sound",
+  delayMinutes: "Delay (minutes)",
+  delaySeconds: "Delay (seconds)",
+  repeatTimes: "Repeat times",
+  intervalSeconds: "Interval (seconds)",
+  cancelSchedule: "Cancel",
+  schedule: "Schedule",
+  timesLeft: "x left",
 
   // History
   all: "All",

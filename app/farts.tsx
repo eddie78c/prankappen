@@ -3,13 +3,16 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Dimens
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { usePrank } from '@/contexts/PrankContext';
 import { ArrowLeft, X, Clock, Wallet, History, CreditCard, User, Settings } from 'lucide-react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
 export default function FartsScreen() {
   const { theme } = useTheme();
+  const { translations } = useLanguage();
+  const { settings, addCustomSound } = usePrank();
   const router = useRouter();
-  const [customSounds, setCustomSounds] = React.useState<string[]>(['', '', '', '']);
   const [queue, setQueue] = React.useState<any[]>([]);
   const [showPopup, setShowPopup] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
@@ -76,19 +79,15 @@ export default function FartsScreen() {
 
     if (index >= 12) {
       const customIndex = index - 12;
-      if (customSounds[customIndex]) {
-        soundUri = { uri: customSounds[customIndex] };
+      if (settings.customSounds[customIndex]) {
+        soundUri = { uri: settings.customSounds[customIndex] };
       } else {
         try {
           const result = await DocumentPicker.getDocumentAsync({
             type: 'audio/*',
           });
           if (result.type === 'success' && result.uri) {
-            setCustomSounds(prev => {
-              const newSounds = [...prev];
-              newSounds[customIndex] = result.uri!;
-              return newSounds;
-            });
+            await addCustomSound(result.uri);
             soundUri = { uri: result.uri };
           } else {
             return;
@@ -107,7 +106,7 @@ export default function FartsScreen() {
     const delay = (delayMinutes * 60 + delaySeconds) * 1000;
     const numTimes = times;
     const interval = intervalSeconds * 1000;
-    const soundUri = selectedIndex >= 12 ? { uri: customSounds[selectedIndex - 12] } : require('@/assets/sounds/farts/fart-4.mp3');
+    const soundUri = selectedIndex >= 12 ? { uri: settings.customSounds[selectedIndex - 12] } : require('@/assets/sounds/farts/fart-4.mp3');
     const name = selectedIndex >= 12 ? `Custom ${selectedIndex - 11}` : `Fart ${selectedIndex + 1}`;
     const id = Date.now() + Math.random();
 
@@ -220,7 +219,7 @@ export default function FartsScreen() {
           <ArrowLeft size={24} color={theme.colors.text} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
-          Farts
+          {translations.farts}
         </Text>
       </View>
 
@@ -230,7 +229,7 @@ export default function FartsScreen() {
           <View style={styles.queueHeader}>
             <Clock size={16} color={theme.colors.primary} />
             <Text style={[styles.queueHeaderText, { color: theme.colors.text }]}>
-              Scheduled Sounds
+              {translations.scheduledSounds}
             </Text>
           </View>
           <ScrollView 
@@ -289,7 +288,7 @@ export default function FartsScreen() {
                   </View>
                   
                   <Text style={[styles.queueRepeat, { color: theme.colors.text + '80' }]}>
-                    {item.remainingTimes}x left
+                    {item.remainingTimes}{translations.timesLeft || 'x left'}
                   </Text>
                 </View>
               );
@@ -301,10 +300,10 @@ export default function FartsScreen() {
       <ScrollView style={styles.scrollContent}>
         <View style={styles.content}>
           <Text style={[styles.title, { color: theme.colors.text }]}>
-            Choose your fart sound!
+            {translations.chooseYourFartSound}
           </Text>
           <Text style={[styles.subtitle, { color: theme.colors.text + '80' }]}>
-            Tap to play • Hold 2s to schedule
+            {translations.tapToPlayHoldToSchedule}
           </Text>
 
           <View style={styles.buttonsGrid}>
@@ -315,7 +314,7 @@ export default function FartsScreen() {
             <View style={styles.divider}>
               <View style={[styles.dividerLine, { backgroundColor: theme.colors.border }]} />
               <Text style={[styles.dividerText, { color: theme.colors.text + '60' }]}>
-                Custom Sounds
+                {translations.customSounds}
               </Text>
               <View style={[styles.dividerLine, { backgroundColor: theme.colors.border }]} />
             </View>
@@ -341,7 +340,7 @@ export default function FartsScreen() {
                 <Clock size={20} color={theme.colors.primary} />
               </View>
               <Text style={[styles.modalTitle, { color: theme.colors.text }]}>
-                Schedule Sound
+                {translations.scheduleSound}
               </Text>
               <Text style={[styles.modalSubtitle, { color: theme.colors.text + '60' }]}>
                 {selectedIndex >= 12 ? `Custom ${selectedIndex - 11}` : `Fart ${selectedIndex + 1}`}
@@ -349,25 +348,25 @@ export default function FartsScreen() {
             </View>
 
             <View style={styles.popupContent}>
-              {renderSelector('Delay (minutes)', delayMinutes, setDelayMinutes, 0, 10)}
-              {renderSelector('Delay (seconds)', delaySeconds, setDelaySeconds, 0, 60, 5)}
-              {renderSelector('Repeat times', times, setTimes, 1, 10)}
-              {renderSelector('Interval (seconds)', intervalSeconds, setIntervalSeconds, 5, 60, 5)}
+              {renderSelector(translations.delayMinutes || 'Delay (minutes)', delayMinutes, setDelayMinutes, 0, 10)}
+              {renderSelector(translations.delaySeconds || 'Delay (seconds)', delaySeconds, setDelaySeconds, 0, 60, 5)}
+              {renderSelector(translations.repeatTimes || 'Repeat times', times, setTimes, 1, 10)}
+              {renderSelector(translations.intervalSeconds || 'Interval (seconds)', intervalSeconds, setIntervalSeconds, 5, 60, 5)}
             </View>
 
             <View style={styles.modalButtons}>
-              <TouchableOpacity 
-                style={[styles.modalButton, styles.cancelButton, { backgroundColor: theme.colors.background }]} 
+              <TouchableOpacity
+                style={[styles.modalButton, styles.cancelButton, { backgroundColor: theme.colors.background }]}
                 onPress={() => setShowPopup(false)}
               >
-                <Text style={[styles.modalButtonText, { color: theme.colors.text }]}>Cancel</Text>
+                <Text style={[styles.modalButtonText, { color: theme.colors.text }]}>{translations.cancelSchedule || 'Cancel'}</Text>
               </TouchableOpacity>
-              <TouchableOpacity 
-                style={[styles.modalButton, styles.scheduleButton, { backgroundColor: theme.colors.primary }]} 
+              <TouchableOpacity
+                style={[styles.modalButton, styles.scheduleButton, { backgroundColor: theme.colors.primary }]}
                 onPress={scheduleSound}
               >
                 <Clock size={16} color="#FFFFFF" />
-                <Text style={[styles.modalButtonText, { color: '#FFFFFF' }]}>Schedule</Text>
+                <Text style={[styles.modalButtonText, { color: '#FFFFFF' }]}>{translations.schedule || 'Schedule'}</Text>
               </TouchableOpacity>
             </View>
           </View>

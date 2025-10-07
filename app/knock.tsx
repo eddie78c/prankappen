@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Dimens
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
 import { useTheme } from '@/contexts/ThemeContext';
+import { usePrank } from '@/contexts/PrankContext';
 import { ArrowLeft, X, Clock, Wallet, History, CreditCard, User, Settings } from 'lucide-react-native';
 import * as DocumentPicker from 'expo-document-picker';
 
 export default function KnockScreen() {
   const { theme } = useTheme();
+  const { settings, addCustomSound } = usePrank();
   const router = useRouter();
-  const [customSounds, setCustomSounds] = React.useState<string[]>(['', '', '', '']);
   const [queue, setQueue] = React.useState<any[]>([]);
   const [showPopup, setShowPopup] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(-1);
@@ -76,19 +77,15 @@ export default function KnockScreen() {
 
     if (index >= 12) {
       const customIndex = index - 12;
-      if (customSounds[customIndex]) {
-        soundUri = { uri: customSounds[customIndex] };
+      if (settings.customSounds[customIndex]) {
+        soundUri = { uri: settings.customSounds[customIndex] };
       } else {
         try {
           const result = await DocumentPicker.getDocumentAsync({
             type: 'audio/*',
           });
           if (result.type === 'success' && result.uri) {
-            setCustomSounds(prev => {
-              const newSounds = [...prev];
-              newSounds[customIndex] = result.uri!;
-              return newSounds;
-            });
+            await addCustomSound(result.uri);
             soundUri = { uri: result.uri };
           } else {
             return;
@@ -107,7 +104,7 @@ export default function KnockScreen() {
     const delay = (delayMinutes * 60 + delaySeconds) * 1000;
     const numTimes = times;
     const interval = intervalSeconds * 1000;
-    const soundUri = selectedIndex >= 12 ? { uri: customSounds[selectedIndex - 12] } : require('@/assets/sounds/a-pay.mp3');
+    const soundUri = selectedIndex >= 12 ? { uri: settings.customSounds[selectedIndex - 12] } : require('@/assets/sounds/a-pay.mp3');
     const name = selectedIndex >= 12 ? `Custom Knock ${selectedIndex - 11}` : `Knock ${selectedIndex + 1}`;
     const id = Date.now() + Math.random();
 

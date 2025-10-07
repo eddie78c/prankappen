@@ -27,6 +27,8 @@ interface PrankSettings {
   profileMonthlyIncome: number;
   profileTodaySpent: number;
   customSounds: string[];
+  pin?: string | null;
+  notificationsEnabled?: boolean;
 }
 
 interface PrankContextType {
@@ -48,7 +50,7 @@ const PrankContext = createContext<PrankContextType | undefined>(undefined);
 export function PrankProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<PrankSettings>({
     receiverName: 'John Doe',
-    defaultAmount: 500,
+    defaultAmount: 10,
     currency: 'EUR', // Default to EUR for all languages
     profileName: 'Maria Smith',
     profileLocation: 'Stockholm, Sweden',
@@ -56,6 +58,7 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     profileMonthlyIncome: 300.90,
     profileTodaySpent: 600.90,
     customSounds: [],
+    notificationsEnabled: false,
   });
 
   // Load settings from AsyncStorage on initialization
@@ -131,11 +134,18 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const addCustomSound = (soundUri: string) => {
-    setSettings(prev => ({ 
-      ...prev, 
-      customSounds: [...prev.customSounds, soundUri] 
-    }));
+  const addCustomSound = async (soundUri: string) => {
+    const updatedSettings = {
+      ...settings,
+      customSounds: [...settings.customSounds, soundUri]
+    };
+    setSettings(updatedSettings);
+
+    try {
+      await AsyncStorage.setItem('prank_settings', JSON.stringify(updatedSettings));
+    } catch (error) {
+      console.log('Error saving custom sound:', error);
+    }
   };
 
   const updateMonthlyIncome = (amount: number) => {

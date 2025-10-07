@@ -141,6 +141,26 @@ export const sv = {
   // Settings
   currency: "Valuta",
 
+  // Rating
+  rateUs: "Betygsätt oss",
+  rateAppQuestion: "Hur skulle du betygsätta vår app?",
+  writeComment: "Skriv din kommentar (valfritt)",
+  submitRating: "Skicka betyg",
+  thankYou: "Tack!",
+  thankYouFeedback: "Tack för din feedback!",
+
+  // Security
+  setPinCode: "Ställ in din PIN-kod för appsäkerhet:",
+  enter4DigitPin: "Ange 4-siffrig PIN",
+  confirm4DigitPin: "Bekräfta 4-siffrig PIN",
+  savePin: "Spara PIN",
+  pinSet: "PIN inställd",
+  pinDisabled: "PIN inaktiverad",
+  pinMismatch: "PIN-matchning",
+  invalidPin: "Ogiltig PIN",
+  enter4DigitPinOrEmpty: "Ange en 4-siffrig PIN eller lämna tomt för att inaktivera.",
+  pinsDoNotMatch: "PIN-koder matchar inte. Försök igen.",
+
   // History
   all: "Alla",
   income: "Inkomst",

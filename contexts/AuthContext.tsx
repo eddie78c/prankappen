@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePrank } from './PrankContext';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -13,6 +14,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const MOCK_PIN = '1234';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const { settings } = usePrank();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -38,7 +40,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const authenticate = async (pin: string): Promise<boolean> => {
-    if (pin === MOCK_PIN) {
+    if (!settings.pin) {
+      // No PIN set, authenticate automatically
+      setIsAuthenticated(true);
+      try {
+        await AsyncStorage.setItem('auth_timestamp', Date.now().toString());
+      } catch (error) {
+        console.log('Error storing auth timestamp:', error);
+      }
+      return true;
+    }
+    if (pin === settings.pin) {
       setIsAuthenticated(true);
       try {
         await AsyncStorage.setItem('auth_timestamp', Date.now().toString());

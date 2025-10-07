@@ -6,12 +6,13 @@ import { useFrameworkReady } from '@/hooks/useFrameworkReady';
 import { ThemeProvider } from '../contexts/ThemeContext';
 import { LanguageProvider } from '../contexts/LanguageContext';
 import { AuthProvider, useAuth } from '../contexts/AuthContext';
-import { PrankProvider } from '../contexts/PrankContext';
+import { PrankProvider, usePrank } from '../contexts/PrankContext';
 import AnimatedSplash from '../components/AnimatedSplash';
 import PinInput from '../components/PinInput';
 
 function AuthenticatedApp() {
   const { isAuthenticated, authenticate } = useAuth();
+  const { settings } = usePrank();
   const [showSplash, setShowSplash] = useState(true);
   const [showPinError, setShowPinError] = useState(false);
 
@@ -31,7 +32,7 @@ function AuthenticatedApp() {
     );
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && settings.pin) {
     return (
       <PinInput
         onSubmit={handlePinSubmit}

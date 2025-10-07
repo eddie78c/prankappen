@@ -16,7 +16,7 @@ import { BlurView } from 'expo-blur';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 
-interface PinInputProps {
+export interface PinInputProps {
   onSubmit: (pin: string) => void;
   showError: boolean;
 }

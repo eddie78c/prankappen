@@ -376,7 +376,7 @@ export default function HomeScreen() {
           <TouchableOpacity style={styles.menuOverlay} onPress={() => setShowMenu(false)} />
           <View style={[styles.menu, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: theme.colors.border, paddingVertical: 8, marginBottom: 8 }}>
-              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>Menu</Text>
+              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>{translations.menu}</Text>
               <TouchableOpacity
                 onPress={() => setShowMenu(false)}
                 hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
@@ -388,11 +388,11 @@ export default function HomeScreen() {
             </View>
             <TouchableOpacity style={[styles.menuItem, { flexDirection: 'row', alignItems: 'center', gap: 8, borderBottomColor: theme.colors.border }]} onPress={() => { setShowMenu(false); router.push('/farts'); }}>
               <Wind size={18} color={theme.colors.text} />
-              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>Farts</Text>
+              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>{translations.farts}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={[styles.menuItem, { flexDirection: 'row', alignItems: 'center', gap: 8, borderBottomColor: theme.colors.border }]} onPress={() => { setShowMenu(false); router.push('/knock'); }}>
               <DoorOpen size={18} color={theme.colors.text} />
-              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>Knock</Text>
+              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>{translations.knock}</Text>
             </TouchableOpacity>
           </View>
         </>

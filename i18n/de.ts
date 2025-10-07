@@ -141,6 +141,26 @@ export const de = {
   // Settings
   currency: "Währung",
 
+  // Rating
+  rateUs: "Bewerte uns",
+  rateAppQuestion: "Wie würden Sie unsere App bewerten?",
+  writeComment: "Schreiben Sie Ihren Kommentar (optional)",
+  submitRating: "Bewertung senden",
+  thankYou: "Danke!",
+  thankYouFeedback: "Danke für Ihr Feedback!",
+
+  // Security
+  setPinCode: "Stellen Sie Ihren PIN-Code für die App-Sicherheit ein:",
+  enter4DigitPin: "4-stelligen PIN eingeben",
+  confirm4DigitPin: "4-stelligen PIN bestätigen",
+  savePin: "PIN speichern",
+  pinSet: "PIN gesetzt",
+  pinDisabled: "PIN deaktiviert",
+  pinMismatch: "PIN-Fehler",
+  invalidPin: "Ungültiger PIN",
+  enter4DigitPinOrEmpty: "Geben Sie einen 4-stelligen PIN ein oder lassen Sie ihn leer, um zu deaktivieren.",
+  pinsDoNotMatch: "PINs stimmen nicht überein. Versuchen Sie es erneut.",
+
   // History
   all: "Alle",
   income: "Einkommen",

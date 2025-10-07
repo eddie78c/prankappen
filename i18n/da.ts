@@ -129,6 +129,27 @@ export const da = {
   expires: "UDLØBER",
   cvv: "CVV",
   currency: "Valuta",
+
+  // Rating
+  rateUs: "Bedøm os",
+  rateAppQuestion: "Hvordan vil du bedømme vores app?",
+  writeComment: "Skriv din kommentar (valgfrit)",
+  submitRating: "Indsend bedømmelse",
+  thankYou: "Tak!",
+  thankYouFeedback: "Tak for din feedback!",
+
+  // Security
+  setPinCode: "Indstil din PIN-kode til appsikkerhed:",
+  enter4DigitPin: "Indtast 4-cifret PIN",
+  confirm4DigitPin: "Bekræft 4-cifret PIN",
+  savePin: "Gem PIN",
+  pinSet: "PIN indstillet",
+  pinDisabled: "PIN deaktiveret",
+  pinMismatch: "PIN-fejl",
+  invalidPin: "Ugyldig PIN",
+  enter4DigitPinOrEmpty: "Indtast en 4-cifret PIN eller lad være tom for at deaktivere.",
+  pinsDoNotMatch: "PIN-koder matcher ikke. Prøv igen.",
+
   all: "Alle",
   income: "Indkomst",
   expenses: "Udgifter",
