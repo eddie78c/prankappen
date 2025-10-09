@@ -22,7 +22,11 @@
       "bundleIdentifier": "com.nideart.pranko"
     },
     "android": {
-      "package": "com.nideart.pranko"
+      "package": "com.nideart.pranko",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -41,8 +45,10 @@
     },
     "extra": {
       "eas": {
-        "projectId": "b4744d5b-1812-456b-8bfe-c442ad4ad3a2"
-      }
-    }
+        "projectId": "3ad71390-d2c7-4518-9d81-ed9682bbc6aa"
+      },
+      "router": {}
+    },
+    "owner": "nide.art"
   }
 }
