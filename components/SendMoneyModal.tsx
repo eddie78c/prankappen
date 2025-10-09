@@ -20,18 +20,18 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
 
   const handleSend = () => {
     if (!phoneNumber.trim()) {
-      Alert.alert(translations.error, translations.pleaseEnterPhone);
+      Alert.alert(translations.error || 'Error', translations.pleaseEnterPhone || 'Please enter a phone number');
       return;
     }
 
     const numericAmount = parseFloat(amount);
     if (!numericAmount || numericAmount <= 0) {
-      Alert.alert(translations.error, translations.pleaseEnterValidAmount);
+      Alert.alert(translations.error || 'Error', translations.pleaseEnterValidAmount || 'Please enter a valid amount');
       return;
     }
 
     if (numericAmount > settings.profileBalance) {
-      Alert.alert(translations.insufficientBalance, translations.cannotSendMore);
+      Alert.alert(translations.insufficientBalance || 'Insufficient Balance', translations.cannotSendMore || 'You cannot send more money than your current balance');
       return;
     }
 
