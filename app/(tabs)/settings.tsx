@@ -1657,16 +1657,16 @@ const styles = StyleSheet.create({
 
   // Wheel Picker styles
   pickerContainer: {
-    height: 300,
+    minHeight: 400,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 20,
+    marginHorizontal: 10,
   },
   pickerMask: {
     overflow: 'hidden',
     borderRadius: 16,
     width: '100%',
-    maxWidth: 320,
+    maxWidth: 360,
   },
   pickerContent: {
     paddingTop: 120, // Center the content
