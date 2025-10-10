@@ -185,5 +185,9 @@ export const no = {
   minimumPayoutAmount: "Minimum utbetalingsbeløp er 50 USD. Du har for øyeblikket 47.00 USD tilgjengelig.",
   insufficientEarnings: "Du kan ikke be om mer enn dine tilgjengelige inntekter. Du har 47.00 USD tilgjengelig, men ba om $[beløp].",
   copied: "Kopiert!",
-  payoutHistory: "Utbetalingshistorikk"
+  payoutHistory: "Utbetalingshistorikk",
+
+  // Delete
+  delete: "Slett",
+  confirmDelete: "Er du sikker på at du vil slette dette virtuelle kortet?"
 };

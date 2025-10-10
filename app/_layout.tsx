@@ -10,6 +10,7 @@ import { PrankProvider, usePrank } from '../contexts/PrankContext';
 import AnimatedSplash from '../components/AnimatedSplash';
 import PinInput from '../components/PinInput';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { TopSafeArea } from '@/components/TopSafeArea';
 
 function AuthenticatedApp() {
   const { isAuthenticated, authenticate } = useAuth();
@@ -63,9 +64,9 @@ export default function RootLayout() {
           <LanguageProvider>
             <PrankProvider>
               <AuthProvider>
-                <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
+                <TopSafeArea>
                   <AuthenticatedApp />
-                </SafeAreaView>
+                </TopSafeArea>
                 <RootStatusBar />
               </AuthProvider>
             </PrankProvider>
@@ -81,7 +82,7 @@ function RootStatusBar() {
   return (
     <StatusBar
       style={theme.isDark ? "light" : "dark"}
-      backgroundColor={theme.isDark ? "#000000" : theme.colors.background}
+      backgroundColor={theme.isDark ? theme.colors.primaryDark : theme.colors.background}
     />
   );
 }

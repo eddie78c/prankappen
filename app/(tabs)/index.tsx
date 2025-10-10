@@ -59,6 +59,7 @@ export default function HomeScreen() {
     receiver: string;
   } | null>(null);
   const [showMenu, setShowMenu] = React.useState(false);
+  const [showAll, setShowAll] = React.useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -200,6 +201,27 @@ export default function HomeScreen() {
     />
   );
 
+  // Group transactions by date for dynamic listing
+  const todayTransactions = transactions.filter(
+    (t: any) => t.date === todayDateStr || t.date === todayDateStrEnUS
+  );
+  const yesterdayTransactions = transactions.filter(
+    (t: any) => t.date === yesterdayDateStr || t.date === yesterdayDateStrEnUS
+  );
+  const otherTransactions = transactions.filter(
+    (t: any) =>
+      t.date !== todayDateStr &&
+      t.date !== todayDateStrEnUS &&
+      t.date !== yesterdayDateStr &&
+      t.date !== yesterdayDateStrEnUS
+  );
+  const maxToShow = showAll ? Number.MAX_SAFE_INTEGER : 10;
+  const showTodayCount = Math.min(todayTransactions.length, maxToShow);
+  const remainingAfterToday = maxToShow - showTodayCount;
+  const showYesterdayCount = Math.min(yesterdayTransactions.length, remainingAfterToday);
+  const remainingAfterYesterday = remainingAfterToday - showYesterdayCount;
+  const showOtherCount = Math.max(0, remainingAfterYesterday);
+
   if (showPrankReveal) {
     return <PrankRevealScreen onClose={() => setShowPrankReveal(false)} />;
   }
@@ -213,8 +235,9 @@ export default function HomeScreen() {
       }]}>
         <TouchableOpacity 
           style={styles.headerButton} 
-          onPress={() => setShowMenu(true)}
-          hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
+          onPressIn={() => setShowMenu(true)}
+          delayPressIn={0}
+          hitSlop={{ top: 30, right: 30, bottom: 30, left: 30 }}
         >
           <Text style={[styles.menuIcon, { color: theme.colors.text }]}>☰</Text>
         </TouchableOpacity>
@@ -338,7 +361,7 @@ export default function HomeScreen() {
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                 {translations.recentTransactions}
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => setShowAll(true)}>
                 <Text style={[styles.seeAll, { color: theme.colors.primary }]}>
                   {translations.seeAll}
                 </Text>
@@ -349,18 +372,27 @@ export default function HomeScreen() {
               <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
                 {translations.today}
               </Text>
-              {transactions
-                .filter(t => t.date === todayDateStr || t.date === todayDateStrEnUS)
-                .slice(0, 2)
+              {todayTransactions
+                .slice(0, showAll ? todayTransactions.length : showTodayCount)
                 .map(renderTransaction)}
               
               <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
                 {translations.yesterday}
               </Text>
-              {transactions
-                .filter(t => t.date === yesterdayDateStr || t.date === yesterdayDateStrEnUS)
-                .slice(0, 3)
+              {yesterdayTransactions
+                .slice(0, showAll ? yesterdayTransactions.length : showYesterdayCount)
                 .map(renderTransaction)}
+
+              {(showAll || showOtherCount > 0) && (
+                <>
+                  <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
+                    {translations.thisWeek}
+                  </Text>
+                  {otherTransactions
+                    .slice(0, showAll ? otherTransactions.length : showOtherCount)
+                    .map(renderTransaction)}
+                </>
+              )}
             </View>
           </View>
         </View>
@@ -411,7 +443,8 @@ export default function HomeScreen() {
         <>
           <TouchableOpacity 
             style={styles.menuOverlay} 
-            onPress={() => setShowMenu(false)}
+            onPressIn={() => setShowMenu(false)}
+            delayPressIn={0}
             activeOpacity={1}
           />
           <View style={[styles.menu, { 
@@ -480,8 +513,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
   },
   headerButton: {
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
     justifyContent: 'center',
     alignItems: 'center',
   },

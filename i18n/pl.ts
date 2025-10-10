@@ -252,5 +252,6 @@ export const pl = {
   timesLeft: "x pozostało",
 
   // Delete
-  delete: "Usuń"
+  delete: "Usuń",
+  confirmDelete: "Czy na pewno chcesz usunąć tę wirtualną kartę?"
 };

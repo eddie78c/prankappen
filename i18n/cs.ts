@@ -143,5 +143,118 @@ export const cs = {
   chain7: "Alza Praha",
   chain8: "Mall.cz Praha",
   chain9: "Globus Praha",
-  chain10: "Costa Coffee Praha"
+  chain10: "Costa Coffee Praha",
+
+  // Navigation
+
+  // Transaction prefixes
+
+  // Rating
+  rateUs: "Ohodnoťte nás",
+  rateAppQuestion: "Jak byste ohodnotili naši aplikaci?",
+  writeComment: "Napište svůj komentář (volitelné)",
+  submitRating: "Odeslat hodnocení",
+  thankYou: "Děkujeme!",
+  thankYouFeedback: "Děkujeme za vaši zpětnou vazbu!",
+
+  // Security
+  setPinCode: "Nastavte svůj PIN kód pro zabezpečení aplikace:",
+  enter4DigitPin: "Zadejte 4-místný PIN",
+  confirm4DigitPin: "Potvrďte 4-místný PIN",
+  savePin: "Uložit PIN",
+  pinSet: "PIN nastaven",
+  pinDisabled: "PIN zakázán",
+  pinMismatch: "PIN se neshoduje",
+  invalidPin: "Neplatný PIN",
+  enter4DigitPinOrEmpty: "Zadejte 4-místný PIN nebo nechte prázdné pro zakázání.",
+  pinsDoNotMatch: "PIN kódy se neshodují. Zkuste to znovu.",
+  pinSecuritySubText: "Použijte tento PIN pro přístup k citlivým funkcím aplikace. Nechte prázdné pro zakázání PIN. Uchovejte ho v bezpečí a nesdílejte ho s ostatními.",
+
+  // Notifications
+  receiveUpdatesOffers: "Přijímejte aktualizace a nabídky od Prank Bank",
+  notificationsEnabledText: "Budete dostávat oznámení o nových funkcích, aktualizacích aplikace a speciálních nabídkách. Můžete se kdykoli odhlásit z nastavení zařízení.",
+
+  // Help Center
+  welcomeToPrankBank: "Vítejte v Prank Bank!",
+  gettingStarted: "Začínáme",
+  settingUpProfile: "1. Nastavení vašeho profilu",
+  goToSettingsConfigure: "Přejděte do Nastavení: Nakonfigurujte Prank pro přizpůsobení vaší zkušenosti s prank:",
+  bulletReceiverName: "• Jméno příjemce: Nastavte jméno osoby, kterou chcete napálit",
+  bulletLocation: "• Umístění: Přidejte umístění pro autenticitu",
+  bulletTotalBalance: "• Celkový zůstatek: Nastavte svůj falešný zůstatek účtu",
+  bulletDefaultAmount: "• Výchozí částka: Vyberte částku transakce pro váš prank",
+  soundSettings: "2. Nastavení zvuku",
+  makePranksConvincing: "Udělejte své pranky přesvědčivějšími s vlastními zvuky:",
+  bulletLaughterSounds: "• Zvuky smíchu: Vyberte si z Chichotání, Hihňání nebo Hee-hee",
+  bulletCustomSounds: "• Vlastní zvuky: Nahrajte své vlastní audio soubory",
+  bulletRequestSound: "• Zvuk požadavku: Nastavte zvuk, který se přehraje při žádosti o peníze",
+  photoSettings: "3. Nastavení fotografie",
+  addReceiverPhoto: "Přidejte fotografii příjemce, aby byl prank realističtější. Nahrajte z kamery nebo galerie.",
+  fartsKnockFeatures: "4. Funkce prdů a klepání",
+  additionalPrankTools: "Dodatečné nástroje pro prank pro větší zábavu:",
+  bulletFarts: "• /prdy: Přehrajte různé zvuky prdů pro komický efekt",
+  bulletKnock: "• /klepání: Simulujte zvuky klepání",
+  howToExecutePrank: "5. Jak provést prank",
+  followStepsPerfectPrank: "Postupujte podle těchto kroků pro perfektní prank:",
+  step1SetupProfile: "1. Nastavte svůj profil s realistickými detaily",
+  step2ChooseSounds: "2. Vyberte vhodné zvuky a částky",
+  step3NavigateMainScreen: "3. Přejděte na hlavní obrazovku a spusťte transakci",
+  step4ShowTransactionScreen: "4. Zobrazte falešnou obrazovku transakce svému příteli",
+  step5EnjoyReaction: "5. Užijte si reakci a odhalte prank!",
+  importantNote: "⚠️ DŮLEŽITÁ POZNÁMKA",
+  alwaysPrankResponsibly: "Vždy provádějte pranky zodpovědně. Ujistěte se, že vaše oběti jsou dobré sporty a nebudou naštvané. Pranky by měly být zábavné pro všechny zúčastněné.",
+
+  // About
+  aboutDescription: "Prank Bank je zábavná prank aplikace navržená pouze pro účely zábavy. Všechny funkce jsou určeny pro humorné pranky mezi přáteli a rodinou.",
+  aboutFeatures: "Funkce zahrnují falešné bankovní transakce, zvuky prank, zvuky prdů, zvuky klepání a přizpůsobitelné scénáře prank pro překvapení vašich přátel neškodnou zábavou.",
+  aboutHowItWorks: "Jak to funguje: Nastavte svůj profil prank s detaily příjemce, vyberte částky a zvuky, pak zobrazte falešnou obrazovku transakce svému nic netušícímu příteli!",
+  legalDisclaimer: "PRÁVNÍ ZŘEKNUTÍ SE ODPOVĚDNOSTI:",
+  legalText1: "Tato aplikace je pouze pro účely zábavy. Uživatelé jsou plně zodpovědní za to, jak používají tuto aplikaci. Aplikace by nikdy neměla být používána pro podvodné aktivity, obtěžování nebo jakékoli nezákonné účely. Používáním této aplikace souhlasíte, že ji nebudete používat k oklamání, poškození nebo podvodu ostatních. Vývojáři nejsou zodpovědní za jakékoli zneužití této aplikace.",
+  legalText2: "Pamatujte: Pranky by měly být zábavné a neškodné. Vždy respektujte hranice ostatních a místní zákony.",
+  legalText3: "Tato aplikace je poskytována 'tak jak je' bez záruky jakéhokoli druhu. Používejte na vlastní riziko.",
+  legalText4: "Uživatel přebírá plnou zodpovědnost za všechny akce provedené s touto aplikací. Pranky by měly být hrány pouze na ochotné účastníky, kteří rozumí, že jde o žert.",
+
+  // Menu and Navigation
+  menu: "Menu",
+  farts: "Prdy",
+  knock: "Klepání",
+
+  // Farts Screen
+  chooseYourFartSound: "Vyberte si svůj zvuk prdu!",
+  tapToPlayHoldToSchedule: "Klepněte pro přehrání • Podržte 2s pro naplánování",
+  customSounds: "Vlastní zvuky",
+  scheduledSounds: "Naplánované zvuky",
+  scheduleSound: "Naplánovat zvuk",
+  delayMinutes: "Zpoždění (minuty)",
+  delaySeconds: "Zpoždění (sekundy)",
+  repeatTimes: "Počet opakování",
+  intervalSeconds: "Interval (sekundy)",
+  cancelSchedule: "Zrušit",
+  schedule: "Naplánovat",
+  timesLeft: "x zbývá",
+
+  // Delete
+  delete: "Smazat",
+  confirmDelete: "Jste si jisti, že chcete smazat tuto virtuální kartu?",
+
+  // Affiliate Program
+  affiliateProgram: "Affiliate program",
+  totalEarned: "Celkem vyděláno",
+  earnPerReferral: "Vydělejte 1 $ za doporučení, když někdo zakoupí aplikaci",
+  totalReferrals: "Celkem doporučení",
+  pendingPayouts: "Čekající výplaty",
+  referralLink: "Odkaz na doporučení",
+  requestPayout: "Požádat o výplatu",
+  minimumPayout: "Minimální výplata: 50 $",
+  paypalEmail: "PayPal email",
+  enterPaypalEmail: "Zadejte PayPal email",
+  payoutAmount: "Částka výplaty",
+  enterPayoutAmount: "Zadejte částku",
+  payoutRequested: "Žádost o výplatu úspěšně odeslána",
+  invalidPaypalEmail: "Zadejte svou adresu PayPal email",
+  invalidPayoutAmount: "Zadejte platnou částku výplaty",
+  minimumPayoutAmount: "Minimální částka výplaty je 50 $. Aktuálně máte k dispozici 47.00 $.",
+  insufficientEarnings: "Nemůžete požádat o více než vaše dostupné příjmy. Máte k dispozici 47.00 $, ale požádali jste o $[částka].",
+  copied: "Zkopírováno!",
+  payoutHistory: "Historie výplat"
 };

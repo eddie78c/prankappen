@@ -145,5 +145,30 @@ export const ro = {
   chain7: "DM București",
   chain8: "Sensiblu București",
   chain9: "Profi București",
-  chain10: "Costa Coffee București"
+  chain10: "Costa Coffee București",
+
+  // Affiliate Program
+  affiliateProgram: "Program de afiliere",
+  totalEarned: "Total câștigat",
+  earnPerReferral: "Câștigă 1 USD per recomandare când cineva cumpără aplicația",
+  totalReferrals: "Total recomandări",
+  pendingPayouts: "Plăți în așteptare",
+  referralLink: "Link de recomandare",
+  requestPayout: "Solicită plată",
+  minimumPayout: "Plată minimă: 50 USD",
+  paypalEmail: "Email PayPal",
+  enterPaypalEmail: "Introdu email PayPal",
+  payoutAmount: "Sumă plată",
+  enterPayoutAmount: "Introdu suma",
+  payoutRequested: "Solicitare plată trimisă cu succes",
+  invalidPaypalEmail: "Te rugăm să introduci adresa ta de email PayPal",
+  invalidPayoutAmount: "Te rugăm să introduci o sumă de plată validă",
+  minimumPayoutAmount: "Suma minimă de plată este de 50 USD. Ai disponibil în prezent 47.00 USD.",
+  insufficientEarnings: "Nu poți solicita mai mult decât câștigurile tale disponibile. Ai 47.00 USD disponibile, dar ai solicitat $[sumă].",
+  copied: "Copiat!",
+  payoutHistory: "Istoric plăți",
+
+  // Delete
+  delete: "Șterge",
+  confirmDelete: "Ești sigur că vrei să ștergi acest card virtual?"
 };

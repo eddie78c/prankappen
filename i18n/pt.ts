@@ -168,5 +168,9 @@ export const pt = {
   minimumPayoutAmount: "O valor mínimo de pagamento é 50 USD. Você tem atualmente 47.00 USD disponível.",
   insufficientEarnings: "Você não pode solicitar mais do que seus ganhos disponíveis. Você tem 47.00 USD disponível, mas solicitou $[valor].",
   copied: "Copiado!",
-  payoutHistory: "Histórico de pagamentos"
+  payoutHistory: "Histórico de pagamentos",
+
+  // Delete
+  delete: "Excluir",
+  confirmDelete: "Tem certeza de que deseja excluir este cartão virtual?"
 };

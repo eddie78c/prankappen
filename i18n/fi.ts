@@ -166,5 +166,9 @@ export const fi = {
   minimumPayoutAmount: "Vähimmäismaksun määrä on 50 USD. Sinulla on tällä hetkellä 47.00 USD käytettävissä.",
   insufficientEarnings: "Et voi pyytää enemmän kuin käytettävissä olevat tulosi. Sinulla on 47.00 USD käytettävissä, mutta pyysit $[määrä].",
   copied: "Kopioitu!",
-  payoutHistory: "Maksuhistoria"
+  payoutHistory: "Maksuhistoria",
+
+  // Delete
+  delete: "Poista",
+  confirmDelete: "Oletko varma, että haluat poistaa tämän virtuaalikortin?"
 };
