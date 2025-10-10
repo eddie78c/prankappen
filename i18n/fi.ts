@@ -144,4 +144,25 @@ export const fi = {
   chain8: "Alko Helsinki",
   chain9: "Lidl Helsinki",
   chain10: "Sokos Helsinki",
+
+  // Affiliate Program
+  affiliateProgram: "Kumppaniohjelma",
+  totalEarned: "Yhteensä ansaittu",
+  earnPerReferral: "Ansaitse 1 USD jokaisesta suosittelusta kun joku ostaa sovelluksen",
+  totalReferrals: "Yhteensä suosittelut",
+  pendingPayouts: "Odottavat maksut",
+  referralLink: "Suosittelulinkki",
+  requestPayout: "Pyydä maksua",
+  minimumPayout: "Vähimmäismaksu: 50 USD",
+  paypalEmail: "PayPal-sähköposti",
+  enterPaypalEmail: "Syötä PayPal-sähköposti",
+  payoutAmount: "Maksun määrä",
+  enterPayoutAmount: "Syötä määrä",
+  payoutRequested: "Maksupyyntö lähetetty onnistuneesti",
+  invalidPaypalEmail: "Syötä PayPal-sähköpostiosoitteesi",
+  invalidPayoutAmount: "Syötä kelvollinen maksun määrä",
+  minimumPayoutAmount: "Vähimmäismaksun määrä on 50 USD. Sinulla on tällä hetkellä 47.00 USD käytettävissä.",
+  insufficientEarnings: "Et voi pyytää enemmän kuin käytettävissä olevat tulosi. Sinulla on 47.00 USD käytettävissä, mutta pyysit $[määrä].",
+  copied: "Kopioitu!",
+  payoutHistory: "Maksuhistoria"
 };

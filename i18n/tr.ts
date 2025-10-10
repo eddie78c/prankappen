@@ -144,5 +144,26 @@ export const tr = {
   chain7: "Teknosa İstanbul",
   chain8: "H&M İstanbul",
   chain9: "Zara İstanbul",
-  chain10: "Costa Coffee İstanbul"
+  chain10: "Costa Coffee İstanbul",
+
+  // Affiliate Program
+  affiliateProgram: "Ortaklık programı",
+  totalEarned: "Toplam kazanılan",
+  earnPerReferral: "Birisi uygulamayı satın aldığında yönlendirme başına 1 USD kazanın",
+  totalReferrals: "Toplam yönlendirmeler",
+  pendingPayouts: "Bekleyen ödemeler",
+  referralLink: "Yönlendirme bağlantısı",
+  requestPayout: "Ödeme talebi",
+  minimumPayout: "Minimum ödeme: 50 USD",
+  paypalEmail: "PayPal e-posta",
+  enterPaypalEmail: "PayPal e-posta girin",
+  payoutAmount: "Ödeme tutarı",
+  enterPayoutAmount: "Tutar girin",
+  payoutRequested: "Ödeme talebi başarıyla gönderildi",
+  invalidPaypalEmail: "Lütfen PayPal e-posta adresinizi girin",
+  invalidPayoutAmount: "Lütfen geçerli bir ödeme tutarı girin",
+  minimumPayoutAmount: "Minimum ödeme tutarı 50 USD'dir. Şu anda 47.00 USD kullanılabilir.",
+  insufficientEarnings: "Mevcut gelirlerinizden daha fazlasını talep edemezsiniz. 47.00 USD kullanılabilir, ancak $[tutar] istediniz.",
+  copied: "Kopyalandı!",
+  payoutHistory: "Ödeme geçmişi"
 };
