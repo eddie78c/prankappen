@@ -277,6 +277,12 @@ export default function MoreScreen() {
   };
 
   const savePrankSettings = () => {
+    // Stop any currently playing sound
+    if (currentSoundRef.current) {
+      currentSoundRef.current.unloadAsync();
+      currentSoundRef.current = null;
+    }
+
     updateSettings({
       receiverName: tempReceiverName,
       defaultAmount: parseFloat(tempAmount) || settings.defaultAmount,
