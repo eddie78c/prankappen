@@ -263,5 +263,6 @@ export const it = {
   timesLeft: "x rimanenti",
 
   // Delete
-  delete: "Elimina"
+  delete: "Elimina",
+  confirmDelete: "Sei sicuro di voler eliminare questa carta virtuale?"
 };

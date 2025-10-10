@@ -233,6 +233,7 @@ export const hr = {
 
   // History
   delete: "Izbriši",
+  confirmDelete: "Jeste li sigurni da želite izbrisati ovu virtualnu karticu?",
 
   // Sound
 

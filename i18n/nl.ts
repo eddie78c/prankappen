@@ -38,7 +38,9 @@ export const nl = {
   today: "VANDAAG",
   yesterday: "GISTEREN",
   thisWeek: "DEZE WEEK",
-  
+  from: "Van",
+  to: "Naar",
+
   // Actions
   send: "Verzenden",
   request: "Aanvragen",
@@ -265,5 +267,6 @@ export const nl = {
   timesLeft: "x over",
 
   // Delete
-  delete: "Verwijderen"
+  delete: "Verwijderen",
+  confirmDelete: "Weet u zeker dat u deze virtuele kaart wilt verwijderen?"
 };

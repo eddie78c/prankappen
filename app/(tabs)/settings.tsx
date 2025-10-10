@@ -205,6 +205,11 @@ export default function MoreScreen() {
   const [payoutAmount, setPayoutAmount] = useState('');
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
   const [payoutError, setPayoutError] = useState('');
+  const [showContactUs, setShowContactUs] = useState(false);
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactMessage, setContactMessage] = useState('');
+  const [showContactThankYou, setShowContactThankYou] = useState(false);
 
   // Scroll to top when changing views
   const scrollToTop = () => {
@@ -214,7 +219,7 @@ export default function MoreScreen() {
   // Scroll to top when changing views
   React.useEffect(() => {
     scrollToTop();
-  }, [showLanguageSelector, showCurrencySelector, showPrankSettings, showAffiliates, showHelpCenter, showAbout, showSecurity, showNotifications, showRating]);
+  }, [showLanguageSelector, showCurrencySelector, showPrankSettings, showAffiliates, showHelpCenter, showAbout, showSecurity, showNotifications, showRating, showContactUs]);
 
   // Generate dynamic referral code
   const generateReferralCode = () => {
@@ -393,6 +398,12 @@ export default function MoreScreen() {
           type: 'navigation',
           onPress: () => setShowAbout(!showAbout),
         },
+        {
+          icon: <Ionicons name="mail" size={24} color={theme.colors.primary} />,
+          title: translations.contactUs,
+          type: 'navigation',
+          onPress: () => setShowContactUs(!showContactUs),
+        },
       ],
     },
   ];
@@ -435,7 +446,7 @@ export default function MoreScreen() {
     </Animated.View>
   );
 
-  const showBackButton = showLanguageSelector || showCurrencySelector || showPrankSettings || showAffiliates || showHelpCenter || showAbout || showSecurity || showNotifications || showRating;
+  const showBackButton = showLanguageSelector || showCurrencySelector || showPrankSettings || showAffiliates || showHelpCenter || showAbout || showSecurity || showNotifications || showRating || showContactUs;
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -454,6 +465,7 @@ export default function MoreScreen() {
               setShowSecurity(false);
               setShowNotifications(false);
               setShowRating(false);
+              setShowContactUs(false);
             }}
           >
             <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
@@ -485,6 +497,7 @@ export default function MoreScreen() {
              showSecurity ? translations.security :
              showNotifications ? translations.notifications :
              showRating ? translations.rateUs :
+             showContactUs ? translations.contactUs :
              translations.settings}
           </Text>
         </TouchableOpacity>
@@ -1294,6 +1307,84 @@ export default function MoreScreen() {
           </Animated.View>
         )}
 
+        {/* Contact Us */}
+        {showContactUs && (
+          <Animated.View entering={FadeInDown.springify()}>
+            <View style={styles.section}>
+              <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
+                {translations.contactUs}
+              </Text>
+
+              <View style={[styles.notificationsContent, { backgroundColor: theme.colors.surface }]}>
+                <Text style={[styles.notificationText, { color: theme.colors.text, textAlign: 'center', marginBottom: 16 }]}>
+                  {translations.contactUsDescription}
+                </Text>
+
+                <TextInput
+                  style={[styles.textInput, {
+                    backgroundColor: theme.colors.background,
+                    color: theme.colors.text,
+                    borderColor: theme.colors.border,
+                    marginBottom: 12,
+                  }]}
+                  placeholder={translations.name}
+                  placeholderTextColor={theme.colors.textSecondary}
+                  value={contactName}
+                  onChangeText={setContactName}
+                />
+
+                <TextInput
+                  style={[styles.textInput, {
+                    backgroundColor: theme.colors.background,
+                    color: theme.colors.text,
+                    borderColor: theme.colors.border,
+                    marginBottom: 12,
+                  }]}
+                  placeholder={translations.email}
+                  placeholderTextColor={theme.colors.textSecondary}
+                  keyboardType="email-address"
+                  value={contactEmail}
+                  onChangeText={setContactEmail}
+                />
+
+                <TextInput
+                  style={[styles.textInput, {
+                    backgroundColor: theme.colors.background,
+                    color: theme.colors.text,
+                    borderColor: theme.colors.border,
+                    marginBottom: 16,
+                    height: 80,
+                    textAlignVertical: 'top',
+                  }]}
+                  placeholder={translations.message}
+                  placeholderTextColor={theme.colors.textSecondary}
+                  value={contactMessage}
+                  onChangeText={setContactMessage}
+                  multiline
+                  numberOfLines={4}
+                />
+
+                <TouchableOpacity
+                  style={[styles.saveButton, { backgroundColor: theme.colors.primary }]}
+                  onPress={() => {
+                    if (contactName.trim() && contactEmail.trim() && contactMessage.trim()) {
+                      // In a real app, send to server
+                      setShowContactThankYou(true);
+                    } else {
+                      Alert.alert('Error', 'Please fill in all fields');
+                    }
+                  }}
+                >
+                  <Ionicons name="send" size={18} color={theme.colors.surface} style={styles.saveButtonIcon} />
+                  <Text style={[styles.saveButtonText, { color: theme.colors.surface }]}>
+                    {translations.sendMessage}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Animated.View>
+        )}
+
         {/* Settings Groups */}
         {!showLanguageSelector && !showCurrencySelector && !showPrankSettings && !showAffiliates && !showHelpCenter && !showAbout && !showSecurity && !showNotifications && !showRating && (
           <>
@@ -1375,6 +1466,40 @@ export default function MoreScreen() {
                 setShowRating(false);
                 setRatingStars(0);
                 setRatingComment('');
+              }}
+            >
+              <Text style={[styles.closeModalText, { color: theme.colors.surface }]}>
+                {translations.close}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      {/* Contact Thank You Modal */}
+      <Modal
+        visible={showContactThankYou}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowContactThankYou(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.thankYouModal, { backgroundColor: theme.colors.surface }]}>
+            <Ionicons name="checkmark-circle" size={48} color={theme.colors.success} style={{ marginBottom: 16 }} />
+            <Text style={[styles.thankYouTitle, { color: theme.colors.text }]}>
+              {translations.messageSent}
+            </Text>
+            <Text style={[styles.thankYouText, { color: theme.colors.textSecondary }]}>
+              {translations.messageSentDescription}
+            </Text>
+            <TouchableOpacity
+              style={[styles.closeModalButton, { backgroundColor: theme.colors.primary }]}
+              onPress={() => {
+                setShowContactThankYou(false);
+                setShowContactUs(false);
+                setContactName('');
+                setContactEmail('');
+                setContactMessage('');
               }}
             >
               <Text style={[styles.closeModalText, { color: theme.colors.surface }]}>

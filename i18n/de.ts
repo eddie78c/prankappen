@@ -272,5 +272,15 @@ export const de = {
   intervalSeconds: "Intervall (Sekunden)",
   cancelSchedule: "Abbrechen",
   schedule: "Planen",
-  timesLeft: "x übrig"
+  timesLeft: "x übrig",
+
+  // Contact Us
+  contactUs: "Kontaktieren Sie uns",
+  contactUsDescription: "Haben Sie Vorschläge oder Feedback? Wir freuen uns auf Ihre Nachricht!",
+  name: "Name",
+  email: "E-Mail",
+  message: "Nachricht",
+  sendMessage: "Nachricht senden",
+  messageSent: "Vielen Dank für Ihre Nachricht!",
+  messageSentDescription: "Wir schätzen Ihr Feedback und werden uns bald bei Ihnen melden."
 };

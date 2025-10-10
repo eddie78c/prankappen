@@ -7,7 +7,7 @@ export function TopSafeArea({ children }: { children: React.ReactNode }) {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
 
-  const topBg = theme.isDark ? theme.colors.primaryDark : theme.colors.background;
+  const topBg = theme.colors.surface;
 
   return (
     <View style={{ flex: 1 }}>

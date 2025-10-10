@@ -272,5 +272,15 @@ export const en = {
   minimumPayoutAmount: "The minimum payout amount is $50. You currently have $47.00 available.",
   insufficientEarnings: "You cannot request more than your available earnings. You have $47.00 available, but requested $[amount].",
   copied: "Copied!",
-  payoutHistory: "Payout History"
+  payoutHistory: "Payout History",
+
+  // Contact Us
+  contactUs: "Contact Us",
+  contactUsDescription: "Have suggestions or feedback? We'd love to hear from you!",
+  name: "Name",
+  email: "Email",
+  message: "Message",
+  sendMessage: "Send Message",
+  messageSent: "Thank you for your message!",
+  messageSentDescription: "We appreciate your feedback and will get back to you soon."
 };

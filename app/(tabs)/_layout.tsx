@@ -42,7 +42,7 @@ export default function TabLayout() {
         options={{
           title: translations.home,
           tabBarIcon: ({ color, size }) => (
-            <Wallet size={24} color={color} />
+            <Wallet size={28} color={color} />
           ),
         }}
       />
@@ -52,7 +52,7 @@ export default function TabLayout() {
         options={{
           title: translations.history,
           tabBarIcon: ({ color, size }) => (
-            <History size={24} color={color} />
+            <History size={28} color={color} />
           ),
         }}
       />
@@ -62,7 +62,7 @@ export default function TabLayout() {
         options={{
           title: translations.cards,
           tabBarIcon: ({ color, size }) => (
-            <CreditCard size={24} color={color} />
+            <CreditCard size={28} color={color} />
           ),
         }}
       />
@@ -72,7 +72,7 @@ export default function TabLayout() {
         options={{
           title: translations.profile,
           tabBarIcon: ({ color, size }) => (
-            <User size={24} color={color} />
+            <User size={28} color={color} />
           ),
         }}
       />
@@ -82,7 +82,7 @@ export default function TabLayout() {
         options={{
           title: translations.settings,
           tabBarIcon: ({ color, size }) => (
-            <Settings size={24} color={color} />
+            <Settings size={28} color={color} />
           ),
         }}
       />

@@ -268,5 +268,6 @@ export const bs = {
 
   // Delete
   delete: "Izbriši",
-  confirmDelete: "Da li ste sigurni da želite izbrisati ovu virtualnu karticu?"
+  confirmDelete: "Da li ste sigurni da želite izbrisati ovu virtualnu karticu?",
+  schedule: "Zakazati"
 };

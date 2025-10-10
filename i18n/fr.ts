@@ -269,5 +269,15 @@ export const fr = {
   intervalSeconds: "Intervalle (secondes)",
   cancelSchedule: "Annuler",
   schedule: "Programmer",
-  timesLeft: "x restant"
+  timesLeft: "x restant",
+
+  // Contact Us
+  contactUs: "Contactez-nous",
+  contactUsDescription: "Vous avez des suggestions ou des commentaires ? Nous aimerions avoir de vos nouvelles !",
+  name: "Nom",
+  email: "Email",
+  message: "Message",
+  sendMessage: "Envoyer le message",
+  messageSent: "Merci pour votre message !",
+  messageSentDescription: "Nous apprécions vos commentaires et nous vous répondrons bientôt."
 };
