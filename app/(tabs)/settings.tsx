@@ -1,3 +1,4 @@
+
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, TextInput, Image, Alert, Platform, Linking, Modal } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -179,6 +180,7 @@ export default function MoreScreen() {
   const { settings, updateSettings } = usePrank();
   const { logout } = useAuth();
   const currentSoundRef = useRef<any>(null);
+  const scrollViewRef = useRef<ScrollView>(null);
   const [showLanguageSelector, setShowLanguageSelector] = useState(false);
   const [showPrankSettings, setShowPrankSettings] = useState(false);
   const [showCurrencySelector, setShowCurrencySelector] = useState(false);
@@ -203,6 +205,16 @@ export default function MoreScreen() {
   const [payoutAmount, setPayoutAmount] = useState('');
   const [showCopiedMessage, setShowCopiedMessage] = useState(false);
   const [payoutError, setPayoutError] = useState('');
+
+  // Scroll to top when changing views
+  const scrollToTop = () => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  };
+
+  // Scroll to top when changing views
+  React.useEffect(() => {
+    scrollToTop();
+  }, [showLanguageSelector, showCurrencySelector, showPrankSettings, showAffiliates, showHelpCenter, showAbout, showSecurity, showNotifications, showRating]);
 
   // Generate dynamic referral code
   const generateReferralCode = () => {
@@ -447,21 +459,38 @@ export default function MoreScreen() {
             <Ionicons name="arrow-back" size={24} color={theme.colors.text} />
           </TouchableOpacity>
         )}
-        <Text style={[styles.title, { color: theme.colors.text }]}>
-          {showLanguageSelector ? translations.selectLanguage :
-           showCurrencySelector ? translations.selectCurrency :
-           showPrankSettings ? translations.prankConfiguration :
-           showAffiliates ? translations.affiliateProgram :
-           showHelpCenter ? translations.helpCenter :
-           showAbout ? translations.about :
-           showSecurity ? translations.security :
-           showNotifications ? translations.notifications :
-           showRating ? translations.rateUs :
-           translations.settings}
-        </Text>
+        <TouchableOpacity
+          onPress={() => {
+            if (showBackButton) {
+              setShowLanguageSelector(false);
+              setShowCurrencySelector(false);
+              setShowPrankSettings(false);
+              setShowAffiliates(false);
+              setShowHelpCenter(false);
+              setShowAbout(false);
+              setShowSecurity(false);
+              setShowNotifications(false);
+              setShowRating(false);
+            }
+          }}
+          style={{ flex: 1, alignItems: 'center' }}
+        >
+          <Text style={[styles.title, { color: theme.colors.text }]}>
+            {showLanguageSelector ? translations.selectLanguage :
+             showCurrencySelector ? translations.selectCurrency :
+             showPrankSettings ? translations.prankConfiguration :
+             showAffiliates ? translations.affiliateProgram :
+             showHelpCenter ? translations.helpCenter :
+             showAbout ? translations.about :
+             showSecurity ? translations.security :
+             showNotifications ? translations.notifications :
+             showRating ? translations.rateUs :
+             translations.settings}
+          </Text>
+        </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollViewRef} style={styles.content} showsVerticalScrollIndicator={false}>
 
         {/* Language Selector */}
         {showLanguageSelector && (

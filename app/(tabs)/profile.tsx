@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingBottom: 0,
     elevation: 6,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -183,7 +184,7 @@ const styles = StyleSheet.create({
     lineHeight: 48,
   },
   profileHeader: {
-    marginTop: 16,
+    marginTop: 0,
     paddingTop: 24,
     paddingHorizontal: 20,
     paddingBottom: 20,

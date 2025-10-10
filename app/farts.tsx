@@ -11,7 +11,7 @@ import * as DocumentPicker from 'expo-document-picker';
 export default function FartsScreen() {
   const { theme } = useTheme();
   const { translations } = useLanguage();
-  const { settings, addCustomSound } = usePrank();
+  const { settings, addCustomSound, removeCustomSound } = usePrank();
   const router = useRouter();
   const [queue, setQueue] = React.useState<any[]>([]);
   const [showPopup, setShowPopup] = React.useState(false);
@@ -177,33 +177,48 @@ export default function FartsScreen() {
 
   const renderFartButton = (index: number) => {
     const isCustom = index >= 12;
+    const customIndex = index - 12;
+    const hasCustomSound = isCustom && settings.customSounds[customIndex];
     const label = isCustom ? `Custom ${index - 11}` : `Fart ${index + 1}`;
     const iconColor = isCustom ? '#FF6B35' : theme.colors.primary;
     const iconBg = isCustom ? '#FF6B3515' : theme.colors.primary + '15';
     const borderColor = isCustom ? '#FF6B3540' : theme.colors.primary + '40';
-    
+
+    const handleLongPress = () => {
+      if (isCustom && hasCustomSound) {
+        // Delete custom sound
+        removeCustomSound(customIndex);
+      } else {
+        // Schedule sound
+        setSelectedIndex(index);
+        setShowPopup(true);
+      }
+    };
+
     return (
       <TouchableOpacity
         key={index}
         style={[
-          styles.fartButton, 
-          { 
+          styles.fartButton,
+          {
             backgroundColor: theme.colors.surface,
             borderColor: borderColor,
             borderWidth: 1.5,
           }
         ]}
         onPress={() => playSound(index)}
-        onLongPress={() => {
-          setSelectedIndex(index);
-          setShowPopup(true);
-        }}
-        delayLongPress={2000}
+        onLongPress={handleLongPress}
+        delayLongPress={isCustom && hasCustomSound ? 2000 : 2000}
       >
         <View style={[styles.buttonIcon, { backgroundColor: iconBg }]}>
           <Text style={[styles.buttonEmoji, { color: iconColor }]}>💨</Text>
         </View>
         <Text style={[styles.buttonLabel, { color: theme.colors.text }]}>{label}</Text>
+        {isCustom && hasCustomSound && (
+          <View style={styles.deleteIndicator}>
+            <Text style={styles.deleteText}>{translations.delete || 'DEL'}</Text>
+          </View>
+        )}
       </TouchableOpacity>
     );
   };
@@ -426,20 +441,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: 20,
-    paddingBottom: 40,
+    padding: 16,
+    paddingBottom: 20,
   },
   title: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: '700',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 4,
     letterSpacing: -0.5,
   },
   subtitle: {
     fontSize: 14,
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: 20,
     fontWeight: '500',
   },
   buttonsGrid: {
@@ -449,10 +464,10 @@ const styles = StyleSheet.create({
   },
   fartButton: {
     alignItems: 'center',
-    padding: 14,
-    borderRadius: 20,
+    padding: 12,
+    borderRadius: 16,
     width: '23%',
-    marginBottom: 16,
+    marginBottom: 12,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -476,7 +491,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   customSection: {
-    marginTop: 24,
+    marginTop: 16,
   },
   divider: {
     flexDirection: 'row',
@@ -712,5 +727,19 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  deleteIndicator: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    backgroundColor: '#FF6B6B',
+    borderRadius: 6,
+    paddingHorizontal: 4,
+    paddingVertical: 2,
+  },
+  deleteText: {
+    fontSize: 8,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
 });

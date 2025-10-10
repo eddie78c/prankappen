@@ -21,7 +21,6 @@ interface PrankSettings {
   currency: string;
   requestSound?: string;
   laughterSound?: string;
-  profileName: string;
   profileLocation: string;
   profileBalance: number;
   profileMonthlyIncome: number;
@@ -35,6 +34,7 @@ interface PrankContextType {
   settings: PrankSettings;
   updateSettings: (newSettings: Partial<PrankSettings>) => void;
   addCustomSound: (soundUri: string) => void;
+  removeCustomSound: (index: number) => void;
   showPrankReveal: boolean;
   setShowPrankReveal: (show: boolean) => void;
   transactions: Transaction[];
@@ -52,7 +52,6 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     receiverName: 'John Doe',
     defaultAmount: 10,
     currency: 'EUR', // Default to EUR for all languages
-    profileName: 'Maria Smith',
     profileLocation: 'Stockholm, Sweden',
     profileBalance: 21500.00,
     profileMonthlyIncome: 300.90,
@@ -80,13 +79,16 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
 
   const [showPrankReveal, setShowPrankReveal] = useState(false);
   const [sendMode, setSendMode] = useState<'send' | 'receive'>('receive');
+  const formatDate = (d: Date) => d.toLocaleString('en-US', { month: 'short', day: 'numeric' });
+  const daysAgo = (n: number) => new Date(Date.now() - n * 24 * 60 * 60 * 1000);
+
   const [transactions, setTransactions] = useState<Transaction[]>([
     {
       id: '1',
       titleKey: 'grocery',
       descriptionKey: 'mainGroceryStore',
       amount: -50.68,
-      date: 'Aug 26',
+      date: formatDate(daysAgo(0)),
       category: 'food',
       icon: 'basket',
       color: '#FF6B6B'
@@ -96,7 +98,7 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
       titleKey: 'transport',
       descriptionKey: 'slCardTopUp',
       amount: -86.00,
-      date: 'Aug 25',
+      date: formatDate(daysAgo(1)),
       category: 'transport',
       icon: 'car',
       color: '#4ECDC4'
@@ -106,7 +108,7 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
       titleKey: 'salary',
       descriptionKey: 'monthlySalary',
       amount: 6500.00,
-      date: 'Aug 25',
+      date: formatDate(daysAgo(1)),
       category: 'income',
       icon: 'cash',
       color: '#10B981'
@@ -116,7 +118,7 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
       titleKey: 'coffee',
       descriptionKey: 'espressoHouse',
       amount: -45.00,
-      date: 'Aug 24',
+      date: formatDate(daysAgo(2)),
       category: 'food',
       icon: 'cafe',
       color: '#FF6B6B'
@@ -148,6 +150,20 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const removeCustomSound = async (index: number) => {
+    const updatedSettings = {
+      ...settings,
+      customSounds: settings.customSounds.filter((_, i) => i !== index)
+    };
+    setSettings(updatedSettings);
+
+    try {
+      await AsyncStorage.setItem('prank_settings', JSON.stringify(updatedSettings));
+    } catch (error) {
+      console.log('Error removing custom sound:', error);
+    }
+  };
+
   const updateMonthlyIncome = (amount: number) => {
     setSettings(prev => ({ 
       ...prev, 
@@ -172,6 +188,7 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
       settings,
       updateSettings,
       addCustomSound,
+      removeCustomSound,
       showPrankReveal,
       setShowPrankReveal,
       transactions,

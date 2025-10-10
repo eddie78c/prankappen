@@ -22,18 +22,18 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
   const handleSend = () => {
     Keyboard.dismiss();
     if (!phoneNumber.trim()) {
-      Alert.alert(translations.error || 'Error', translations.pleaseEnterPhone || 'Please enter a phone number');
+      Alert.alert(translations.error!, translations.pleaseEnterPhone!);
       return;
     }
 
     const numericAmount = parseFloat(amount);
     if (!numericAmount || numericAmount <= 0) {
-      Alert.alert(translations.error || 'Error', translations.pleaseEnterValidAmount || 'Please enter a valid amount');
+      Alert.alert(translations.error!, translations.pleaseEnterValidAmount!);
       return;
     }
 
     if (numericAmount > settings.profileBalance) {
-      Alert.alert(translations.insufficientBalance || 'Insufficient Balance', translations.cannotSendMore || 'You cannot send more money than your current balance');
+      Alert.alert(translations.insufficientBalance!, translations.cannotSendMore!);
       return;
     }
 
@@ -57,9 +57,9 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
       animationType="slide"
       onRequestClose={handleClose}
     >
-      <TouchableWithoutFeedback onPress={handleClose} accessible={false}>
-        <View style={styles.overlay}>
-          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ justifyContent: 'flex-end' }}>
+      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.overlay}>
+        <TouchableWithoutFeedback onPress={handleClose} accessible={false}>
+          <View style={styles.overlayContent}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
               <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
                 <View style={styles.header}>
@@ -146,9 +146,9 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
                 </View>
               </View>
             </TouchableWithoutFeedback>
-          </KeyboardAvoidingView>
-        </View>
-      </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </Modal>
   );
 }
@@ -157,6 +157,9 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  overlayContent: {
+    flex: 1,
     justifyContent: 'flex-end',
   },
   container: {

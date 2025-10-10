@@ -14,7 +14,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 function AuthenticatedApp() {
   const { isAuthenticated, authenticate } = useAuth();
   const { settings } = usePrank();
-  const { isDark } = useTheme();
+  const { theme } = useTheme();
   const [showSplash, setShowSplash] = useState(true);
   const [showPinError, setShowPinError] = useState(false);
 
@@ -44,14 +44,11 @@ function AuthenticatedApp() {
   }
 
   return (
-    <>
-      <StatusBar style={isDark ? "light" : "dark"} />
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="+not-found" />
-        {/* Removed farts and knock from the main stack */}
-      </Stack>
-    </>
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="+not-found" />
+      {/* Removed farts and knock from the main stack */}
+    </Stack>
   );
 }
 
@@ -73,7 +70,18 @@ export default function RootLayout() {
             </PrankProvider>
           </LanguageProvider>
         </ThemeProvider>
+        <RootStatusBar />
       </SafeAreaProvider>
     </GestureHandlerRootView>
+  );
+}
+
+function RootStatusBar() {
+  const { theme } = useTheme();
+  return (
+    <StatusBar
+      style={theme.isDark ? "light" : "dark"}
+      backgroundColor={theme.colors.background}
+    />
   );
 }

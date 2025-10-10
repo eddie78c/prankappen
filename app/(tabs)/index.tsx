@@ -93,7 +93,7 @@ export default function HomeScreen() {
     // Add new transaction
     const newTransaction = {
       titleKey: 'request',
-      description: `From ${settings.receiverName}`,
+      description: `${translations.from} ${settings.receiverName}`,
       amount: settings.defaultAmount,
       date: 'Today',
       category: 'transfer',
@@ -119,7 +119,7 @@ export default function HomeScreen() {
     // Add new transaction
     const newTransaction = {
       titleKey: 'send',
-      description: `To ${phoneNumber}`,
+      description: `${translations.to} ${phoneNumber}`,
       amount: -amount,
       date: 'Today',
       category: 'transfer',
@@ -214,8 +214,8 @@ export default function HomeScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Fixed Header */}
       <View style={[styles.fixedHeader, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
-        <TouchableOpacity style={[styles.menuButton, { position: 'absolute', left: 20, top: 0, bottom: 0, justifyContent: 'center' }]} onPress={() => setShowMenu(true)}>
-          <Text style={[styles.menuLines, { color: theme.colors.text }]}>☰</Text>
+        <TouchableOpacity style={[styles.menuButton, { position: 'absolute', left: 20, top: 0, bottom: 0, justifyContent: 'center' }]} onPress={() => setShowMenu(true)} hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}>
+          <Text style={[styles.menuLines, { color: theme.colors.text, fontSize: 24 }]}>☰</Text>
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
           {translations.dashboard}
@@ -578,7 +578,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     position: 'absolute',
-    top: 0,
+    top: 60,
     left: 20,
     width: 240,
     minHeight: 120,

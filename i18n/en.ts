@@ -211,6 +211,10 @@ export const en = {
   farts: "Farts",
   knock: "Knock",
 
+  // Transaction prefixes
+  from: "From",
+  to: "To",
+
   // Farts Screen
   chooseYourFartSound: "Choose your fart sound!",
   tapToPlayHoldToSchedule: "Tap to play • Hold 2s to schedule",
