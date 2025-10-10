@@ -633,7 +633,7 @@ export default function MoreScreen() {
                   ]}
                   onPress={() => {
                     updateSettings({ requestSound: 'a-pay.mp3' });
-                    playSoundUri(require('@/assets/sounds/a-pay.mp3'));
+                    playSoundUri(require('../../assets/sounds/a-pay.mp3'));
                     Alert.alert(translations.soundSelected || 'Sound selected', translations.aPaySound || 'A-Pay sound selected');
                   }}
                 >
@@ -661,9 +661,9 @@ export default function MoreScreen() {
                       ]}
                       onPress={() => {
                         setTempLaughterSound(sound.file);
-                        const soundPath = sound.file === 'Chuckle.mp3' ? require('@/assets/sounds/laugh/Chuckle.mp3') :
-                                         sound.file === 'Giggle.mp3' ? require('@/assets/sounds/laugh/Giggle.mp3') :
-                                         require('@/assets/sounds/laugh/Tee-hee.mp3');
+                        const soundPath = sound.file === 'Chuckle.mp3' ? require('../../assets/sounds/laugh/Chuckle.mp3') :
+                                         sound.file === 'Giggle.mp3' ? require('../../assets/sounds/laugh/Giggle.mp3') :
+                                         require('../../assets/sounds/laugh/Tee-hee.mp3');
                         playSoundUri(soundPath);
                       }}
                     >
