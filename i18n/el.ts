@@ -155,5 +155,26 @@ export const el = {
  chain7: "Hondos Center Αθήνα",
  chain8: "Attica Αθήνα",
  chain9: "My Market Αθήνα",
- chain10: "Costa Coffee Αθήνα"
+ chain10: "Costa Coffee Αθήνα",
+
+ // Affiliate Program
+ affiliateProgram: "Πρόγραμμα συνεργατών",
+ totalEarned: "Σύνολο κερδισμένων",
+ earnPerReferral: "Κερδίστε 1 USD ανά παραπομπή όταν κάποιος αγοράσει την εφαρμογή",
+ totalReferrals: "Σύνολο παραπομπών",
+ pendingPayouts: "Εκκρεμείς πληρωμές",
+ referralLink: "Σύνδεσμος παραπομπής",
+ requestPayout: "Αίτηση πληρωμής",
+ minimumPayout: "Ελάχιστη πληρωμή: 50 USD",
+ paypalEmail: "PayPal email",
+ enterPaypalEmail: "Εισάγετε PayPal email",
+ payoutAmount: "Ποσό πληρωμής",
+ enterPayoutAmount: "Εισάγετε ποσό",
+ payoutRequested: "Η αίτηση πληρωμής εστάλη επιτυχώς",
+ invalidPaypalEmail: "Παρακαλώ εισάγετε τη διεύθυνση email PayPal σας",
+ invalidPayoutAmount: "Παρακαλώ εισάγετε έγκυρο ποσό πληρωμής",
+ minimumPayoutAmount: "Το ελάχιστο ποσό πληρωμής είναι 50 USD. Έχετε αυτή τη στιγμή 47.00 USD διαθέσιμα.",
+ insufficientEarnings: "Δεν μπορείτε να ζητήσετε περισσότερα από τα διαθέσιμα έσοδά σας. Έχετε 47.00 USD διαθέσιμα, αλλά ζητήσατε $[ποσό].",
+ copied: "Αντιγράφηκε!",
+ payoutHistory: "Ιστορικό πληρωμών"
 };
