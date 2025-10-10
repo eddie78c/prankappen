@@ -66,11 +66,11 @@ export default function RootLayout() {
                 <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
                   <AuthenticatedApp />
                 </SafeAreaView>
+                <RootStatusBar />
               </AuthProvider>
             </PrankProvider>
           </LanguageProvider>
         </ThemeProvider>
-        <RootStatusBar />
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
