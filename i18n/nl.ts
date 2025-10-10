@@ -178,5 +178,92 @@ export const nl = {
   minimumPayoutAmount: "Het minimum uitbetalingsbedrag is $50. U heeft momenteel $47.00 beschikbaar.",
   insufficientEarnings: "U kunt niet meer aanvragen dan uw beschikbare inkomsten. U heeft $47.00 beschikbaar, maar heeft $[amount] aangevraagd.",
   copied: "Gekopieerd!",
-  payoutHistory: "Uitbetalingsgeschiedenis"
+  payoutHistory: "Uitbetalingsgeschiedenis",
+
+  // Rating
+  rateUs: "Beoordeel ons",
+  rateAppQuestion: "Hoe zou u onze app beoordelen?",
+  writeComment: "Schrijf uw opmerking (optioneel)",
+  submitRating: "Beoordeling indienen",
+  thankYou: "Dank u!",
+  thankYouFeedback: "Dank u voor uw feedback!",
+
+  // Security
+  setPinCode: "Stel uw PIN-code in voor app-beveiliging:",
+  enter4DigitPin: "Voer 4-cijferige PIN in",
+  confirm4DigitPin: "Bevestig 4-cijferige PIN",
+  savePin: "PIN opslaan",
+  pinSet: "PIN ingesteld",
+  pinDisabled: "PIN uitgeschakeld",
+  pinMismatch: "PIN komt niet overeen",
+  invalidPin: "Ongeldige PIN",
+  enter4DigitPinOrEmpty: "Voer een 4-cijferige PIN in of laat leeg om uit te schakelen.",
+  pinsDoNotMatch: "PIN's komen niet overeen. Probeer het opnieuw.",
+  pinSecuritySubText: "Gebruik deze PIN om toegang te krijgen tot gevoelige app-functies. Laat leeg om PIN uit te schakelen. Houd het veilig en deel het niet met anderen.",
+
+  // Notifications
+  receiveUpdatesOffers: "Ontvang updates en aanbiedingen van Prank Bank",
+  notificationsEnabledText: "U ontvangt meldingen over nieuwe functies, app-updates en speciale aanbiedingen. U kunt zich op elk moment afmelden via uw apparaatinstellingen.",
+
+  // Help Center
+  welcomeToPrankBank: "Welkom bij Prank Bank!",
+  gettingStarted: "Aan de slag",
+  settingUpProfile: "1. Uw profiel instellen",
+  goToSettingsConfigure: "Ga naar Instellingen: Configureer Prank om uw prank-ervaring aan te passen:",
+  bulletReceiverName: "• Naam ontvanger: Stel de naam in van de persoon die u wilt foppen",
+  bulletLocation: "• Locatie: Voeg een locatie toe voor authenticiteit",
+  bulletTotalBalance: "• Totaal saldo: Stel uw valse rekeningsaldo in",
+  bulletDefaultAmount: "• Standaardbedrag: Kies het transactiebedrag voor uw prank",
+  soundSettings: "2. Geluidsinstellingen",
+  makePranksConvincing: "Maak uw pranks overtuigender met aangepaste geluiden:",
+  bulletLaughterSounds: "• Lachgeluiden: Kies tussen Lachen, Giechelen of Hee-hee",
+  bulletCustomSounds: "• Aangepaste geluiden: Upload uw eigen audiobestanden",
+  bulletRequestSound: "• Verzoekgeluid: Stel een geluid in dat afspeelt bij geldverzoeken",
+  photoSettings: "3. Foto-instellingen",
+  addReceiverPhoto: "Voeg een foto van de ontvanger toe om de prank realistischer te maken. Upload van camera of galerij.",
+  fartsKnockFeatures: "4. Scheet- en klop-functies",
+  additionalPrankTools: "Extra prank-tools voor meer plezier:",
+  bulletFarts: "• /scheten: Speel verschillende scheetgeluiden af voor komisch effect",
+  bulletKnock: "• /kloppen: Simuleer klopgeluiden",
+  howToExecutePrank: "5. Hoe een prank uit te voeren",
+  followStepsPerfectPrank: "Volg deze stappen voor de perfecte prank:",
+  step1SetupProfile: "1. Stel uw profiel in met realistische details",
+  step2ChooseSounds: "2. Kies geschikte geluiden en bedragen",
+  step3NavigateMainScreen: "3. Navigeer naar het hoofdscherm en initieer een transactie",
+  step4ShowTransactionScreen: "4. Toon het valse transactiescherm aan uw vriend",
+  step5EnjoyReaction: "5. Geniet van de reactie en onthul de prank!",
+  importantNote: "⚠️ BELANGRIJKE OPMERKING",
+  alwaysPrankResponsibly: "Doe altijd verantwoordelijk pranks. Zorg ervoor dat uw slachtoffers goede sporters zijn en niet van streek raken. Pranks zouden leuk moeten zijn voor alle deelnemers.",
+
+  // About
+  aboutDescription: "Prank Bank is een leuke prank-applicatie ontworpen alleen voor entertainment. Alle functies zijn bedoeld voor onschuldige pranks tussen vrienden en familie.",
+  aboutFeatures: "Functies omvatten valse banktransacties, prank-geluiden, scheetgeluiden, klopgeluiden en aanpasbare prank-scenario's om uw vrienden te verrassen met onschuldige plezier.",
+  aboutHowItWorks: "Hoe het werkt: Stel uw prank-profiel in met ontvangerdetails, kies bedragen en geluiden, toon dan het valse transactiescherm aan uw onwetende vriend!",
+  legalDisclaimer: "JURIDISCHE DISCLAIMER:",
+  legalText1: "Deze applicatie is alleen bedoeld voor entertainment. Gebruikers zijn volledig verantwoordelijk voor hun gebruik van deze app. De app mag nooit worden gebruikt voor frauduleuze activiteiten, intimidatie of illegale activiteiten. Door deze app te gebruiken, gaat u ermee akkoord deze niet te gebruiken om anderen te misleiden, te schaden of te bedriegen. De ontwikkelaars zijn niet verantwoordelijk voor enig misbruik van deze applicatie.",
+  legalText2: "Onthoud: Pranks zouden leuk en onschuldig moeten zijn. Respecteer altijd de grenzen van anderen en lokale wetten.",
+  legalText3: "Deze app wordt geleverd 'zoals het is' zonder garantie van welke aard dan ook. Gebruik op eigen risico.",
+  legalText4: "De gebruiker neemt volledige verantwoordelijkheid voor alle acties die met deze applicatie worden uitgevoerd. Pranks mogen alleen worden gespeeld op instemmende deelnemers die begrijpen dat het een grap is.",
+
+  // Menu and Navigation
+  menu: "Menu",
+  farts: "Scheten",
+  knock: "Kloppen",
+
+  // Farts Screen
+  chooseYourFartSound: "Kies uw scheetgeluid!",
+  tapToPlayHoldToSchedule: "Tik om af te spelen • Houd 2s ingedrukt om te plannen",
+  customSounds: "Aangepaste geluiden",
+  scheduledSounds: "Geplande geluiden",
+  scheduleSound: "Geluid plannen",
+  delayMinutes: "Vertraging (minuten)",
+  delaySeconds: "Vertraging (seconden)",
+  repeatTimes: "Aantal herhalingen",
+  intervalSeconds: "Interval (seconden)",
+  cancelSchedule: "Annuleren",
+  schedule: "Plannen",
+  timesLeft: "x over",
+
+  // Delete
+  delete: "Verwijderen"
 };
