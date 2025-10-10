@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Modal } from 'react-native';
+import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
 import { Audio } from 'expo-av';
 import Animated, {
   useSharedValue,
@@ -10,7 +10,7 @@ import Animated, {
   runOnJS
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ArrowDownLeft } from 'lucide-react-native';
+import { ArrowDownLeft, X } from 'lucide-react-native';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
 import { usePrank } from '../contexts/PrankContext';
@@ -35,6 +35,7 @@ export default function MoneyReceivedAnimation({
   const scale = useSharedValue(0);
   const opacity = useSharedValue(0);
   const iconScale = useSharedValue(0);
+  const [currentDateTime, setCurrentDateTime] = React.useState('');
 
   const playRequestSound = async () => {
     try {
@@ -58,28 +59,41 @@ export default function MoneyReceivedAnimation({
     return Math.random().toString(36).substr(2, 9).toUpperCase();
   };
 
+  const handleManualClose = () => {
+    opacity.value = withTiming(0, { duration: 300 });
+    setTimeout(() => {
+      runOnJS(onClose)();
+    }, 300);
+  };
+
   useEffect(() => {
+    // Set current date and time
+    const now = new Date();
+    const dateStr = now.toLocaleDateString();
+    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    setCurrentDateTime(`${dateStr} ${timeStr}`);
+
     // Play configured sound for money received
     playRequestSound();
-    
+
     // Start animation sequence
     opacity.value = withTiming(1, { duration: 300 });
     scale.value = withSequence(
       withSpring(1.2, { damping: 15 }),
       withSpring(1, { damping: 12 })
     );
-    
+
     setTimeout(() => {
       iconScale.value = withSpring(1, { damping: 15 });
     }, 500);
-    
-    // Auto close after 2.5 seconds
+
+    // Auto close after 5.5 seconds (original 2.5 + 3 seconds)
     setTimeout(() => {
       opacity.value = withTiming(0, { duration: 300 });
       setTimeout(() => {
         runOnJS(onClose)();
       }, 300);
-    }, 2500);
+    }, 5500);
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -105,22 +119,33 @@ export default function MoneyReceivedAnimation({
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
           >
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={handleManualClose}
+            >
+              <X size={24} color="white" />
+            </TouchableOpacity>
+
             <Animated.View style={[styles.iconContainer, iconAnimatedStyle]}>
               <ArrowDownLeft size={60} color="white" />
             </Animated.View>
-            
+
             <Text style={styles.title}>
               {translations.moneyReceived}
             </Text>
-            
+
             <Text style={styles.amount}>
               {formatCurrency(Math.abs(amount), currency)}
             </Text>
-            
+
             <Text style={styles.receiver}>
               {receiver}
             </Text>
-            
+
+            <Text style={styles.dateTime}>
+              {currentDateTime}
+            </Text>
+
             <Text style={styles.transactionId}>
               ID: {generateTransactionId()}
             </Text>
@@ -140,11 +165,22 @@ const styles = StyleSheet.create({
   },
   container: {
     width: 280,
-    height: 320,
+    height: 340,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 30,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   iconContainer: {
     marginBottom: 20,
@@ -166,6 +202,13 @@ const styles = StyleSheet.create({
   receiver: {
     fontSize: 16,
     opacity: 0.9,
+    textAlign: 'center',
+    marginBottom: 5,
+    color: 'white',
+  },
+  dateTime: {
+    fontSize: 12,
+    opacity: 0.7,
     textAlign: 'center',
     marginBottom: 10,
     color: 'white',

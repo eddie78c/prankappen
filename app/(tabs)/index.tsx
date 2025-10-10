@@ -112,7 +112,7 @@ export default function HomeScreen() {
     // Play sound
     playRequestSound();
 
-    createAnimationData(settings.defaultAmount, `From ${settings.receiverName}`, 'received');
+    createAnimationData(settings.defaultAmount, settings.receiverName, 'received');
   };
 
   const handleSendToPhone = (phoneNumber: string, amount: number) => {
