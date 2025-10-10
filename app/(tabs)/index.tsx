@@ -214,7 +214,7 @@ export default function HomeScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Fixed Header */}
       <View style={[styles.fixedHeader, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
-        <TouchableOpacity style={[styles.menuButton, { position: 'absolute', left: 20, top: 0, bottom: 0, justifyContent: 'center' }]} onPress={() => setShowMenu(true)} hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}>
+        <TouchableOpacity style={[styles.menuButton, { position: 'absolute', left: 20, top: 0, bottom: 0, justifyContent: 'center' }]} onPress={() => setShowMenu(true)} hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}>
           <Text style={[styles.menuLines, { color: theme.colors.text, fontSize: 24 }]}>☰</Text>
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: theme.colors.text }]}>

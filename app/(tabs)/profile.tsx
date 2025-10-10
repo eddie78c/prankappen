@@ -48,44 +48,31 @@ export default function ProfileScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Fixed Header */}
       <View style={[styles.fixedHeader, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
-        <TouchableOpacity style={[styles.menuButton, { position: 'absolute', left: 20, top: 0, bottom: 0, justifyContent: 'center' }]}>
-          <Text style={[styles.menuLines, { color: theme.colors.text }]}>☰</Text>
-        </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
           {translations.account}
         </Text>
-        <TouchableOpacity style={[styles.menuButton, { position: 'absolute', right: 20, top: 0, bottom: 0, justifyContent: 'center' }]}>
-          <Bell size={24} color={theme.colors.text} />
-        </TouchableOpacity>
       </View>
 
       <ScrollView ref={scrollRef} style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.contentPadding}>
         {/* Profile Info */}
-        <LinearGradient
-          colors={theme.colors.gradient}
-          style={styles.profileHeader}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <Animated.View entering={FadeInDown.delay(200)} style={styles.profileInfo}>
-            <View style={styles.avatarContainer}>
-              <Image
-                source={settings.receiverPhoto ? { uri: settings.receiverPhoto } : avatarPlaceholder}
-                style={styles.avatar}
-              />
-              <View style={styles.avatarGlow} />
-            </View>
-            <View style={styles.userInfo}>
-              <Text style={[styles.name, { color: theme.colors.surface }]}>
-                {settings.receiverName || 'John Doe'}
-              </Text>
-              <Text style={[styles.location, { color: theme.colors.surface }]}>
-                {settings.profileLocation}
-              </Text>
-            </View>
-          </Animated.View>
-        </LinearGradient>
+        <Animated.View entering={FadeInDown.delay(200)} style={styles.profileInfo}>
+          <View style={styles.avatarContainer}>
+            <Image
+              source={settings.receiverPhoto ? { uri: settings.receiverPhoto } : avatarPlaceholder}
+              style={styles.avatar}
+            />
+            <View style={styles.avatarGlow} />
+          </View>
+          <View style={styles.userInfo}>
+            <Text style={[styles.name, { color: theme.colors.text }]}>
+              {settings.receiverName || 'John Doe'}
+            </Text>
+            <Text style={[styles.location, { color: theme.colors.textSecondary }]}>
+              {settings.profileLocation}
+            </Text>
+          </View>
+        </Animated.View>
         {/* Balance Section */}
         <Animated.View entering={FadeInDown.delay(600)} style={styles.balanceSection}>
           <GlassCard style={styles.balanceCard}>
@@ -184,13 +171,13 @@ const styles = StyleSheet.create({
     lineHeight: 48,
   },
   profileHeader: {
-    marginTop: 0,
-    paddingTop: 24,
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    borderRadius: 16,
-    marginHorizontal: 16,
-  },
+   marginTop: 20,
+   paddingTop: 24,
+   paddingHorizontal: 20,
+   paddingBottom: 20,
+   borderRadius: 16,
+   marginHorizontal: 16,
+ },
   profileInfo: {
     alignItems: 'center',
   },

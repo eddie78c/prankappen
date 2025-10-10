@@ -215,6 +215,16 @@ export default function KnockScreen() {
         </View>
         <Text style={[styles.buttonLabel, { color: theme.colors.text }]}>{label}</Text>
         {isCustom && hasCustomSound && (
+          <View style={styles.playIndicator}>
+            <TouchableOpacity
+              style={[styles.playButton, { backgroundColor: theme.colors.primary }]}
+              onPress={() => playSound(index)}
+            >
+              <Text style={styles.playIcon}>▶️</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {isCustom && hasCustomSound && (
           <View style={styles.deleteIndicator}>
             <Text style={styles.deleteText}>{translations.delete || 'DEL'}</Text>
           </View>
@@ -727,6 +737,24 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  playIndicator: {
+    position: 'absolute',
+    bottom: 4,
+    left: 4,
+    right: 4,
+    alignItems: 'center',
+  },
+  playButton: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  playIcon: {
+    fontSize: 10,
+    color: '#FFFFFF',
   },
   deleteIndicator: {
     position: 'absolute',

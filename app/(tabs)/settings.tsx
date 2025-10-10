@@ -473,7 +473,7 @@ export default function MoreScreen() {
               setShowRating(false);
             }
           }}
-          style={{ flex: 1, alignItems: 'center' }}
+          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
         >
           <Text style={[styles.title, { color: theme.colors.text }]}>
             {showLanguageSelector ? translations.selectLanguage :

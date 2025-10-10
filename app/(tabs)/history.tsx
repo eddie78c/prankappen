@@ -104,12 +104,6 @@ export default function HistoryScreen() {
            <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
              <Ionicons name="search" size={24} color={theme.colors.text} />
            </TouchableOpacity>
-           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-             <Ionicons name="filter" size={24} color={theme.colors.text} />
-           </TouchableOpacity>
-           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-             <Ionicons name="calendar" size={24} color={theme.colors.text} />
-           </TouchableOpacity>
          </View>
       </View>
 
