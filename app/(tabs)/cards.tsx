@@ -54,7 +54,7 @@ export default function CardsScreen() {
       id: (cards.length + 1).toString(),
       typeKey: 'virtualCard',
       number: generateCardNumber(),
-      holder: settings.receiverName || 'Maria Smith',
+      holder: settings.receiverName,
       expiry: `${(new Date().getMonth() + 1).toString().padStart(2, '0')}/${(new Date().getFullYear() + 2).toString().slice(-2)}`,
       cvv: (Math.floor(Math.random() * 900) + 100).toString(),
       isActive: true,
