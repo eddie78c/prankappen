@@ -78,16 +78,26 @@ export default function HistoryScreen() {
     { key: 'expenses', label: translations.expenses }
   ];
 
+  const filteredTransactions = useMemo(() => {
+    if (selectedFilter === 'income') {
+      return dynamicTransactions.filter(t => t.amount > 0 || t.category === 'income');
+    }
+    if (selectedFilter === 'expenses') {
+      return dynamicTransactions.filter(t => t.amount < 0);
+    }
+    return dynamicTransactions;
+  }, [selectedFilter, dynamicTransactions]);
+
   const groupedTransactions = useMemo(() => {
-    const firstDate = dynamicTransactions[0]?.date;
-    const secondDate = dynamicTransactions[2]?.date;
+    const firstDate = filteredTransactions[0]?.date;
+    const secondDate = filteredTransactions[2]?.date;
 
     return {
-      today: dynamicTransactions.filter(t => t.date === firstDate),
-      yesterday: dynamicTransactions.filter(t => t.date === secondDate),
-      thisWeek: dynamicTransactions.filter(t => t.date !== firstDate && t.date !== secondDate)
+      today: filteredTransactions.filter(t => t.date === firstDate),
+      yesterday: filteredTransactions.filter(t => t.date === secondDate),
+      thisWeek: filteredTransactions.filter(t => t.date !== firstDate && t.date !== secondDate)
     };
-  }, [dynamicTransactions]);
+  }, [filteredTransactions]);
 
   const getCategoryIcon = (icon: string) => {
     const iconMap: { [key: string]: string } = {
@@ -161,39 +171,28 @@ export default function HistoryScreen() {
 
       {/* Filters */}
       <View style={styles.filterSection}>
-        <ScrollView 
-          horizontal 
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.filterContent}
-        >
+        <View style={styles.tabContainer}>
           {filters.map((filter, index) => (
-            <Animated.View key={filter.key} entering={FadeInDown.delay(index * 100)}>
+            <Animated.View key={filter.key} style={{ flex: 1 }} entering={FadeInDown.delay(index * 100)}>
               <TouchableOpacity
                 style={[
-                  styles.filterChip,
-                  {
-                    backgroundColor: selectedFilter === filter.key 
-                      ? theme.colors.primary 
-                      : theme.colors.surface,
-                  },
+                  styles.tabButton,
+                  { backgroundColor: selectedFilter === filter.key ? theme.colors.primary : theme.colors.surface },
+                  index < filters.length - 1 ? { marginRight: 8 } : null
                 ]}
                 onPress={() => setSelectedFilter(filter.key)}
                 activeOpacity={0.8}
               >
                 <Text style={[
-                  styles.filterLabel,
-                  {
-                    color: selectedFilter === filter.key 
-                      ? '#FFFFFF'
-                      : theme.colors.text,
-                  },
+                  styles.tabLabel,
+                  { color: selectedFilter === filter.key ? '#FFFFFF' : theme.colors.text }
                 ]}>
                   {filter.label}
                 </Text>
               </TouchableOpacity>
             </Animated.View>
           ))}
-        </ScrollView>
+        </View>
       </View>
 
       {/* Transactions List */}
@@ -274,21 +273,21 @@ const styles = StyleSheet.create({
   filterSection: {
     paddingVertical: 12,
   },
-  filterContent: {
+  tabContainer: {
+    flexDirection: 'row',
     paddingHorizontal: PADDING,
   },
-  filterChip: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 20,
-    marginRight: 10,
+  tabButton: {
+    paddingVertical: 12,
+    borderRadius: 12,
+    alignItems: 'center',
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },
-  filterLabel: {
+  tabLabel: {
     fontSize: 14,
     fontWeight: '600',
     letterSpacing: 0.2,

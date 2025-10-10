@@ -279,5 +279,8 @@ export const fr = {
   message: "Message",
   sendMessage: "Envoyer le message",
   messageSent: "Merci pour votre message !",
-  messageSentDescription: "Nous apprécions vos commentaires et nous vous répondrons bientôt."
+  messageSentDescription: "Nous apprécions vos commentaires et nous vous répondrons bientôt.",
+
+  // Replace Sound
+  replaceSound: "Remplacer"
 };

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Vibration, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Vibration, Dimensions, Image } from 'react-native';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -293,18 +293,22 @@ export default function PinInput({ onSubmit, showError }: PinInputProps) {
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
             >
+              <Image
+                source={require('../assets/images/android-chrome-512x512.png')}
+                style={styles.logoImage}
+                resizeMode="cover"
+              />
               <View style={styles.logoGlassEffect} />
-              <Text style={[styles.logoText, { color: theme.colors.surface }]}>P</Text>
             </LinearGradient>
           </View>
         </Animated.View>
         
-        <Animated.View style={titleAnimatedStyle}>
-          <Text style={[styles.bankName, { color: theme.colors.surface }]}>
-            PREMIUM
-          </Text>
+        <Animated.View style={[titleAnimatedStyle, { marginTop: -12 }]}>
+          
+          <Text style={[styles.bankName, { color: theme.colors.surface }]}>PREMIUM</Text>
           <Text style={[styles.bankSubtitle, { color: 'rgba(255, 255, 255, 0.8)' }]}>
-            {translations.bankName}
+            <Text style={styles.bankStrike}>BANK</Text>
+            <Text> PRANK</Text>
           </Text>
         </Animated.View>
         
@@ -360,6 +364,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 20,
+    marginTop: -60,
   },
   floatingBubble: {
     position: 'absolute',
@@ -389,17 +394,17 @@ const styles = StyleSheet.create({
     left: '10%',
   },
   logoContainer: {
-    marginBottom: 15,
+    marginBottom: 10,
   },
   logoOuter: {
-    padding: 3,
+    padding: 1,
     borderRadius: 50,
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   logo: {
-    width: 90,
-    height: 90,
-    borderRadius: 45,
+    width: 110,
+    height: 110,
+    borderRadius: 55,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
@@ -424,6 +429,11 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 2 },
     textShadowRadius: 4,
   },
+  logoImage: {
+    width: '100%',
+    height: '100%',
+    transform: [{ scale: 1.2 }],
+  },
   bankName: {
     fontSize: 32,
     fontWeight: '900',
@@ -437,25 +447,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     letterSpacing: 2,
-    marginBottom: 50,
+    marginBottom: 24,
     textTransform: 'uppercase',
+  },
+  bankStrike: {
+    textDecorationLine: 'line-through',
+  },
+  welcomeTitle: {
+    fontSize: 13,
+    fontWeight: '500',
+    letterSpacing: 1,
+    marginBottom: 2,
   },
   title: {
     fontSize: 18,
     fontWeight: '600',
-    marginBottom: 10,
+    marginBottom: 6,
     textAlign: 'center',
     letterSpacing: 1,
   },
   errorText: {
     fontSize: 14,
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: 6,
     fontWeight: '600',
   },
   pinContainer: {
     flexDirection: 'row',
-    marginBottom: 60,
+    marginBottom: 24,
   },
   pinDotOuter: {
     marginHorizontal: 12,

@@ -250,5 +250,8 @@ export const ar = {
   message: "الرسالة",
   sendMessage: "إرسال الرسالة",
   messageSent: "شكراً لرسالتك!",
-  messageSentDescription: "نقدر ملاحظاتك وسنعود إليك قريباً."
+  messageSentDescription: "نقدر ملاحظاتك وسنعود إليك قريباً.",
+
+  // Replace Sound
+  replaceSound: "استبدال"
 };

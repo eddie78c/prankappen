@@ -281,5 +281,8 @@ export const sr = {
   message: "Порука",
   sendMessage: "Пошаљи поруку",
   messageSent: "Хвала на вашој поруци!",
-  messageSentDescription: "Ценимо ваше повратне информације и ускоро ћемо вам се јавити."
+  messageSentDescription: "Ценимо ваше повратне информације и ускоро ћемо вам се јавити.",
+
+  // Replace Sound
+  replaceSound: "Замени"
 };

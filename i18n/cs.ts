@@ -256,5 +256,18 @@ export const cs = {
   minimumPayoutAmount: "Minimální částka výplaty je 50 $. Aktuálně máte k dispozici 47.00 $.",
   insufficientEarnings: "Nemůžete požádat o více než vaše dostupné příjmy. Máte k dispozici 47.00 $, ale požádali jste o $[částka].",
   copied: "Zkopírováno!",
-  payoutHistory: "Historie výplat"
+  payoutHistory: "Historie výplat",
+
+  // Contact Us
+  contactUs: "Kontaktujte nás",
+  contactUsDescription: "Máte návrhy nebo zpětnou vazbu? Rádi uslyšíme od vás!",
+  name: "Jméno",
+  email: "Email",
+  message: "Zpráva",
+  sendMessage: "Odeslat zprávu",
+  messageSent: "Děkujeme za vaši zprávu!",
+  messageSentDescription: "Oceňujeme vaši zpětnou vazbu a brzy se vám ozveme.",
+
+  // Replace Sound
+  replaceSound: "Nahradit"
 };

@@ -31,6 +31,17 @@ export default function FartsScreen() {
   
   const timersRef = React.useRef<{ [key: string]: any }>({});
 
+  const pickCustomSoundForIndex = async (customIndex: number) => {
+    try {
+      const result = await DocumentPicker.getDocumentAsync({ type: 'audio/*' });
+      if (result.type === 'success' && result.uri) {
+        await addCustomSound(result.uri, customIndex);
+      }
+    } catch (error) {
+      console.log('Error picking document:', error);
+    }
+  };
+
   React.useEffect(() => {
     const timer = setInterval(() => setCurrentTime(Date.now()), 1000);
     return () => {
@@ -66,18 +77,8 @@ export default function FartsScreen() {
       if (settings.customSounds[customIndex]) {
         soundUri = { uri: settings.customSounds[customIndex] };
       } else {
-        try {
-          const result = await DocumentPicker.getDocumentAsync({ type: 'audio/*' });
-          if (result.type === 'success' && result.uri) {
-            await addCustomSound(result.uri);
-            soundUri = { uri: result.uri };
-          } else {
-            return;
-          }
-        } catch (error) {
-          console.log('Error picking document:', error);
-          return;
-        }
+        // No sound uploaded, do nothing
+        return;
       }
     }
 
@@ -201,8 +202,13 @@ export default function FartsScreen() {
         ]}
         onPress={() => playSound(index)}
         onLongPress={() => {
-          if (isCustom && hasCustomSound) {
-            removeCustomSound(customIndex);
+          if (isCustom) {
+            if (hasCustomSound) {
+              pickCustomSoundForIndex(customIndex);
+            } else {
+              setSelectedIndex(index);
+              setShowPopup(true);
+            }
           } else {
             setSelectedIndex(index);
             setShowPopup(true);
@@ -222,7 +228,7 @@ export default function FartsScreen() {
         {isCustom && hasCustomSound && (
           <>
             <View style={[styles.deleteIndicator, { backgroundColor: theme.colors.error }]}>
-              <Text style={styles.deleteText}>{translations.delete || 'DEL'}</Text>
+              <Text style={styles.deleteText}>{translations.replaceSound || 'REP'}</Text>
             </View>
             <View style={styles.playIndicator}>
               <TouchableOpacity

@@ -1,6 +1,7 @@
 export const en = {
   // Welcome & Auth
   welcome: "Welcome to",
+  termsAndConditions: "Terms & Conditions",
   bankName: "PREMIUM BANK",
   enterPin: "Enter your PIN",
   wrongPin: "Wrong PIN. Try again.",
@@ -129,6 +130,8 @@ export const en = {
   notification: "Notification",
   prankMessage: "This is a prank banking app for entertainment purposes only. No real transactions are being made.",
   gotIt: "Got it",
+  acceptTerms: "I accept the terms and conditions",
+  continue: "Continue",
 
   // Cards
   showCardDetails: "Show Card Details",
@@ -282,5 +285,8 @@ export const en = {
   message: "Message",
   sendMessage: "Send Message",
   messageSent: "Thank you for your message!",
-  messageSentDescription: "We appreciate your feedback and will get back to you soon."
+  messageSentDescription: "We appreciate your feedback and will get back to you soon.",
+
+  // Replace Sound
+  replaceSound: "REP"
 };

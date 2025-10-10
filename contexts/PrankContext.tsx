@@ -33,7 +33,7 @@ interface PrankSettings {
 interface PrankContextType {
   settings: PrankSettings;
   updateSettings: (newSettings: Partial<PrankSettings>) => void;
-  addCustomSound: (soundUri: string) => void;
+  addCustomSound: (soundUri: string, index?: number) => void;
   removeCustomSound: (index: number) => void;
   showPrankReveal: boolean;
   setShowPrankReveal: (show: boolean) => void;
@@ -136,10 +136,17 @@ export function PrankProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const addCustomSound = async (soundUri: string) => {
+  const addCustomSound = async (soundUri: string, index?: number) => {
+    let updatedSounds;
+    if (index !== undefined && index >= 0 && index < settings.customSounds.length) {
+      updatedSounds = [...settings.customSounds];
+      updatedSounds[index] = soundUri;
+    } else {
+      updatedSounds = [...settings.customSounds, soundUri];
+    }
     const updatedSettings = {
       ...settings,
-      customSounds: [...settings.customSounds, soundUri]
+      customSounds: updatedSounds
     };
     setSettings(updatedSettings);
 

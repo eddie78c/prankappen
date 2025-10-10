@@ -282,5 +282,8 @@ export const de = {
   message: "Nachricht",
   sendMessage: "Nachricht senden",
   messageSent: "Vielen Dank für Ihre Nachricht!",
-  messageSentDescription: "Wir schätzen Ihr Feedback und werden uns bald bei Ihnen melden."
+  messageSentDescription: "Wir schätzen Ihr Feedback und werden uns bald bei Ihnen melden.",
+
+  // Replace Sound
+  replaceSound: "Ersetzen"
 };
