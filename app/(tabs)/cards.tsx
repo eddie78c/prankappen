@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert, Modal, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
+import { useFocusEffect } from '@react-navigation/native';
+import { PanGestureHandler, State } from 'react-native-gesture-handler';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { usePrank } from '../../contexts/PrankContext';
 import { getMockUserData } from '../../data/mockData';
 import GlassCard from '../../components/GlassCard';
-import { CreditCard, Eye, EyeOff, Plus, Settings } from 'lucide-react-native';
+import { CreditCard, Eye, EyeOff, Plus, Settings, Trash2 } from 'lucide-react-native';
 
 export default function CardsScreen() {
   const { theme } = useTheme();
@@ -23,6 +25,21 @@ export default function CardsScreen() {
   });
   const mockData = getMockUserData(currentLanguage, settings.receiverName);
   const [cards, setCards] = useState(mockData.cards);
+  const scrollRef = useRef<ScrollView>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [cardToDelete, setCardToDelete] = useState<any>(null);
+  const [longPressTimer, setLongPressTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+  const { width } = Dimensions.get('window');
+
+  // Scroll to top when this screen gains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({ y: 0, animated: false });
+      }, 0);
+      return undefined;
+    }, [])
+  );
 
   const addNewCard = () => {
     const generateCardNumber = () => {
@@ -46,53 +63,100 @@ export default function CardsScreen() {
     setCards([...cards, newCard]);
   };
 
+  const deleteCard = (cardId: string) => {
+    setCards(cards.filter(card => card.id !== cardId));
+    setShowDeleteModal(false);
+    setCardToDelete(null);
+  };
+
+  const handleLongPressStart = (card: any) => {
+    if (card.typeKey === 'virtualCard') {
+      const timer = setTimeout(() => {
+        setCardToDelete(card);
+        setShowDeleteModal(true);
+      }, 2000);
+      setLongPressTimer(timer);
+    }
+  };
+
+  const handleLongPressEnd = () => {
+    if (longPressTimer) {
+      clearTimeout(longPressTimer);
+      setLongPressTimer(null);
+    }
+  };
+
+  const createSwipeHandler = (cardIndex: number) => (event: any) => {
+    const { translationX, state } = event.nativeEvent;
+    if (state === State.END) {
+      const currentCards = cards.filter(card => selectedCard === 0 ? card.typeKey === 'physicalCard' : card.typeKey === 'virtualCard');
+
+      if (Math.abs(translationX) > width * 0.3) {
+        if (translationX > 0 && cardIndex > 0) {
+          // Swipe right - go to previous card
+          setSelectedCard(cardIndex - 1);
+        } else if (translationX < 0 && cardIndex < currentCards.length - 1) {
+          // Swipe left - go to next card
+          setSelectedCard(cardIndex + 1);
+        }
+      }
+    }
+  };
+
   const renderCard = (card: any, index: number) => (
     <Animated.View
       key={card.id}
       entering={FadeInRight.delay(index * 200).springify()}
     >
-      <TouchableOpacity
-        onPress={() => setSelectedCard(index)}
-        style={[
-          styles.cardContainer,
-          selectedCard === index && styles.selectedCard,
-        ]}
-      >
-        <LinearGradient
-          colors={[card.color, card.color + '80']}
-          style={styles.card}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <View style={styles.cardHeader}>
-            <Text style={styles.cardType}>{translations[card.typeKey as keyof typeof translations]}</Text>
-            <Text style={styles.visa}>VISA</Text>
-          </View>
-          
-          <View style={styles.cardNumber}>
-            <Text style={styles.numberText}>
-              {showCardNumber ? card.number : '**** **** **** ' + card.number.slice(-4)}
-            </Text>
-          </View>
-          
-          <View style={styles.cardFooter}>
-            <View>
-              <Text style={styles.cardLabel}>{translations.cardHolder}</Text>
-              <Text style={styles.cardValue}>{card.holder}</Text>
-            </View>
-            <View>
-              <Text style={styles.cardLabel}>{translations.expires}</Text>
-              <Text style={styles.cardValue}>{card.expiry}</Text>
-            </View>
-            <View>
-              <Text style={styles.cardLabel}>{translations.cvv}</Text>
-              <Text style={styles.cardValue}>
-                {showCardNumber ? card.cvv : '***'}
-              </Text>
-            </View>
-          </View>
-        </LinearGradient>
-      </TouchableOpacity>
+      <PanGestureHandler onGestureEvent={createSwipeHandler(index)} onHandlerStateChange={createSwipeHandler(index)}>
+        <View style={styles.gestureContainer}>
+          <TouchableOpacity
+            onPress={() => setSelectedCard(index)}
+            onLongPress={() => handleLongPressStart(card)}
+            onPressOut={handleLongPressEnd}
+            delayLongPress={2000}
+            style={[
+              styles.cardContainer,
+              selectedCard === index && styles.selectedCard,
+            ]}
+          >
+            <LinearGradient
+              colors={[card.color, card.color + '80']}
+              style={styles.card}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+            >
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardType}>{translations[card.typeKey as keyof typeof translations]}</Text>
+                <Text style={styles.visa}>VISA</Text>
+              </View>
+
+              <View style={styles.cardNumber}>
+                <Text style={styles.numberText}>
+                  {showCardNumber ? card.number : '**** **** **** ' + card.number.slice(-4)}
+                </Text>
+              </View>
+
+              <View style={styles.cardFooter}>
+                <View>
+                  <Text style={styles.cardLabel}>{translations.cardHolder}</Text>
+                  <Text style={styles.cardValue}>{card.holder}</Text>
+                </View>
+                <View>
+                  <Text style={styles.cardLabel}>{translations.expires}</Text>
+                  <Text style={styles.cardValue}>{card.expiry}</Text>
+                </View>
+                <View>
+                  <Text style={styles.cardLabel}>{translations.cvv}</Text>
+                  <Text style={styles.cardValue}>
+                    {showCardNumber ? card.cvv : '***'}
+                  </Text>
+                </View>
+              </View>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </PanGestureHandler>
     </Animated.View>
   );
 
@@ -132,7 +196,7 @@ export default function CardsScreen() {
         </Text>
       </View>
 
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false}>
         {/* Card Tabs */}
         <View style={styles.cardTabs}>
           <Animated.View entering={FadeInDown.delay(100)}>
@@ -237,12 +301,53 @@ export default function CardsScreen() {
           )}
         </View>
       </ScrollView>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        visible={showDeleteModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowDeleteModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.deleteModal, { backgroundColor: theme.colors.surface }]}>
+            <Trash2 size={48} color={theme.colors.error || '#ef4444'} style={{ marginBottom: 16 }} />
+            <Text style={[styles.deleteTitle, { color: theme.colors.text }]}>
+              {translations.delete || 'Delete Card'}
+            </Text>
+            <Text style={[styles.deleteMessage, { color: theme.colors.textSecondary }]}>
+              {translations.confirmDelete || 'Are you sure you want to delete this virtual card?'}
+            </Text>
+            <View style={styles.deleteButtons}>
+              <TouchableOpacity
+                style={[styles.deleteButton, styles.cancelButton, { backgroundColor: theme.colors.background }]}
+                onPress={() => setShowDeleteModal(false)}
+              >
+                <Text style={[styles.deleteButtonText, { color: theme.colors.text }]}>
+                  {translations.cancel || 'Cancel'}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.deleteButton, styles.confirmButton, { backgroundColor: theme.colors.error || '#ef4444' }]}
+                onPress={() => cardToDelete && deleteCard(cardToDelete.id)}
+              >
+                <Text style={[styles.deleteButtonText, { color: theme.colors.surface }]}>
+                  {translations.delete || 'Delete'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+  },
+  gestureContainer: {
     flex: 1,
   },
   header: {
@@ -421,6 +526,58 @@ const styles = StyleSheet.create({
     marginRight: 12,
   },
   settingTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  deleteModal: {
+    width: '80%',
+    maxWidth: 300,
+    padding: 24,
+    borderRadius: 16,
+    alignItems: 'center',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+  },
+  deleteTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  deleteMessage: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 24,
+    lineHeight: 22,
+  },
+  deleteButtons: {
+    flexDirection: 'row',
+    gap: 12,
+    width: '100%',
+  },
+  deleteButton: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  cancelButton: {
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+  },
+  confirmButton: {
+    // backgroundColor is set inline
+  },
+  deleteButtonText: {
     fontSize: 16,
     fontWeight: '600',
   },

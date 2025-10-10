@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Bell, Home, Utensils, Car, Gamepad2 } from 'lucide-react-native';
 import Animated, { FadeInDown } from 'react-native-reanimated';
+import { useFocusEffect } from '@react-navigation/native';
 const avatarPlaceholder = require('../../assets/images/avatar.jpg');
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
@@ -16,6 +17,17 @@ export default function ProfileScreen() {
     const { translations, currentLanguage } = useLanguage();
     const { settings } = usePrank();
    const mockUserData = getMockUserData(currentLanguage, settings.receiverName);
+   const scrollRef = useRef<ScrollView>(null);
+
+   // Scroll to top when this screen gains focus
+   useFocusEffect(
+     React.useCallback(() => {
+       setTimeout(() => {
+         scrollRef.current?.scrollTo({ y: 0, animated: false });
+       }, 0);
+       return undefined;
+     }, [])
+   );
  
    const getBudgetIcon = (categoryName: string) => {
      switch (categoryName) {
@@ -47,7 +59,7 @@ export default function ProfileScreen() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView style={[styles.content, { marginTop: 48 }]} showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollRef} style={[styles.content, { marginTop: 48 }]} showsVerticalScrollIndicator={false}>
         <View style={styles.contentPadding}>
         {/* Profile Info */}
         <LinearGradient

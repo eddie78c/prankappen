@@ -13,7 +13,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { availableCurrencies, getCurrencySymbol } from '../../utils/currency';
 // import PinInput, { PinInputProps } from '../components/PinInput';
 
-// Återanvändbar InputContainer komponent
+// Reusable InputContainer component
 const InputContainer = ({ label, labelStyle, value, onChangeText, placeholder, keyboardType, theme, children }: any) => (
   <View style={[styles.compactInputContainer, { backgroundColor: theme.colors.surface }]}>
     <Text style={[styles.inputLabel, { color: theme.colors.text }, labelStyle]}>
@@ -291,7 +291,6 @@ export default function MoreScreen() {
 
   const handleCurrencySelect = (currency: string) => {
     updateSettings({ currency });
-    // Don't close automatically - let user close with back button
   };
 
   const settingsGroups = [
@@ -715,10 +714,6 @@ export default function MoreScreen() {
         {showHelpCenter && (
           <Animated.View entering={FadeInDown.springify()}>
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
-                {translations.helpCenter}
-              </Text>
-
               <View style={[styles.helpContent, { backgroundColor: theme.colors.surface }]}>
                 <Text style={[styles.helpTitle, { color: theme.colors.text }]}>
                   {translations.welcomeToPrankBank}
@@ -1289,11 +1284,15 @@ export default function MoreScreen() {
                     styles.logoutButton,
                     { borderColor: 'rgba(239, 68, 68, 0.25)', backgroundColor: 'rgba(239, 68, 68, 0.10)' }
                   ]}
-                  onPress={logout}
+                  onPress={() => {
+                    logout();
+                    // Navigate back to home tab to show PIN screen if needed
+                    // The AuthContext will handle the state change
+                  }}
                 >
                   <Ionicons name="log-out-outline" size={18} color="rgb(220, 38, 38)" style={styles.logoutIcon} />
                   <Text style={[styles.logoutText, { color: theme.colors.text }]}>
-                    Logga ut
+                    {translations.logOut || 'Log Out'}
                   </Text>
                 </TouchableOpacity>
                 <View style={styles.footerTextContainer}>

@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown } from 'react-native-reanimated';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { usePrank } from '../../contexts/PrankContext';
@@ -13,6 +14,17 @@ export default function HistoryScreen() {
   const { translations } = useLanguage();
   const { settings } = usePrank();
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const scrollRef = useRef<ScrollView>(null);
+
+  // Scroll to top when this screen gains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({ y: 0, animated: false });
+      }, 0);
+      return undefined;
+    }, [])
+  );
 
   // Generate dynamic dates
   const dynamicTransactions = useMemo(() => {
@@ -136,7 +148,7 @@ export default function HistoryScreen() {
       </View>
 
       {/* Transactions List */}
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollRef} style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.transactionsList}>
           <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
             {translations.today}

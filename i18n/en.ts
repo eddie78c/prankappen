@@ -232,6 +232,7 @@ export const en = {
 
   // Delete
   delete: "Delete",
+  confirmDelete: "Are you sure you want to delete this virtual card?",
 
   // Sound
   selectSound: "Select Sound",

@@ -212,7 +212,6 @@ export default function HomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-
       {/* Fixed Header */}
       <View style={[styles.fixedHeader, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
         <TouchableOpacity style={[styles.menuButton, { position: 'absolute', left: 20, top: 0, bottom: 0, justifyContent: 'center' }]} onPress={() => setShowMenu(true)}>
@@ -237,7 +236,7 @@ export default function HomeScreen() {
         style={styles.secretTapSpot}
         onPress={handleSecretTap}
       />
-      <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} style={{ marginTop: 48 }} contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
         <LinearGradient
           colors={theme.colors.gradient}
           style={styles.balanceSection}
@@ -416,18 +415,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   fixedHeader: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+    position: 'relative',
     height: 48,
-    marginTop: 0,
-    paddingTop: 0,
     paddingHorizontal: 0,
     justifyContent: 'center',
     alignItems: 'center',
     paddingBottom: 0,
-    zIndex: 1000,
     elevation: 6,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -576,7 +569,7 @@ const styles = StyleSheet.create({
   },
   menuOverlay: {
     position: 'absolute',
-    top: 48,
+    top: 0,
     left: 0,
     right: 0,
     bottom: 0,
@@ -585,7 +578,7 @@ const styles = StyleSheet.create({
   },
   menu: {
     position: 'absolute',
-    top: 48,
+    top: 0,
     left: 20,
     width: 240,
     minHeight: 120,

@@ -57,23 +57,23 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
       animationType="slide"
       onRequestClose={handleClose}
     >
-      <View style={styles.overlay}>
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
+      <TouchableWithoutFeedback onPress={handleClose} accessible={false}>
+        <View style={styles.overlay}>
+          <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ justifyContent: 'flex-end' }}>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-              <View>
+              <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
                 <View style={styles.header}>
                   <Text style={[styles.title, { color: theme.colors.text }]}>
                     {translations.sendMoney}
                   </Text>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={[styles.closeButton, { backgroundColor: theme.colors.background }]}
                     onPress={handleClose}
                   >
                     <Ionicons name="close" size={24} color={theme.colors.text} />
                   </TouchableOpacity>
                 </View>
-                
+
                 <View style={styles.content}>
                   <View style={styles.inputContainer}>
                     <Text style={[styles.label, { color: theme.colors.text }]}>
@@ -95,9 +95,10 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
                       returnKeyType="next"
                       blurOnSubmit={false}
                       onSubmitEditing={() => amountRef.current?.focus()}
+                      autoFocus={false}
                     />
                   </View>
-                  
+
                   <View style={styles.inputContainer}>
                     <Text style={[styles.label, { color: theme.colors.text }]}>
                       {translations.amount}
@@ -116,15 +117,15 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
                       placeholder={translations.enterAmount}
                       placeholderTextColor={theme.colors.textSecondary}
                       keyboardType="numeric"
-                      returnKeyType="done"
-                      blurOnSubmit={true}
-                      onSubmitEditing={() => Keyboard.dismiss()}
+                      returnKeyType="send"
+                      onSubmitEditing={handleSend}
+                      autoFocus={false}
                     />
                   </View>
                 </View>
-                
+
                 <View style={styles.footer}>
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={[styles.cancelButton, { backgroundColor: theme.colors.background }]}
                     onPress={handleClose}
                   >
@@ -132,8 +133,8 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
                       {translations.cancel}
                     </Text>
                   </TouchableOpacity>
-                  
-                  <TouchableOpacity 
+
+                  <TouchableOpacity
                     style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
                     onPress={handleSend}
                   >
@@ -145,9 +146,9 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
                 </View>
               </View>
             </TouchableWithoutFeedback>
-          </View>
-        </KeyboardAvoidingView>
-      </View>
+          </KeyboardAvoidingView>
+        </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 }
