@@ -522,7 +522,7 @@ export default function MoreScreen() {
                       {
                         color: isSelected ? theme.colors.primary : theme.colors.text,
                         fontWeight: isSelected ? '700' : '600',
-                        fontSize: isSelected ? 20 : 18
+                        fontSize: isSelected ? 16 : 14
                       }
                     ]}>
                       {currency.code} - {currency.name}
@@ -1657,16 +1657,16 @@ const styles = StyleSheet.create({
 
   // Wheel Picker styles
   pickerContainer: {
-    minHeight: 400,
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10,
+    paddingHorizontal: 15,
   },
   pickerMask: {
     overflow: 'hidden',
     borderRadius: 16,
     width: '100%',
-    maxWidth: 360,
+    maxWidth: 380,
   },
   pickerContent: {
     paddingTop: 120, // Center the content

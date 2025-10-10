@@ -143,5 +143,115 @@ export const hr = {
   chain7: "Starbucks Zagreb",
   chain8: "McDonald's Zagreb",
   chain9: "H&M Zagreb",
-  chain10: "Zara Zagreb"
+  chain10: "Zara Zagreb",
+
+  // Rating
+  rateUs: "Ocijenite nas",
+  rateAppQuestion: "Kako biste ocijenili našu aplikaciju?",
+  writeComment: "Napišite svoj komentar (neobavezno)",
+  submitRating: "Pošalji ocjenu",
+  thankYou: "Hvala vam!",
+  thankYouFeedback: "Hvala vam na povratnim informacijama!",
+
+  // Security
+  setPinCode: "Postavite svoj PIN kod za sigurnost aplikacije:",
+  enter4DigitPin: "Unesite 4-znamenkasti PIN",
+  confirm4DigitPin: "Potvrdite 4-znamenkasti PIN",
+  savePin: "Spremi PIN",
+  pinSet: "PIN postavljen",
+  pinDisabled: "PIN onemogućen",
+  pinMismatch: "PIN ne odgovara",
+  invalidPin: "Nevažeći PIN",
+  enter4DigitPinOrEmpty: "Unesite 4-znamenkasti PIN ili ostavite prazno za onemogućavanje.",
+  pinsDoNotMatch: "PIN-ovi se ne podudaraju. Pokušajte ponovno.",
+  pinSecuritySubText: "Koristite ovaj PIN za pristup osjetljivim značajkama aplikacije. Ostavite prazno za onemogućavanje PIN-a. Držite ga sigurnim i nemojte ga dijeliti s drugima.",
+
+  // Notifications
+  receiveUpdatesOffers: "Primajte ažuriranja i ponude od Prank Bank",
+  notificationsEnabledText: "Primit ćete obavijesti o novim značajkama, ažuriranjima aplikacije i posebnim ponudama. Možete se odjaviti u bilo kojem trenutku iz postavki uređaja.",
+
+  // Help Center
+  welcomeToPrankBank: "Dobrodošli u Prank Bank!",
+  gettingStarted: "Početak rada",
+  settingUpProfile: "1. Postavljanje vašeg profila",
+  goToSettingsConfigure: "Idite na Postavke: Konfigurirajte Šalu kako biste prilagodili svoje iskustvo šale:",
+  bulletReceiverName: "• Ime primatelja: Postavite ime osobe koju želite zeznuti",
+  bulletLocation: "• Lokacija: Dodajte lokaciju radi autentičnosti",
+  bulletTotalBalance: "• Ukupno stanje: Postavite svoje lažno stanje računa",
+  bulletDefaultAmount: "• Zadani iznos: Odaberite iznos transakcije za svoju šalu",
+  soundSettings: "2. Postavke zvuka",
+  makePranksConvincing: "Učinite svoje šale uvjerljivijima s prilagođenim zvukovima:",
+  bulletLaughterSounds: "• Zvukovi smijeha: Odaberite između Smijeh, Kihot ili Hee-hee",
+  bulletCustomSounds: "• Prilagođeni zvukovi: Prenesite svoje audio datoteke",
+  bulletRequestSound: "• Zvuk zahtjeva: Postavite zvuk koji se reproducira pri zahtjevu",
+  photoSettings: "3. Postavke fotografije",
+  addReceiverPhoto: "Dodajte fotografiju primatelja kako biste šalu učinili realnijom. Prenesite s kamere ili galerije.",
+  fartsKnockFeatures: "4. Značajke prdeža i kucanja",
+  additionalPrankTools: "Dodatni alati za šalu za dodatnu zabavu:",
+  bulletFarts: "• /prdeži: Reproducirajte različite zvukove prdeža za komični učinak",
+  bulletKnock: "• /kucanje: Simulirajte zvukove kucanja",
+  howToExecutePrank: "5. Kako izvesti šalu",
+  followStepsPerfectPrank: "Slijedite ove korake za savršenu šalu:",
+  step1SetupProfile: "1. Postavite svoj profil s realnim detaljima",
+  step2ChooseSounds: "2. Odaberite odgovarajuće zvukove i iznose",
+  step3NavigateMainScreen: "3. Navigirajte do glavnog ekrana i pokrenite transakciju",
+  step4ShowTransactionScreen: "4. Prikažite lažni ekran transakcije svom prijatelju",
+  step5EnjoyReaction: "5. Uživajte u reakciji i otkrijte šalu!",
+  importantNote: "⚠️ VAŽNA NAPOMENA",
+  alwaysPrankResponsibly: "Uvijek se šalite odgovorno. Provjerite da vaši žrtve budu dobre šale i neće se uvrijediti. Šale bi trebale biti zabavne za sve uključene.",
+
+  // About
+  aboutDescription: "Prank Bank je zabavna aplikacija za šalu dizajnirana samo za zabavu. Sve značajke namijenjene su bezazlenim šalama među prijateljima i obitelji.",
+  aboutFeatures: "Značajke uključuju lažne bankovne transakcije, zvukove šala, zvukove prdeža, zvukove kucanja i prilagodljive scenarije šala kako biste iznenadili svoje prijatelje bezazlenom zabavom.",
+  aboutHowItWorks: "Kako radi: Postavite svoj profil šale s detaljima primatelja, odaberite iznose i zvukove, zatim pokažite lažni ekran transakcije svom nesumnjivom prijatelju!",
+  legalDisclaimer: "PRAVNO ODRICANJE:",
+  legalText1: "Ova aplikacija namijenjena je samo za zabavu. Korisnici su isključivo odgovorni za način na koji koriste ovu aplikaciju. Aplikacija se nikada ne smije koristiti za prijevarne aktivnosti, uznemiravanje ili bilo kakve ilegalne svrhe. Korištenjem ove aplikacije slažete se da je nećete koristiti za obmanu, štetu ili prijevaru drugih. Programeri nisu odgovorni za bilo kakvu zlouporabu ove aplikacije.",
+  legalText2: "Zapamtite: Šale bi trebale biti zabavne i bezazlene. Uvijek poštujte granice drugih i lokalne zakone.",
+  legalText3: "Ova aplikacija se pruža 'kao što jest' bez jamstva bilo koje vrste. Koristite na vlastiti rizik.",
+  legalText4: "Korisnik preuzima punu odgovornost za sve radnje izvedene s ovom aplikacijom. Šale se smiju igrati samo na voljne sudionike koji razumiju da je to šala.",
+
+  // Menu and Navigation
+  menu: "Izbornik",
+  farts: "Prdeži",
+  knock: "Kucanje",
+
+  // Farts Screen
+  chooseYourFartSound: "Odaberite svoj zvuk prdeža!",
+  tapToPlayHoldToSchedule: "Dodirnite za reprodukciju • Držite 2s za raspored",
+  customSounds: "Prilagođeni zvukovi",
+  scheduledSounds: "Raspoređeni zvukovi",
+  scheduleSound: "Rasporedi zvuk",
+  delayMinutes: "Odgoda (minute)",
+  delaySeconds: "Odgoda (sekunde)",
+  repeatTimes: "Broj ponavljanja",
+  intervalSeconds: "Interval (sekunde)",
+  cancelSchedule: "Otkaži",
+  schedule: "Rasporedi",
+  timesLeft: "x preostalo",
+
+  // History
+  delete: "Izbriši",
+
+  // Sound
+
+  // Affiliate Program
+  affiliateProgram: "Partnerski program",
+  totalEarned: "Ukupno zaradjeno",
+  earnPerReferral: "Zaradite 1 USD po preporuci kada netko kupi aplikaciju",
+  totalReferrals: "Ukupno preporuka",
+  pendingPayouts: "Čekajući isplate",
+  referralLink: "Link za preporuku",
+  requestPayout: "Zatraži isplatu",
+  minimumPayout: "Minimalna isplata: 50 USD",
+  paypalEmail: "PayPal email",
+  enterPaypalEmail: "Unesite PayPal email",
+  payoutAmount: "Iznos isplate",
+  enterPayoutAmount: "Unesite iznos",
+  payoutRequested: "Zahtjev za isplatu uspješno poslan",
+  invalidPaypalEmail: "Molimo unesite svoju PayPal email adresu",
+  invalidPayoutAmount: "Molimo unesite valjani iznos isplate",
+  minimumPayoutAmount: "Minimalni iznos isplate je 50 USD. Trenutno imate 47.00 USD dostupno.",
+  insufficientEarnings: "Ne možete zatražiti više od dostupnih zarada. Imate 47.00 USD dostupno, ali ste zatražili $[iznos].",
+  copied: "Kopirano!",
+  payoutHistory: "Povijest isplata"
 };

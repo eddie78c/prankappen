@@ -59,7 +59,7 @@ export default function ProfileScreen() {
         </TouchableOpacity>
       </View>
 
-      <ScrollView ref={scrollRef} style={[styles.content, { marginTop: 48 }]} showsVerticalScrollIndicator={false}>
+      <ScrollView ref={scrollRef} style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.contentPadding}>
         {/* Profile Info */}
         <LinearGradient
@@ -153,19 +153,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   fixedHeader: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+    position: 'relative',
     height: 48,
-    marginTop: 0,
-    paddingTop: 0,
     paddingHorizontal: 0,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingBottom: 0,
-    zIndex: 100,
-    elevation: 2,
+    elevation: 6,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -256,6 +249,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    marginTop: 48,
   },
   contentPadding: {
     paddingHorizontal: 16,
