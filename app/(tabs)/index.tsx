@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, Animated as RNAnimated, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Send, Plus, CreditCard, PiggyBank, Bell, X, Wind, DoorOpen } from 'lucide-react-native';
+import { Send, Plus, CreditCard, PiggyBank, Bell, X, Wind, DoorOpen, ArrowDown, ArrowUp } from 'lucide-react-native';
 import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
@@ -283,26 +283,26 @@ export default function HomeScreen() {
           {/* Quick Actions */}
           <View style={styles.quickActions}>
             <Animated.View entering={FadeInRight.delay(0 * 200).springify()}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={[styles.quickAction, { backgroundColor: theme.colors.surface }]}
                 onPress={handleSendMoney}
               >
                 <View style={[styles.actionIcon, { backgroundColor: theme.colors.success + '20' }]}>
-                  <Plus size={24} color={theme.colors.success} />
+                  <ArrowDown size={24} color={theme.colors.success} />
                 </View>
                 <Text style={[styles.actionLabel, { color: theme.colors.text }]}>
                   {translations.request}
                 </Text>
               </TouchableOpacity>
             </Animated.View>
-            
+
             <Animated.View entering={FadeInRight.delay(1 * 200).springify()}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={[styles.quickAction, { backgroundColor: theme.colors.surface }]}
                 onPress={() => setShowSendModal(true)}
               >
                 <View style={[styles.actionIcon, { backgroundColor: theme.colors.primary + '20' }]}>
-                  <Send size={24} color={theme.colors.primary} />
+                  <ArrowUp size={24} color={theme.colors.primary} />
                 </View>
                 <Text style={[styles.actionLabel, { color: theme.colors.text }]}>
                   {translations.send}

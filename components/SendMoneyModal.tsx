@@ -60,20 +60,20 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.overlay}>
         <TouchableWithoutFeedback onPress={handleClose} accessible={false}>
           <View style={styles.overlayContent}>
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-              <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-                <View style={styles.header}>
-                  <Text style={[styles.title, { color: theme.colors.text }]}>
-                    {translations.sendMoney}
-                  </Text>
-                  <TouchableOpacity
-                    style={[styles.closeButton, { backgroundColor: theme.colors.background }]}
-                    onPress={handleClose}
-                  >
-                    <Ionicons name="close" size={24} color={theme.colors.text} />
-                  </TouchableOpacity>
-                </View>
+            <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
+              <View style={styles.header}>
+                <Text style={[styles.title, { color: theme.colors.text }]}>
+                  {translations.sendMoney}
+                </Text>
+                <TouchableOpacity
+                  style={[styles.closeButton, { backgroundColor: theme.colors.background }]}
+                  onPress={handleClose}
+                >
+                  <Ionicons name="close" size={24} color={theme.colors.text} />
+                </TouchableOpacity>
+              </View>
 
+              <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.content}>
                   <View style={styles.inputContainer}>
                     <Text style={[styles.label, { color: theme.colors.text }]}>
@@ -123,29 +123,29 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
                     />
                   </View>
                 </View>
+              </TouchableWithoutFeedback>
 
-                <View style={styles.footer}>
-                  <TouchableOpacity
-                    style={[styles.cancelButton, { backgroundColor: theme.colors.background }]}
-                    onPress={handleClose}
-                  >
-                    <Text style={[styles.cancelButtonText, { color: theme.colors.text }]}>
-                      {translations.cancel}
-                    </Text>
-                  </TouchableOpacity>
+              <View style={styles.footer}>
+                <TouchableOpacity
+                  style={[styles.cancelButton, { backgroundColor: theme.colors.background }]}
+                  onPress={handleClose}
+                >
+                  <Text style={[styles.cancelButtonText, { color: theme.colors.text }]}>
+                    {translations.cancel}
+                  </Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
-                    onPress={handleSend}
-                  >
-                    <Ionicons name="send" size={20} color={theme.colors.surface} />
-                    <Text style={[styles.sendButtonText, { color: theme.colors.surface }]}>
-                      {translations.send}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
+                  onPress={handleSend}
+                >
+                  <Ionicons name="send" size={20} color={theme.colors.surface} />
+                  <Text style={[styles.sendButtonText, { color: theme.colors.surface }]}>
+                    {translations.send}
+                  </Text>
+                </TouchableOpacity>
               </View>
-            </TouchableWithoutFeedback>
+            </View>
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
