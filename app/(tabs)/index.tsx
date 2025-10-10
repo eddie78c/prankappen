@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Alert, Animated as RNAnimated, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Send, Plus, CreditCard, PiggyBank, Bell, X, Wind, DoorOpen, ArrowDown, ArrowUp } from 'lucide-react-native';
+import { Bell, PiggyBank, CreditCard, X, Wind, DoorOpen, ArrowDown, ArrowUp, TrendingUp, TrendingDown } from 'lucide-react-native';
 import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
@@ -15,28 +15,37 @@ import MoneyReceivedAnimation from '../../components/MoneyReceivedAnimation';
 import PrankRevealScreen from '../../components/PrankRevealScreen';
 import PrankModal from '../../components/PrankModal';
 import SendMoneyModal from '../../components/SendMoneyModal';
-import TransactionIcon from '../../components/TransactionIcon';
 import SwipeableTransaction from '../../components/SwipeableTransaction';
 import { formatCurrency } from '../../utils/currency';
 
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+const PADDING = 16;
+const CARD_GAP = 12;
+
 export default function HomeScreen() {
-    const { theme } = useTheme();
-    const { translations } = useLanguage();
-    const router = useRouter();
-    const scrollRef = React.useRef<ScrollView>(null);
-    const {
-      settings,
-      updateSettings,
-      showPrankReveal,
-      setShowPrankReveal,
-      transactions,
-      addTransaction,
-      deleteTransaction,
-      updateMonthlyIncome,
-      sendMode,
-      setSendMode
-    } = usePrank();
-    const { height } = Dimensions.get('window');
+  const { theme } = useTheme();
+  const { translations, currentLanguage } = useLanguage();
+  // Date helpers for dynamic, locale-aware formatting
+  const locale = currentLanguage === 'sv' ? 'sv-SE' : (currentLanguage === 'en' ? 'en-US' : currentLanguage);
+  const formatDate = (date: Date) => date.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
+  const formatDateEnUS = (date: Date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const todayDateStr = formatDate(new Date());
+  const todayDateStrEnUS = formatDateEnUS(new Date());
+  const yesterdayDateStr = formatDate(new Date(Date.now() - 24 * 60 * 60 * 1000));
+  const yesterdayDateStrEnUS = formatDateEnUS(new Date(Date.now() - 24 * 60 * 60 * 1000));
+  const router = useRouter();
+  const scrollRef = React.useRef<ScrollView>(null);
+  const {
+    settings,
+    updateSettings,
+    showPrankReveal,
+    setShowPrankReveal,
+    transactions,
+    addTransaction,
+    deleteTransaction,
+    updateMonthlyIncome,
+  } = usePrank();
+
   const [showAnimation, setShowAnimation] = React.useState(false);
   const [animationType, setAnimationType] = React.useState<'sent' | 'received'>('received');
   const [secretTaps, setSecretTaps] = React.useState(0);
@@ -51,7 +60,6 @@ export default function HomeScreen() {
   } | null>(null);
   const [showMenu, setShowMenu] = React.useState(false);
 
-  // Scroll to top when this screen gains focus
   useFocusEffect(
     React.useCallback(() => {
       setTimeout(() => {
@@ -68,7 +76,6 @@ export default function HomeScreen() {
       );
       await sound.playAsync();
       
-      // Unload sound after playing
       sound.setOnPlaybackStatusUpdate((status) => {
         if (status.isLoaded && status.didJustFinish) {
           sound.unloadAsync();
@@ -90,51 +97,41 @@ export default function HomeScreen() {
   };
 
   const handleSendMoney = () => {
-    // Add new transaction
     const newTransaction = {
       titleKey: 'request',
-      description: `${translations.from || 'From'} ${settings.receiverName}`,
+      description: `${translations.to || 'To'} ${settings.receiverName}`,
       amount: settings.defaultAmount,
-      date: 'Today',
+      date: todayDateStr,
       category: 'transfer',
       icon: 'arrow-down-left',
       color: '#10B981'
     };
 
     addTransaction(newTransaction);
-
-    // Update balance and monthly income
     updateSettings({
       profileBalance: settings.profileBalance + settings.defaultAmount
     });
     updateMonthlyIncome(settings.defaultAmount);
-
-    // Play sound
     playRequestSound();
-
     createAnimationData(settings.defaultAmount, settings.receiverName, 'received');
   };
 
   const handleSendToPhone = (phoneNumber: string, amount: number) => {
-    // Add new transaction
     const newTransaction = {
       titleKey: 'send',
       description: `${translations.to || 'To'} ${phoneNumber}`,
       amount: -amount,
-      date: 'Today',
+      date: todayDateStr,
       category: 'transfer',
       icon: 'arrow-up-right',
       color: '#FF6B6B'
     };
 
     addTransaction(newTransaction);
-
-    // Update balance and today spent
     updateSettings({
       profileBalance: settings.profileBalance - amount,
       profileTodaySpent: settings.profileTodaySpent + amount
     });
-
     createAnimationData(amount, phoneNumber, 'sent');
   };
 
@@ -160,7 +157,6 @@ export default function HomeScreen() {
     const timer = setTimeout(() => {
       setShowPrankReveal(true);
     }, 2000);
-    
     setLongPressTimer(timer);
   };
 
@@ -171,27 +167,25 @@ export default function HomeScreen() {
     }
   };
 
-  const getQuickActionPressHandler = (label: string) => () => {
-    if (label === translations.send && sendMode === 'send') {
-      handleSendMoney();
-    } else if (label === translations.send && sendMode === 'receive') {
-      setShowSendModal(true);
-    }
-  };
-
-  const renderQuickAction = (icon: React.ReactNode, label: string, index: number) => (
-    <Animated.View
-      key={label}
-      entering={FadeInRight.delay(index * 200).springify()}
-    >
+  const renderQuickAction = (
+    icon: React.ReactNode, 
+    label: string, 
+    index: number, 
+    onPress: () => void,
+    color: string = theme.colors.primary
+  ) => (
+    <Animated.View key={label} entering={FadeInRight.delay(index * 100).springify()}>
       <TouchableOpacity
         style={[styles.quickAction, { backgroundColor: theme.colors.surface }]}
-        onPress={getQuickActionPressHandler(label)}
+        onPress={onPress}
+        activeOpacity={0.7}
       >
-        <View style={[styles.actionIcon, { backgroundColor: theme.colors.primary + '20' }]}>
+        <View style={[styles.actionIcon, { backgroundColor: color + '15' }]}>
           {icon}
         </View>
-        <Text style={[styles.actionLabel, { color: theme.colors.text }]}>{label}</Text>
+        <Text style={[styles.actionLabel, { color: theme.colors.text }]} numberOfLines={1}>
+          {label}
+        </Text>
       </TouchableOpacity>
     </Animated.View>
   );
@@ -202,7 +196,7 @@ export default function HomeScreen() {
       transaction={transaction}
       index={index}
       onDelete={() => deleteTransaction(transaction.id)}
-      canDelete={transaction.date === 'Today'}
+      canDelete={transaction.date === todayDateStr || transaction.date === todayDateStrEnUS}
     />
   );
 
@@ -212,65 +206,90 @@ export default function HomeScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      {/* Fixed Header */}
-      <View style={[styles.fixedHeader, { backgroundColor: theme.colors.surface, borderBottomColor: theme.colors.border }]}>
-        <TouchableOpacity style={[styles.menuButton, { position: 'absolute', left: 20, top: 0, bottom: 0, justifyContent: 'center' }]} onPress={() => setShowMenu(true)} hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-          <Text style={[styles.menuLines, { color: theme.colors.text, fontSize: 24 }]}>☰</Text>
+      {/* Header */}
+      <View style={[styles.header, { 
+        backgroundColor: theme.colors.surface, 
+        borderBottomColor: theme.colors.border 
+      }]}>
+        <TouchableOpacity 
+          style={styles.headerButton} 
+          onPress={() => setShowMenu(true)}
+          hitSlop={{ top: 20, right: 20, bottom: 20, left: 20 }}
+        >
+          <Text style={[styles.menuIcon, { color: theme.colors.text }]}>☰</Text>
         </TouchableOpacity>
+        
         <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
           {translations.dashboard}
         </Text>
-        <TouchableOpacity onPress={() => setShowPrankModal(true)} style={[styles.menuButton, { position: 'absolute', right: 20, top: 0, bottom: 0, justifyContent: 'center' }]}>
-          <Bell size={24} color={theme.colors.text} />
+        
+        <TouchableOpacity 
+          style={styles.headerButton} 
+          onPress={() => setShowPrankModal(true)}
+        >
+          <Bell size={22} color={theme.colors.text} />
         </TouchableOpacity>
       </View>
 
-      {/* Secret spots for prank reveal */}
+      {/* Secret Spots */}
       <TouchableOpacity
         style={styles.secretSpot}
         onPressIn={handleLongPressStart}
         onPressOut={handleLongPressEnd}
       />
-
       <TouchableOpacity
         style={styles.secretTapSpot}
         onPress={handleSecretTap}
       />
-      <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
+
+      <ScrollView 
+        ref={scrollRef} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Balance Section */}
         <LinearGradient
           colors={theme.colors.gradient}
           style={styles.balanceSection}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
-          <Text style={[styles.subtitle, { color: theme.colors.surface }]}>
+          <Text style={styles.subtitle}>
             {translations.overview}
           </Text>
 
-          {/* Balance Card */}
           <Animated.View entering={FadeInDown.delay(200).springify()}>
             <GlassCard style={styles.balanceCard}>
-              <Text style={[styles.balanceLabel, { color: theme.colors.surface }]}>
+              <Text style={styles.balanceLabel}>
                 {translations.totalBalance}
               </Text>
-              <Text style={[styles.balanceAmount, { color: theme.colors.surface }]}>
+              <Text
+                style={styles.balanceAmount}
+              >
                 {formatCurrency(settings.profileBalance, settings.currency)}
               </Text>
               
-              <View style={styles.balanceStats}>
-                <View style={styles.statItem}>
-                  <Text style={[styles.statAmount, { color: theme.colors.surface }]}>
-                    {formatCurrency(settings.profileMonthlyIncome, settings.currency)}
-                  </Text>
-                  <Text style={[styles.statLabel, { color: theme.colors.surface }]}>
+              <View style={styles.statsContainer}>
+                <View style={styles.statCard}>
+                  <View style={styles.statHeader}>
+                    <TrendingUp size={16} color={theme.colors.success} />
+                    <Text style={styles.statAmount}>
+                      {formatCurrency(settings.profileMonthlyIncome, settings.currency)}
+                    </Text>
+                  </View>
+                  <Text style={styles.statLabel}>
                     {translations.monthlyIncome}
                   </Text>
                 </View>
-                <View style={styles.statItem}>
-                  <Text style={[styles.statAmount, { color: theme.colors.surface }]}>
-                    -{formatCurrency(settings.profileTodaySpent, settings.currency)}
-                  </Text>
-                  <Text style={[styles.statLabel, { color: theme.colors.surface }]}>
+                
+                <View style={[styles.statCard, styles.statCardRight]}>
+                  <View style={styles.statHeader}>
+                    <TrendingDown size={16} color={theme.colors.error || '#FF6B6B'} />
+                    <Text style={styles.statAmount}>
+                      {formatCurrency(settings.profileTodaySpent, settings.currency)}
+                    </Text>
+                  </View>
+                  <Text style={styles.statLabel}>
                     {translations.todaySpent}
                   </Text>
                 </View>
@@ -279,43 +298,42 @@ export default function HomeScreen() {
           </Animated.View>
         </LinearGradient>
 
-        <View style={{ paddingHorizontal: 16, paddingVertical: 20 }}>
+        {/* Content Section */}
+        <View style={styles.contentSection}>
           {/* Quick Actions */}
-          <View style={styles.quickActions}>
-            <Animated.View entering={FadeInRight.delay(0 * 200).springify()}>
-              <TouchableOpacity
-                style={[styles.quickAction, { backgroundColor: theme.colors.surface }]}
-                onPress={handleSendMoney}
-              >
-                <View style={[styles.actionIcon, { backgroundColor: theme.colors.success + '20' }]}>
-                  <ArrowDown size={24} color={theme.colors.success} />
-                </View>
-                <Text style={[styles.actionLabel, { color: theme.colors.text }]}>
-                  {translations.request}
-                </Text>
-              </TouchableOpacity>
-            </Animated.View>
-
-            <Animated.View entering={FadeInRight.delay(1 * 200).springify()}>
-              <TouchableOpacity
-                style={[styles.quickAction, { backgroundColor: theme.colors.surface }]}
-                onPress={() => setShowSendModal(true)}
-              >
-                <View style={[styles.actionIcon, { backgroundColor: theme.colors.primary + '20' }]}>
-                  <ArrowUp size={24} color={theme.colors.primary} />
-                </View>
-                <Text style={[styles.actionLabel, { color: theme.colors.text }]}>
-                  {translations.send}
-                </Text>
-              </TouchableOpacity>
-            </Animated.View>
-            
-            {renderQuickAction(<PiggyBank size={24} color={theme.colors.primary} />, translations.loan || 'Loan', 2)}
-            {renderQuickAction(<CreditCard size={24} color={theme.colors.primary} />, translations.topup || 'Top-up', 3)}
+          <View style={styles.quickActionsContainer}>
+            {renderQuickAction(
+              <ArrowDown size={22} color={theme.colors.success} />,
+              translations.request || 'Request',
+              0,
+              handleSendMoney,
+              theme.colors.success
+            )}
+            {renderQuickAction(
+              <ArrowUp size={22} color={theme.colors.primary} />,
+              translations.send || 'Send',
+              1,
+              () => setShowSendModal(true),
+              theme.colors.primary
+            )}
+            {renderQuickAction(
+              <PiggyBank size={22} color={theme.colors.primary} />,
+              translations.loan || 'Loan',
+              2,
+              () => {},
+              theme.colors.primary
+            )}
+            {renderQuickAction(
+              <CreditCard size={22} color={theme.colors.primary} />,
+              translations.topup || 'Top-up',
+              3,
+              playRequestSound,
+              theme.colors.primary
+            )}
           </View>
 
           {/* Recent Transactions */}
-          <View style={styles.section}>
+          <View style={[styles.transactionsSection, { paddingHorizontal: PADDING }]}>
             <View style={styles.sectionHeader}>
               <Text style={[styles.sectionTitle, { color: theme.colors.text }]}>
                 {translations.recentTransactions}
@@ -328,27 +346,34 @@ export default function HomeScreen() {
             </View>
 
             <View style={styles.transactionsList}>
-              <Text style={[styles.transactionGroup, { color: theme.colors.text }]}>
+              <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
                 {translations.today}
               </Text>
-              {transactions.filter(t => t.date === 'Today' || t.date === 'Aug 26').map(renderTransaction)}
+              {transactions
+                .filter(t => t.date === todayDateStr || t.date === todayDateStrEnUS)
+                .slice(0, 2)
+                .map(renderTransaction)}
               
-              <Text style={[styles.transactionGroup, { color: theme.colors.text }]}>
+              <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
                 {translations.yesterday}
               </Text>
-              {transactions.filter(t => t.date === 'Aug 25').map(renderTransaction)}
+              {transactions
+                .filter(t => t.date === yesterdayDateStr || t.date === yesterdayDateStrEnUS)
+                .slice(0, 3)
+                .map(renderTransaction)}
             </View>
           </View>
         </View>
       </ScrollView>
       
-      {showAnimation && (
+      {/* Animations */}
+      {showAnimation && animationData && (
         <>
           {animationType === 'sent' && (
             <MoneySentAnimation 
-              amount={animationData?.amount || 0}
-              currency={animationData?.currency || settings.currency}
-              receiver={animationData?.receiver || ''}
+              amount={animationData.amount}
+              currency={animationData.currency}
+              receiver={animationData.receiver}
               onClose={() => {
                 setShowAnimation(false);
                 setAnimationData(null);
@@ -357,9 +382,9 @@ export default function HomeScreen() {
           )}
           {animationType === 'received' && (
             <MoneyReceivedAnimation 
-              amount={animationData?.amount || 0}
-              currency={animationData?.currency || settings.currency}
-              receiver={animationData?.receiver || ''}
+              amount={animationData.amount}
+              currency={animationData.currency}
+              receiver={animationData.receiver}
               onClose={() => {
                 setShowAnimation(false);
                 setAnimationData(null);
@@ -369,6 +394,7 @@ export default function HomeScreen() {
         </>
       )}
       
+      {/* Modals */}
       <PrankModal 
         visible={showPrankModal}
         onClose={() => setShowPrankModal(false)}
@@ -380,28 +406,54 @@ export default function HomeScreen() {
         onSend={handleSendToPhone}
       />
 
+      {/* Menu */}
       {showMenu && (
         <>
-          <TouchableOpacity style={styles.menuOverlay} onPress={() => setShowMenu(false)} />
-          <View style={[styles.menu, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderBottomWidth: 1, borderBottomColor: theme.colors.border, paddingVertical: 8, marginBottom: 8 }}>
-              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>{translations.menu}</Text>
+          <TouchableOpacity 
+            style={styles.menuOverlay} 
+            onPress={() => setShowMenu(false)}
+            activeOpacity={1}
+          />
+          <View style={[styles.menu, { 
+            backgroundColor: theme.colors.surface, 
+            borderColor: theme.colors.border 
+          }]}>
+            <View style={[styles.menuHeader, { borderBottomColor: theme.colors.border }]}>
+              <Text style={[styles.menuTitle, { color: theme.colors.text }]}>
+                {translations.menu}
+              </Text>
               <TouchableOpacity
                 onPress={() => setShowMenu(false)}
                 hitSlop={{ top: 10, right: 10, bottom: 10, left: 10 }}
-                accessibilityRole="button"
-                style={{ paddingHorizontal: 4, paddingVertical: 2 }}
               >
-                <X size={18} color={theme.colors.text} />
+                <X size={20} color={theme.colors.text} />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity style={[styles.menuItem, { flexDirection: 'row', alignItems: 'center', gap: 8, borderBottomColor: theme.colors.border }]} onPress={() => { setShowMenu(false); router.push('/farts'); }}>
-              <Wind size={18} color={theme.colors.text} />
-              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>{translations.farts}</Text>
+            
+            <TouchableOpacity 
+              style={[styles.menuItem, { borderBottomColor: theme.colors.border }]} 
+              onPress={() => { 
+                setShowMenu(false); 
+                router.push('/farts'); 
+              }}
+            >
+              <Wind size={20} color={theme.colors.text} />
+              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>
+                {translations.farts}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.menuItem, { flexDirection: 'row', alignItems: 'center', gap: 8, borderBottomColor: theme.colors.border }]} onPress={() => { setShowMenu(false); router.push('/knock'); }}>
-              <DoorOpen size={18} color={theme.colors.text} />
-              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>{translations.knock}</Text>
+            
+            <TouchableOpacity 
+              style={styles.menuItem} 
+              onPress={() => { 
+                setShowMenu(false); 
+                router.push('/knock'); 
+              }}
+            >
+              <DoorOpen size={20} color={theme.colors.text} />
+              <Text style={[styles.menuItemText, { color: theme.colors.text }]}>
+                {translations.knock}
+              </Text>
             </TouchableOpacity>
           </View>
         </>
@@ -414,98 +466,120 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  fixedHeader: {
-    position: 'relative',
-    height: 48,
-    paddingHorizontal: 0,
-    justifyContent: 'center',
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    paddingBottom: 0,
-    elevation: 6,
+    height: 48,
+    paddingHorizontal: PADDING,
+    borderBottomWidth: 1,
+    elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    borderBottomWidth: 1,
-    flexDirection: 'row',
   },
-  balanceSection: {
-    marginTop: 0,
-    paddingTop: 20,
-    paddingBottom: 20,
-    paddingHorizontal: 16,
-  },
-  menuButton: {
+  headerButton: {
     width: 40,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  menuLines: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  menuIcon: {
+    fontSize: 22,
+    fontWeight: '600',
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    flex: 1,
-    lineHeight: 48,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  scrollContent: {
+    flexGrow: 1,
+  },
+  balanceSection: {
+    paddingTop: 24,
+    paddingBottom: 24,
+    paddingHorizontal: PADDING,
   },
   subtitle: {
-    fontSize: 14,
-    opacity: 0.9,
-    marginBottom: 20,
-  },
-  balanceCard: {
-    marginTop: 10,
-    padding: 16,
-  },
-  balanceLabel: {
-    fontSize: 14,
-    opacity: 0.9,
-    marginBottom: 8,
-  },
-  balanceAmount: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  balanceStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  statItem: {
-    flex: 1,
-  },
-  statAmount: {
-    fontSize: 18,
+    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.85)',
+    marginBottom: 16,
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
     fontWeight: '600',
   },
+  balanceCard: {
+    padding: 20,
+  },
+  balanceLabel: {
+    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.85)',
+    marginBottom: 8,
+    fontWeight: '500',
+    letterSpacing: 0.5,
+  },
+  balanceAmount: {
+    fontSize: 38,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    marginBottom: 20,
+    letterSpacing: 0.5,
+    flexWrap: 'wrap',
+  },
+  statsContainer: {
+    flexDirection: 'row',
+    gap: CARD_GAP,
+  },
+  statCard: {
+    flex: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.12)',
+    borderRadius: 12,
+    padding: 12,
+  },
+  statCardRight: {
+    marginLeft: 0,
+  },
+  statHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 6,
+  },
+  statAmount: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: 0.3,
+  },
   statLabel: {
-    fontSize: 12,
-    opacity: 0.8,
-    marginTop: 4,
+    fontSize: 11,
+    color: 'rgba(255, 255, 255, 0.75)',
+    fontWeight: '500',
+    letterSpacing: 0.3,
   },
-  content: {
-    paddingHorizontal: 16,
-    paddingVertical: 20,
+  contentSection: {
+    paddingTop: 20,
+    paddingBottom: 20,
   },
-  quickActions: {
+  quickActionsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 30,
+    marginBottom: 28,
+    paddingHorizontal: PADDING,
     gap: 12,
   },
   quickAction: {
     alignItems: 'center',
-    padding: 16,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
     borderRadius: 16,
-    width: 80,
+    width: (SCREEN_WIDTH - (PADDING * 2) - (12 * 3)) / 4,
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.08,
     shadowRadius: 4,
   },
   actionIcon: {
@@ -520,9 +594,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     textAlign: 'center',
+    letterSpacing: 0.2,
   },
-  section: {
-    marginBottom: 24,
+  transactionsSection: {
+    marginBottom: 20,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -531,26 +606,25 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   sectionTitle: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 8,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   seeAll: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
+    letterSpacing: 0.2,
   },
   transactionsList: {
     gap: 2,
   },
   transactionGroup: {
-    fontSize: 12,
-    fontWeight: '600',
-    marginTop: 16,
+    fontSize: 10,
+    fontWeight: '700',
+    marginTop: 14,
     marginBottom: 8,
     textTransform: 'uppercase',
-    letterSpacing: 1,
+    letterSpacing: 1.2,
   },
   secretSpot: {
     position: 'absolute',
@@ -574,33 +648,50 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
     zIndex: 998,
-    elevation: 4,
   },
   menu: {
     position: 'absolute',
     top: 60,
-    left: 20,
-    width: 240,
-    minHeight: 120,
+    left: PADDING,
+    width: SCREEN_WIDTH * 0.65,
+    maxWidth: 280,
     paddingVertical: 8,
-    paddingHorizontal: 8,
-    borderRadius: 8,
+    paddingHorizontal: 0,
+    borderRadius: 12,
     borderWidth: 1,
-    elevation: 5,
+    elevation: 8,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
-    shadowRadius: 4,
+    shadowRadius: 8,
     zIndex: 999,
   },
-  menuItem: {
-    padding: 12,
+  menuHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderBottomWidth: 1,
-    // borderBottomColor sätts via inline-styles för att använda theme.colors.border
+  },
+  menuTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderBottomWidth: 1,
   },
   menuItemText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '500',
+    letterSpacing: 0.2,
   },
 });

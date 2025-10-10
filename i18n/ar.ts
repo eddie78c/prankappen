@@ -1,4 +1,4 @@
- export const ar = {
+export const ar = {
   // Welcome & Auth
   welcome: "مرحبا بك في",
   bankName: "PREMIUM BANK",
@@ -41,6 +41,8 @@
   today: "اليوم",
   yesterday: "أمس",
   thisWeek: "هذا الأسبوع",
+  from: "من",
+  to: "إلى",
   
   // Actions
   send: "إرسال",

@@ -39,6 +39,8 @@ export const da = {
   today: "I DAG",
   yesterday: "I GÅR",
   thisWeek: "DENNE UGE",
+  from: "Fra",
+  to: "Til",
   
   // Actions
   send: "Send",

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { ShoppingCart, Car, DollarSign, Coffee, Plane, Utensils, Fuel, Stethoscope, GraduationCap, Gamepad2, ArrowLeftRight } from 'lucide-react-native';
+import { ShoppingCart, Car, DollarSign, Coffee, Plane, Utensils, Fuel, Stethoscope, GraduationCap, Gamepad2, ArrowLeftRight, ArrowUpRight, ArrowDownLeft } from 'lucide-react-native';
 
 interface TransactionIconProps {
   icon: string;
@@ -47,6 +47,9 @@ export default function TransactionIcon({ icon, color, size = 24, theme }: Trans
     'school': GraduationCap,
     'game-controller': Gamepad2,
     'swap-horizontal': ArrowLeftRight,
+    // Added explicit mappings for send/receive transactions
+    'arrow-up-right': ArrowUpRight,
+    'arrow-down-left': ArrowDownLeft,
   };
 
   const IconComponent = iconMap[icon] || ShoppingCart;
@@ -59,7 +62,7 @@ export default function TransactionIcon({ icon, color, size = 24, theme }: Trans
         height: size + 16,
       }
     ]}>
-      <IconComponent size={size} color={theme?.colors?.text || "#333"} />
+      <IconComponent size={size} color={color || (theme?.colors?.text || "#333")} />
     </View>
   );
 }

@@ -34,11 +34,13 @@ export const sv = {
   contactlessPayment: "Kontaktlös betalning",
   onlinePayment: "Online betalning",
   atmWithdraws: "Bankomatsuttag",
-  
+
   // Transactions
   today: "IDAG",
   yesterday: "IGÅR",
-  thisWeek: "DENNA VECKA",
+  thisWeek: "DEN HÄR VECKAN",
+  from: "Från",
+  to: "Till",
   
   // Actions
   send: "Skicka",
@@ -232,6 +234,7 @@ export const sv = {
 
   // Delete
   delete: "Ta bort",
+  confirmDelete: "Är du säker på att du vill ta bort detta virtuella kort?",
 
   // Sound
   selectSound: "Välj ljud",

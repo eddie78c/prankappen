@@ -35,6 +35,8 @@ export const ha = {
   today: "YAU",
   yesterday: "JIYA",
   thisWeek: "WANNAN MAKON",
+  from: "Daga",
+  to: "Ga",
   
   // Actions
   send: "Aika",

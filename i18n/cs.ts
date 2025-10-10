@@ -35,6 +35,8 @@ export const cs = {
   today: "DNES",
   yesterday: "VČERA",
   thisWeek: "TENTO TÝDEN",
+  from: "Od",
+  to: "Do",
   
   // Actions
   send: "Odeslat",

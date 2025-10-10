@@ -41,6 +41,8 @@ export const de = {
   today: "HEUTE",
   yesterday: "GESTERN",
   thisWeek: "DIESE WOCHE",
+  from: "Von",
+  to: "An",
   
   // Actions
   send: "Senden",
@@ -165,7 +167,11 @@ export const de = {
   all: "Alle",
   income: "Einkommen",
   expenses: "Ausgaben",
-
+  
+  // Delete
+  delete: "Löschen",
+  confirmDelete: "Sind Sie sicher, dass Sie diese virtuelle Karte löschen möchten?",
+  
   // Sound
   selectSound: "Ton auswählen",
 

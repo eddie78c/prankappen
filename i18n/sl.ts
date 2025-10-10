@@ -39,6 +39,8 @@ export const sl = {
   today: "DANES",
   yesterday: "VČERAJ",
   thisWeek: "TA TEDEN",
+  from: "Od",
+  to: "Za",
   
   // Actions
   send: "Pošlji",

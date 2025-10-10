@@ -39,6 +39,8 @@ export const rom = {
   today: "ANDO DJES",
   yesterday: "KALO DJES",
   thisWeek: "KADO KURKO",
+  from: "From",
+  to: "To",
   
   // Actions
   send: "Bitcha",

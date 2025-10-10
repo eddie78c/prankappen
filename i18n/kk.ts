@@ -40,6 +40,8 @@ export const kk = {
   today: "БҮГІН",
   yesterday: "КЕШЕ",
   thisWeek: "ОСЫ АПТА",
+  from: "Кімнен",
+  to: "Кімге",
   
   // Actions
   send: "Жіберу",

@@ -35,6 +35,8 @@ export const et = {
   today: "TÄNA",
   yesterday: "EILE",
   thisWeek: "SELLE NÄDALA",
+  from: "Kellelt",
+  to: "Kellele",
   
   // Actions
   send: "Saada",

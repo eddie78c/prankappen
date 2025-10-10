@@ -35,6 +35,8 @@ export const ur = {
   today: "آج",
   yesterday: "کل",
   thisWeek: "اس ہفتے",
+  from: "سے",
+  to: "کو",
   
   // Actions
   send: "بھیجیں",

@@ -35,6 +35,8 @@ export const no = {
   today: "I DAG",
   yesterday: "I GÅR",
   thisWeek: "DENNE UKEN",
+  from: "Fra",
+  to: "Til",
   
   // Actions
   send: "Send",

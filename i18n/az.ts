@@ -35,6 +35,8 @@ export const az = {
   today: "BU GÜN",
   yesterday: "DÜNƏN",
   thisWeek: "BU HƏFTƏ",
+  from: "Kimdən",
+  to: "Kimə",
   
   // Actions
   send: "Göndər",

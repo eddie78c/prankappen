@@ -35,6 +35,8 @@ export const tr = {
   today: "BUGÜN",
   yesterday: "DÜN",
   thisWeek: "BU HAFTA",
+  from: "Kimden",
+  to: "Kime",
   
   // Actions
   send: "Gönder",
@@ -165,5 +167,9 @@ export const tr = {
   minimumPayoutAmount: "Minimum ödeme tutarı 50 USD'dir. Şu anda 47.00 USD kullanılabilir.",
   insufficientEarnings: "Mevcut gelirlerinizden daha fazlasını talep edemezsiniz. 47.00 USD kullanılabilir, ancak $[tutar] istediniz.",
   copied: "Kopyalandı!",
-  payoutHistory: "Ödeme geçmişi"
+  payoutHistory: "Ödeme geçmişi",
+
+  // Delete
+  delete: "Sil",
+  confirmDelete: "Bu sanal kartı silmek istediğinizden emin misiniz?"
 };

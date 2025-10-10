@@ -39,6 +39,8 @@ export const lv = {
   today: "ŠODIEN",
   yesterday: "VAKAR",
   thisWeek: "ŠĪ NEDĒĻA",
+  from: "No",
+  to: "Uz",
   
   // Actions
   send: "Sūtīt",

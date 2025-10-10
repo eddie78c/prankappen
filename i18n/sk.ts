@@ -39,6 +39,8 @@ export const sk = {
   today: "DNES",
   yesterday: "VČERA",
   thisWeek: "TENTO TÝŽDEŇ",
+  from: "Od",
+  to: "Pre",
   
   // Actions
   send: "Odoslať",

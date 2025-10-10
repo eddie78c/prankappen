@@ -35,6 +35,8 @@ export const ro = {
   today: "AZI",
   yesterday: "IERI",
   thisWeek: "SĂPTĂMÂNA ACEASTA",
+  from: "De la",
+  to: "Către",
   
   // Actions
   send: "Trimite",

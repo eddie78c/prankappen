@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Modal } from 'react-native';
+import { View, Text, StyleSheet, Modal, Dimensions } from 'react-native';
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    width: 280,
+    width: Math.min(280, SCREEN_WIDTH * 0.95),
     height: 320,
     borderRadius: 20,
     justifyContent: 'center',

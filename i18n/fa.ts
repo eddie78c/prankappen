@@ -41,6 +41,8 @@ export const fa = {
   today: "امروز",
   yesterday: "دیروز",
   thisWeek: "این هفته",
+  from: "از",
+  to: "به",
   
   // Actions
   send: "ارسال",

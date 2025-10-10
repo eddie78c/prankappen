@@ -35,6 +35,8 @@ export const pl = {
   today: "DZIŚ",
   yesterday: "WCZORAJ",
   thisWeek: "W TYM TYGODNIU",
+  from: "Od",
+  to: "Do",
   
   // Actions
   send: "Wyślij",

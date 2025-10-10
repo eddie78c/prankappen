@@ -39,6 +39,8 @@ export const hr = {
   today: "DANAS",
   yesterday: "JUČER",
   thisWeek: "OVOG TJEDNA",
+  from: "Od",
+  to: "Za",
   
   // Actions
   send: "Pošalji",

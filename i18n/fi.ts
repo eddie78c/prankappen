@@ -35,6 +35,8 @@ export const fi = {
   today: "TÄNÄÄN",
   yesterday: "EILEN",
   thisWeek: "TÄLLÄ VIIKOLLA",
+  from: "Keneltä",
+  to: "Kenelle",
   
   // Actions
   send: "Lähetä",

@@ -35,6 +35,8 @@ export const bg = {
   today: "ДНЕС",
   yesterday: "ВЧЕРА",
   thisWeek: "ТАЗИ СЕДМИЦА",
+  from: "От",
+  to: "До",
   
   // Actions
   send: "Изпрати",

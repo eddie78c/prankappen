@@ -39,6 +39,8 @@ export const fr = {
   today: "AUJOURD'HUI",
   yesterday: "HIER",
   thisWeek: "CETTE SEMAINE",
+  from: "De",
+  to: "À",
   
   // Actions
   send: "Envoyer",
@@ -94,7 +96,11 @@ export const fr = {
   all: "Tout",
   income: "Revenus",
   expenses: "Dépenses",
-
+  
+  // Delete
+  delete: "Supprimer",
+  confirmDelete: "Êtes-vous sûr de vouloir supprimer cette carte virtuelle ?",
+  
   // Sound
   selectSound: "Sélectionner le son",
 

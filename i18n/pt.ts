@@ -35,6 +35,8 @@ export const pt = {
   today: "HOJE",
   yesterday: "ONTEM",
   thisWeek: "ESTA SEMANA",
+  from: "De",
+  to: "Para",
   
   // Actions
   send: "Enviar",

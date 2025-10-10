@@ -35,6 +35,8 @@ export const sr = {
   today: "Данас",
   yesterday: "Јуче",
   thisWeek: "Ове недеље",
+  from: "Од",
+  to: "За",
   
   // Actions
   send: "Пошаљи",

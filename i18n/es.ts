@@ -39,6 +39,8 @@ export const es = {
   today: "HOY",
   yesterday: "AYER",
   thisWeek: "ESTA SEMANA",
+  from: "De",
+  to: "A",
   
   // Actions
   send: "Enviar",
@@ -266,5 +268,6 @@ export const es = {
   timesLeft: "x restantes",
 
   // Delete
-  delete: "Eliminar"
+  delete: "Eliminar",
+  confirmDelete: "¿Está seguro de que desea eliminar esta tarjeta virtual?"
 };

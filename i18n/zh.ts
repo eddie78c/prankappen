@@ -39,6 +39,8 @@ export const zh = {
   today: "今天",
   yesterday: "昨天",
   thisWeek: "本周",
+  from: "来自",
+  to: "至",
   
   // Actions
   send: "发送",

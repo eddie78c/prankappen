@@ -43,7 +43,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
       setIsLoading(true);
       try {
         const loadedTranslations = languages[currentLanguage];
-        setTranslations(loadedTranslations);
+        // Merge with English defaults to avoid undefined for missing keys
+        setTranslations({ ...languages.en, ...loadedTranslations });
       } catch (error) {
         console.error('Error loading translations:', error);
         // Fallback to English

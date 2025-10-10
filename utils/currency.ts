@@ -110,5 +110,6 @@ export function formatCurrency(amount: number, currencyCode: string = 'SEK'): st
     style: 'currency',
     currency: currencyCode,
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   }).format(amount);
 }

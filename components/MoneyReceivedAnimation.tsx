@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet, Modal, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Modal, TouchableOpacity, Dimensions } from 'react-native';
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 import { Audio } from 'expo-av';
 import Animated, {
   useSharedValue,
@@ -87,13 +88,13 @@ export default function MoneyReceivedAnimation({
       iconScale.value = withSpring(1, { damping: 15 });
     }, 500);
 
-    // Auto close after 5.5 seconds (original 2.5 + 3 seconds)
+    // Removed comment: Auto close timing
     setTimeout(() => {
       opacity.value = withTiming(0, { duration: 300 });
       setTimeout(() => {
         runOnJS(onClose)();
       }, 300);
-    }, 5500);
+    }, 5000);
   }, []);
 
   const animatedStyle = useAnimatedStyle(() => {
@@ -164,7 +165,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    width: 280,
+    width: Math.min(280, SCREEN_WIDTH * 0.95),
     height: 340,
     borderRadius: 20,
     justifyContent: 'center',

@@ -39,6 +39,8 @@ export const cnr = {
   today: "DANAS",
   yesterday: "JUČE",
   thisWeek: "OVE SEDMICE",
+  from: "Od",
+  to: "Za",
   
   // Actions
   send: "Pošalji",

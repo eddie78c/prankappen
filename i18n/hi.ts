@@ -35,6 +35,8 @@ export const hi = {
   today: "आज",
   yesterday: "कल",
   thisWeek: "इस सप्ताह",
+  from: "से",
+  to: "को",
   
   // Actions
   send: "भेजें",

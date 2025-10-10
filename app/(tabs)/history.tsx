@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useFocusEffect } from '@react-navigation/native';
@@ -9,14 +9,16 @@ import { usePrank } from '../../contexts/PrankContext';
 import { formatCurrency } from '../../utils/currency';
 import { mockUserData } from '../../data/mockData';
 
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const PADDING = 16;
+
 export default function HistoryScreen() {
   const { theme } = useTheme();
-  const { translations } = useLanguage();
+  const { translations, currentLanguage } = useLanguage();
   const { settings } = usePrank();
   const [selectedFilter, setSelectedFilter] = useState('all');
   const scrollRef = useRef<ScrollView>(null);
 
-  // Scroll to top when this screen gains focus
   useFocusEffect(
     React.useCallback(() => {
       setTimeout(() => {
@@ -26,22 +28,20 @@ export default function HistoryScreen() {
     }, [])
   );
 
-  // Generate dynamic dates and include all chains sporadically
   const dynamicTransactions = useMemo(() => {
     const now = new Date();
     const today = new Date(now);
     const yesterday = new Date(now);
     yesterday.setDate(now.getDate() - 1);
-    const dayBeforeYesterday = new Date(now);
-    dayBeforeYesterday.setDate(now.getDate() - 2);
+    const dayBefore = new Date(now);
+    dayBefore.setDate(now.getDate() - 2);
     const lastWeek = new Date(now);
     lastWeek.setDate(now.getDate() - 7);
 
-    const formatDate = (date: Date) => {
-      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    };
+    const locale = currentLanguage === 'sv' ? 'sv-SE' : (currentLanguage === 'en' ? 'en-US' : currentLanguage);
+    const formatDate = (date: Date) =>
+      date.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
 
-    // Create more transactions with all chains
     const chains = [
       'chain1', 'chain2', 'chain3', 'chain4', 'chain5',
       'chain6', 'chain7', 'chain8', 'chain9', 'chain10'
@@ -49,31 +49,28 @@ export default function HistoryScreen() {
 
     const extendedTransactions = [...mockUserData.recentTransactions];
 
-    // Add chain transactions sporadically
-    chains.forEach((chainKey, index) => {
-      if (index < 8) { // Add 8 chain transactions
-        extendedTransactions.push({
-          id: `chain-${index}`,
-          titleKey: 'grocery',
-          descriptionKey: chainKey,
-          amount: -(Math.random() * 50 + 10),
-          icon: '🛒',
-          category: 'shopping',
-          date: '' // Will be set in the map below
-        });
-      }
+    chains.slice(0, 8).forEach((chainKey, index) => {
+      extendedTransactions.push({
+        id: `chain-${index}`,
+        titleKey: 'grocery',
+        descriptionKey: chainKey,
+        amount: -(Math.random() * 50 + 10),
+        icon: '🛒',
+        category: 'shopping',
+        date: ''
+      });
     });
 
     return extendedTransactions.map((transaction, index) => {
       let date;
       if (index < 2) date = formatDate(today);
       else if (index < 4) date = formatDate(yesterday);
-      else if (index < 6) date = formatDate(dayBeforeYesterday);
+      else if (index < 6) date = formatDate(dayBefore);
       else date = formatDate(lastWeek);
 
       return { ...transaction, date };
     });
-  }, [translations]);
+  }, [currentLanguage]);
 
   const filters = [
     { key: 'all', label: translations.all },
@@ -81,31 +78,61 @@ export default function HistoryScreen() {
     { key: 'expenses', label: translations.expenses }
   ];
 
+  const groupedTransactions = useMemo(() => {
+    const firstDate = dynamicTransactions[0]?.date;
+    const secondDate = dynamicTransactions[2]?.date;
+
+    return {
+      today: dynamicTransactions.filter(t => t.date === firstDate),
+      yesterday: dynamicTransactions.filter(t => t.date === secondDate),
+      thisWeek: dynamicTransactions.filter(t => t.date !== firstDate && t.date !== secondDate)
+    };
+  }, [dynamicTransactions]);
+
+  const getCategoryIcon = (icon: string) => {
+    const iconMap: { [key: string]: string } = {
+      '🛒': '🛍️',
+      '☕': '☕',
+      '🎮': '🎯',
+      '🚗': '🚙',
+      '🏠': '🏡',
+      '💼': '💰',
+      '🎬': '🎪',
+      '✈️': '✈️',
+    };
+    return iconMap[icon] || icon;
+  };
+
   const renderTransaction = (transaction: any, index: number) => (
     <Animated.View
       key={transaction.id}
       entering={FadeInDown.delay(index * 50).springify()}
     >
-      <TouchableOpacity style={[styles.transactionItem, { backgroundColor: theme.colors.surface }]}>
-        <View style={styles.transactionIcon}>
-          <Text style={styles.transactionEmoji}>{transaction.icon}</Text>
+      <TouchableOpacity 
+        style={[styles.transactionCard, { backgroundColor: theme.colors.surface }]}
+        activeOpacity={0.7}
+      >
+        <View style={[styles.iconContainer, { backgroundColor: theme.colors.background }]}>
+          <Text style={styles.emoji}>{getCategoryIcon(transaction.icon)}</Text>
         </View>
-        <View style={styles.transactionDetails}>
-          <Text style={[styles.transactionTitle, { color: theme.colors.text }]}>
+        
+        <View style={styles.detailsContainer}>
+          <Text style={[styles.title, { color: theme.colors.text }]} numberOfLines={1}>
             {translations[transaction.titleKey as keyof typeof translations]}
           </Text>
-          <Text style={[styles.transactionDescription, { color: theme.colors.textSecondary }]}>
+          <Text style={[styles.description, { color: theme.colors.textSecondary }]} numberOfLines={1}>
             {translations[transaction.descriptionKey as keyof typeof translations]}
           </Text>
         </View>
-        <View style={styles.transactionAmount}>
+        
+        <View style={styles.amountContainer}>
           <Text style={[
-            styles.amountText,
+            styles.amount,
             { color: transaction.amount > 0 ? theme.colors.success : theme.colors.text }
           ]}>
             {formatCurrency(transaction.amount, settings.currency)}
           </Text>
-          <Text style={[styles.transactionDate, { color: theme.colors.textSecondary }]}>
+          <Text style={[styles.date, { color: theme.colors.textSecondary }]}>
             {transaction.date}
           </Text>
         </View>
@@ -116,27 +143,34 @@ export default function HistoryScreen() {
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       {/* Header */}
-      <View style={[styles.header, { backgroundColor: theme.colors.surface }]}>
-         <View style={styles.headerSide} />
-         <Text style={[styles.title, { color: theme.colors.text }]}>
-           {translations.history}
-         </Text>
-         
-         <View style={styles.headerActions}>
-           <TouchableOpacity style={[styles.headerButton, { backgroundColor: theme.colors.background }]}>
-             <Ionicons name="search" size={24} color={theme.colors.text} />
-           </TouchableOpacity>
-         </View>
+      <View style={[styles.header, { 
+        backgroundColor: theme.colors.surface,
+        borderBottomColor: theme.colors.border
+      }]}>
+        <View style={styles.headerSpacer} />
+        <Text style={[styles.headerTitle, { color: theme.colors.text }]}>
+          {translations.history}
+        </Text>
+        <TouchableOpacity 
+          style={[styles.searchButton, { backgroundColor: theme.colors.background }]}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="search" size={22} color={theme.colors.text} />
+        </TouchableOpacity>
       </View>
 
       {/* Filters */}
-      <View style={styles.filtersContainer}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <View style={styles.filterSection}>
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.filterContent}
+        >
           {filters.map((filter, index) => (
             <Animated.View key={filter.key} entering={FadeInDown.delay(index * 100)}>
               <TouchableOpacity
                 style={[
-                  styles.filterButton,
+                  styles.filterChip,
                   {
                     backgroundColor: selectedFilter === filter.key 
                       ? theme.colors.primary 
@@ -144,17 +178,16 @@ export default function HistoryScreen() {
                   },
                 ]}
                 onPress={() => setSelectedFilter(filter.key)}
+                activeOpacity={0.8}
               >
-                <Text
-                  style={[
-                    styles.filterText,
-                    {
-                      color: selectedFilter === filter.key 
-                        ? theme.colors.surface 
-                        : theme.colors.text,
-                    },
-                  ]}
-                >
+                <Text style={[
+                  styles.filterLabel,
+                  {
+                    color: selectedFilter === filter.key 
+                      ? '#FFFFFF'
+                      : theme.colors.text,
+                  },
+                ]}>
                   {filter.label}
                 </Text>
               </TouchableOpacity>
@@ -164,22 +197,40 @@ export default function HistoryScreen() {
       </View>
 
       {/* Transactions List */}
-      <ScrollView ref={scrollRef} style={styles.content} showsVerticalScrollIndicator={false}>
-        <View style={styles.transactionsList}>
-          <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
+      <ScrollView 
+        ref={scrollRef} 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Today */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
             {translations.today}
           </Text>
-          {dynamicTransactions.filter(t => t.date === dynamicTransactions[0].date).map((transaction, index) => renderTransaction(transaction, index))}
+          {groupedTransactions.today.map((transaction, index) => 
+            renderTransaction(transaction, index)
+          )}
+        </View>
 
-          <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
+        {/* Yesterday */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
             {translations.yesterday}
           </Text>
-          {dynamicTransactions.filter(t => t.date === dynamicTransactions[1].date).map((transaction, index) => renderTransaction(transaction, index + 2))}
+          {groupedTransactions.yesterday.map((transaction, index) => 
+            renderTransaction(transaction, index + 2)
+          )}
+        </View>
 
-          <Text style={[styles.transactionGroup, { color: theme.colors.textSecondary }]}>
+        {/* This Week */}
+        <View style={styles.section}>
+          <Text style={[styles.sectionTitle, { color: theme.colors.textSecondary }]}>
             {translations.thisWeek}
           </Text>
-          {dynamicTransactions.filter(t => t.date !== dynamicTransactions[0].date && t.date !== dynamicTransactions[1].date).map((transaction, index) => renderTransaction(transaction, index + 4))}
+          {groupedTransactions.thisWeek.map((transaction, index) => 
+            renderTransaction(transaction, index + 4)
+          )}
         </View>
       </ScrollView>
     </View>
@@ -194,114 +245,118 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 0,
-    paddingHorizontal: 16,
-    paddingBottom: 0,
     height: 48,
-    elevation: 2,
+    paddingHorizontal: PADDING,
+    borderBottomWidth: 1,
+    elevation: 4,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
   },
-  title: {
+  headerSpacer: {
+    width: 40,
+  },
+  headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: '700',
+    letterSpacing: 0.3,
     flex: 1,
+    textAlign: 'center',
   },
-  headerActions: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  headerButton: {
+  searchButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  headerSide: {
-    width: 136,
+  filterSection: {
+    paddingVertical: 12,
   },
-  filtersContainer: {
-    paddingVertical: 16,
-    paddingHorizontal: 16,
+  filterContent: {
+    paddingHorizontal: PADDING,
   },
-  filterButton: {
+  filterChip: {
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
-    marginRight: 12,
-    elevation: 1,
+    marginRight: 10,
+    elevation: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
   },
-  filterText: {
+  filterLabel: {
     fontSize: 14,
     fontWeight: '600',
+    letterSpacing: 0.2,
   },
-  content: {
+  scrollView: {
     flex: 1,
-    paddingHorizontal: 16,
   },
-  transactionsList: {
+  scrollContent: {
+    paddingHorizontal: PADDING,
     paddingBottom: 20,
   },
-  transactionGroup: {
-    fontSize: 12,
-    fontWeight: '600',
-    marginTop: 20,
-    marginBottom: 12,
-    textTransform: 'uppercase',
-    letterSpacing: 1,
+  section: {
+    marginTop: 12,
   },
-  transactionItem: {
+  sectionTitle: {
+    fontSize: 10,
+    fontWeight: '700',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
+  },
+  transactionCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 8,
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 6,
     elevation: 1,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
+    shadowOpacity: 0.08,
+    shadowRadius: 3,
   },
-  transactionIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#F0F0F0',
+  iconContainer: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginRight: 10,
   },
-  transactionEmoji: {
-    fontSize: 20,
+  emoji: {
+    fontSize: 18,
   },
-  transactionDetails: {
+  detailsContainer: {
     flex: 1,
+    marginRight: 8,
   },
-  transactionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 4,
-  },
-  transactionDescription: {
+  title: {
     fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 1,
+    letterSpacing: 0.1,
   },
-  transactionAmount: {
+  description: {
+    fontSize: 11,
+    letterSpacing: 0.1,
+  },
+  amountContainer: {
     alignItems: 'flex-end',
   },
-  amountText: {
-    fontSize: 16,
-    fontWeight: 'bold',
+  amount: {
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: 0.2,
   },
-  transactionDate: {
-    fontSize: 12,
-    marginTop: 4,
+  date: {
+    fontSize: 10,
+    marginTop: 1,
   },
 });

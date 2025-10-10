@@ -39,6 +39,8 @@ export const uz = {
   today: "BUGUN",
   yesterday: "KECHA",
   thisWeek: "BU HAFTA",
+  from: "Kimdan",
+  to: "Kimga",
   
   // Actions
   send: "Yuborish",

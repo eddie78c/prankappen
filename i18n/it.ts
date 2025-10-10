@@ -1,4 +1,4 @@
- export const it = {
+export const it = {
   // Welcome & Auth
   welcome: "Benvenuto in",
   bankName: "BANCA PREMIUM",
@@ -39,6 +39,8 @@
   today: "OGGI",
   yesterday: "IERI",
   thisWeek: "QUESTA SETTIMANA",
+  from: "Da",
+  to: "A",
   
   // Actions
   send: "Invia",

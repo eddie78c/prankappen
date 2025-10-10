@@ -47,6 +47,8 @@ export const el = {
  today: "ΣΗΜΕΡΑ",
  yesterday: "ΧΘΕΣ",
  thisWeek: "ΑΥΤΗ ΤΗΝ ΕΒΔΟΜΑΔΑ",
+  from: "Από",
+  to: "Προς",
 
  // Actions
  send: "Αποστολή",
