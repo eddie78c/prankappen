@@ -26,7 +26,7 @@ export default function HistoryScreen() {
     }, [])
   );
 
-  // Generate dynamic dates
+  // Generate dynamic dates and include all chains sporadically
   const dynamicTransactions = useMemo(() => {
     const now = new Date();
     const today = new Date(now);
@@ -41,17 +41,39 @@ export default function HistoryScreen() {
       return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     };
 
-    return mockUserData.recentTransactions.map((transaction, index) => {
+    // Create more transactions with all chains
+    const chains = [
+      'chain1', 'chain2', 'chain3', 'chain4', 'chain5',
+      'chain6', 'chain7', 'chain8', 'chain9', 'chain10'
+    ];
+
+    const extendedTransactions = [...mockUserData.recentTransactions];
+
+    // Add chain transactions sporadically
+    chains.forEach((chainKey, index) => {
+      if (index < 8) { // Add 8 chain transactions
+        extendedTransactions.push({
+          id: `chain-${index}`,
+          titleKey: 'grocery',
+          descriptionKey: chainKey,
+          amount: -(Math.random() * 50 + 10),
+          icon: '🛒',
+          category: 'shopping',
+          date: '' // Will be set in the map below
+        });
+      }
+    });
+
+    return extendedTransactions.map((transaction, index) => {
       let date;
-      if (index === 0) date = formatDate(today);
-      else if (index === 1) date = formatDate(yesterday);
-      else if (index === 2) date = formatDate(yesterday);
-      else if (index === 3) date = formatDate(dayBeforeYesterday);
+      if (index < 2) date = formatDate(today);
+      else if (index < 4) date = formatDate(yesterday);
+      else if (index < 6) date = formatDate(dayBeforeYesterday);
       else date = formatDate(lastWeek);
 
       return { ...transaction, date };
     });
-  }, []);
+  }, [translations]);
 
   const filters = [
     { key: 'all', label: translations.all },

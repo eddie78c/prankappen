@@ -81,7 +81,7 @@ function RootStatusBar() {
   return (
     <StatusBar
       style={theme.isDark ? "light" : "dark"}
-      backgroundColor={theme.colors.background}
+      backgroundColor={theme.isDark ? "#000000" : theme.colors.background}
     />
   );
 }

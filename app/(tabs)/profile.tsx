@@ -56,7 +56,7 @@ export default function ProfileScreen() {
       <ScrollView ref={scrollRef} style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.contentPadding}>
         {/* Profile Info */}
-        <Animated.View entering={FadeInDown.delay(200)} style={styles.profileInfo}>
+        <Animated.View entering={FadeInDown.delay(200)}>
           <View style={styles.avatarContainer}>
             <Image
               source={settings.receiverPhoto ? { uri: settings.receiverPhoto } : avatarPlaceholder}

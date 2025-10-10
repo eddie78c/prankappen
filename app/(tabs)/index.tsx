@@ -93,7 +93,7 @@ export default function HomeScreen() {
     // Add new transaction
     const newTransaction = {
       titleKey: 'request',
-      description: `${translations.from} ${settings.receiverName}`,
+      description: `${translations.from || 'From'} ${settings.receiverName}`,
       amount: settings.defaultAmount,
       date: 'Today',
       category: 'transfer',
@@ -119,7 +119,7 @@ export default function HomeScreen() {
     // Add new transaction
     const newTransaction = {
       titleKey: 'send',
-      description: `${translations.to} ${phoneNumber}`,
+      description: `${translations.to || 'To'} ${phoneNumber}`,
       amount: -amount,
       date: 'Today',
       category: 'transfer',
@@ -427,6 +427,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     borderBottomWidth: 1,
+    flexDirection: 'row',
   },
   balanceSection: {
     marginTop: 0,
