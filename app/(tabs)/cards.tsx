@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert, Modal, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Switch, Alert, Modal, Dimensions, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import { useFocusEffect } from '@react-navigation/native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
@@ -16,7 +17,8 @@ export default function CardsScreen() {
   const { theme } = useTheme();
   const { translations, currentLanguage } = useLanguage();
   const { settings } = usePrank();
-  const [selectedCard, setSelectedCard] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(0); // 0 for physical, 1 for virtual
+  const [currentCardIndex, setCurrentCardIndex] = useState(0); // Index within the current tab's cards
   const [showCardNumber, setShowCardNumber] = useState(false);
   const [cardSettings, setCardSettings] = useState({
     contactless: true,
@@ -74,7 +76,11 @@ export default function CardsScreen() {
       const timer = setTimeout(() => {
         setCardToDelete(card);
         setShowDeleteModal(true);
-      }, 2000);
+        // Provide haptic feedback
+        if (Platform.OS !== 'web') {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+        }
+      }, 1000); // Reduced from 2000ms to 1000ms
       setLongPressTimer(timer);
     }
   };
@@ -86,18 +92,23 @@ export default function CardsScreen() {
     }
   };
 
-  const createSwipeHandler = (cardIndex: number) => (event: any) => {
+  const onSwipeGesture = (cardIndex: number, event: any) => {
+    const { translationX } = event.nativeEvent;
+    // Store the translation for when gesture ends
+  };
+
+  const onSwipeStateChange = (cardIndex: number, event: any) => {
     const { translationX, state } = event.nativeEvent;
     if (state === State.END) {
-      const currentCards = cards.filter(card => selectedCard === 0 ? card.typeKey === 'physicalCard' : card.typeKey === 'virtualCard');
+      const currentCards = cards.filter(card => selectedTab === 0 ? card.typeKey === 'physicalCard' : card.typeKey === 'virtualCard');
 
       if (Math.abs(translationX) > width * 0.3) {
         if (translationX > 0 && cardIndex > 0) {
           // Swipe right - go to previous card
-          setSelectedCard(cardIndex - 1);
+          setCurrentCardIndex(cardIndex - 1);
         } else if (translationX < 0 && cardIndex < currentCards.length - 1) {
           // Swipe left - go to next card
-          setSelectedCard(cardIndex + 1);
+          setCurrentCardIndex(cardIndex + 1);
         }
       }
     }
@@ -108,16 +119,16 @@ export default function CardsScreen() {
       key={card.id}
       entering={FadeInRight.delay(index * 200).springify()}
     >
-      <PanGestureHandler onGestureEvent={createSwipeHandler(index)} onHandlerStateChange={createSwipeHandler(index)}>
+      <PanGestureHandler onGestureEvent={(event) => onSwipeGesture(index, event)} onHandlerStateChange={(event) => onSwipeStateChange(index, event)}>
         <View style={styles.gestureContainer}>
           <TouchableOpacity
-            onPress={() => setSelectedCard(index)}
+            onPress={() => setCurrentCardIndex(index)}
             onLongPress={() => handleLongPressStart(card)}
             onPressOut={handleLongPressEnd}
-            delayLongPress={2000}
+            delayLongPress={1000}
             style={[
               styles.cardContainer,
-              selectedCard === index && styles.selectedCard,
+              currentCardIndex === index && styles.selectedCard,
             ]}
           >
             <LinearGradient
@@ -204,15 +215,18 @@ export default function CardsScreen() {
               style={[
                 styles.tabButton,
                 {
-                  backgroundColor: selectedCard === 0 ? theme.colors.primary : theme.colors.surface,
+                  backgroundColor: selectedTab === 0 ? theme.colors.primary : theme.colors.surface,
                 },
               ]}
-              onPress={() => setSelectedCard(0)}
+              onPress={() => {
+                setSelectedTab(0);
+                setCurrentCardIndex(0);
+              }}
             >
               <Text
                 style={[
                   styles.tabText,
-                  { color: selectedCard === 0 ? theme.colors.surface : theme.colors.text },
+                  { color: selectedTab === 0 ? theme.colors.surface : theme.colors.text },
                 ]}
               >
                 {translations.physicalCard}
@@ -225,15 +239,18 @@ export default function CardsScreen() {
               style={[
                 styles.tabButton,
                 {
-                  backgroundColor: selectedCard === 1 ? theme.colors.primary : theme.colors.surface,
+                  backgroundColor: selectedTab === 1 ? theme.colors.primary : theme.colors.surface,
                 },
               ]}
-              onPress={() => setSelectedCard(1)}
+              onPress={() => {
+                setSelectedTab(1);
+                setCurrentCardIndex(0);
+              }}
             >
               <Text
                 style={[
                   styles.tabText,
-                  { color: selectedCard === 1 ? theme.colors.surface : theme.colors.text },
+                  { color: selectedTab === 1 ? theme.colors.surface : theme.colors.text },
                 ]}
               >
                 {translations.virtualCard}
@@ -244,7 +261,7 @@ export default function CardsScreen() {
 
         {/* Cards Display */}
         <View style={styles.cardsSection}>
-          {cards.filter(card => selectedCard === 0 ? card.typeKey === 'physicalCard' : card.typeKey === 'virtualCard').map(renderCard)}
+          {cards.filter(card => selectedTab === 0 ? card.typeKey === 'physicalCard' : card.typeKey === 'virtualCard').map(renderCard)}
 
           <Animated.View entering={FadeInDown.delay(600)}>
             <TouchableOpacity style={[styles.addCard, { backgroundColor: theme.colors.surface }]} onPress={addNewCard}>

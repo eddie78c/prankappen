@@ -265,5 +265,6 @@ export const bs = {
   timesLeft: "x preostalo",
 
   // Delete
-  delete: "Izbriši"
+  delete: "Izbriši",
+  confirmDelete: "Da li ste sigurni da želite izbrisati ovu virtualnu karticu?"
 };
