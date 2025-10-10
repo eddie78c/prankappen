@@ -200,5 +200,71 @@ export const de = {
   minimumPayoutAmount: "Der Mindestauszahlungsbetrag beträgt 50 $. Sie haben derzeit 47,00 $ verfügbar.",
   insufficientEarnings: "Sie können nicht mehr anfordern als Ihre verfügbaren Einnahmen. Sie haben 47,00 $ verfügbar, aber $[amount] angefordert.",
   copied: "Kopiert!",
-  payoutHistory: "Auszahlungsverlauf"
+  payoutHistory: "Auszahlungsverlauf",
+
+  // Security
+  pinSecuritySubText: "Verwenden Sie diesen PIN, um auf sensible App-Funktionen zuzugreifen. Leer lassen, um PIN zu deaktivieren. Halten Sie ihn sicher und teilen Sie ihn nicht mit anderen.",
+
+  // Notifications
+  receiveUpdatesOffers: "Erhalten Sie Updates und Angebote von Prank Bank",
+  notificationsEnabledText: "Sie erhalten Benachrichtigungen über neue Funktionen, App-Updates und Sonderangebote. Sie können sich jederzeit von Ihren Geräteeinstellungen abmelden.",
+
+  // Help Center
+  welcomeToPrankBank: "Willkommen bei Prank Bank!",
+  gettingStarted: "Erste Schritte",
+  settingUpProfile: "1. Einrichten Ihres Profils",
+  goToSettingsConfigure: "Gehen Sie zu Einstellungen: Konfigurieren Sie Prank, um Ihre Prank-Erfahrung anzupassen:",
+  bulletReceiverName: "• Empfängername: Legen Sie den Namen der Person fest, die Sie hereinlegen möchten",
+  bulletLocation: "• Standort: Fügen Sie einen Standort für Authentizität hinzu",
+  bulletTotalBalance: "• Gesamtsaldo: Legen Sie Ihr gefälschtes Kontoguthaben fest",
+  bulletDefaultAmount: "• Standardbetrag: Wählen Sie den Transaktionsbetrag für Ihren Prank",
+  soundSettings: "2. Toneinstellungen",
+  makePranksConvincing: "Machen Sie Ihre Pranks überzeugender mit benutzerdefinierten Tönen:",
+  bulletLaughterSounds: "• Lachgeräusche: Wählen Sie zwischen Lachen, Kichern oder Hee-hee",
+  bulletCustomSounds: "• Benutzerdefinierte Töne: Laden Sie Ihre eigenen Audiodateien hoch",
+  bulletRequestSound: "• Anfrageton: Legen Sie einen Ton fest, der bei Geldanfragen abgespielt wird",
+  photoSettings: "3. Fotoeinstellungen",
+  addReceiverPhoto: "Fügen Sie ein Empfängerfoto hinzu, um den Prank realistischer zu machen. Laden Sie von Kamera oder Galerie hoch.",
+  fartsKnockFeatures: "4. Furz- und Klopf-Funktionen",
+  additionalPrankTools: "Zusätzliche Prank-Tools für extra Spaß:",
+  bulletFarts: "• /furze: Spielen Sie verschiedene Furzgeräusche für komischen Effekt",
+  bulletKnock: "• /klopfen: Simulieren Sie Klopfgeräusche",
+  howToExecutePrank: "5. Wie man einen Prank ausführt",
+  followStepsPerfectPrank: "Befolgen Sie diese Schritte für den perfekten Prank:",
+  step1SetupProfile: "1. Richten Sie Ihr Profil mit realistischen Details ein",
+  step2ChooseSounds: "2. Wählen Sie geeignete Töne und Beträge",
+  step3NavigateMainScreen: "3. Navigieren Sie zum Hauptbildschirm und initiieren Sie eine Transaktion",
+  step4ShowTransactionScreen: "4. Zeigen Sie Ihrem Freund den gefälschten Transaktionsbildschirm",
+  step5EnjoyReaction: "5. Genießen Sie die Reaktion und decken Sie den Prank auf!",
+  importantNote: "⚠️ WICHTIGER HINWEIS",
+  alwaysPrankResponsibly: "Machen Sie immer verantwortungsvolle Pranks. Stellen Sie sicher, dass Ihre Opfer gute Sportler sind und nicht verärgert werden. Pranks sollten für alle Beteiligten spaßig sein.",
+
+  // About
+  aboutDescription: "Prank Bank ist eine lustige Prank-Anwendung, die nur für Unterhaltungszwecke entwickelt wurde. Alle Funktionen sind für harmlose Pranks zwischen Freunden und Familie gedacht.",
+  aboutFeatures: "Funktionen umfassen gefälschte Banktransaktionen, Prank-Töne, Furzgeräusche, Klopfgeräusche und anpassbare Prank-Szenarien, um Ihre Freunde mit harmlosem Spaß zu überraschen.",
+  aboutHowItWorks: "Wie es funktioniert: Richten Sie Ihr Prank-Profil mit Empfängerdetails ein, wählen Sie Beträge und Töne, zeigen Sie dann den gefälschten Transaktionsbildschirm Ihrem ahnungslosen Freund!",
+  legalDisclaimer: "RECHTLICHER HAFTUNGSAUSSCHLUSS:",
+  legalText1: "Diese Anwendung ist nur für Unterhaltungszwecke gedacht. Benutzer sind ausschließlich für ihre Nutzung dieser App verantwortlich. Die App darf niemals für betrügerische Aktivitäten, Belästigung oder illegale Aktivitäten verwendet werden. Durch die Nutzung dieser App stimmen Sie zu, sie nicht zu verwenden, um andere zu täuschen, zu schädigen oder zu betrügen. Die Entwickler sind nicht verantwortlich für Missbrauch dieser Anwendung.",
+  legalText2: "Denken Sie daran: Pranks sollten spaßig und harmlos sein. Respektieren Sie immer die Grenzen anderer und lokale Gesetze.",
+  legalText3: "Diese App wird 'wie sie ist' ohne Garantie jeglicher Art bereitgestellt. Nutzung auf eigene Gefahr.",
+  legalText4: "Der Benutzer übernimmt die volle Verantwortung für alle mit dieser Anwendung durchgeführten Aktionen. Pranks dürfen nur bei einvernehmlichen Teilnehmern gespielt werden, die verstehen, dass es ein Witz ist.",
+
+  // Menu and Navigation
+  menu: "Menü",
+  farts: "Furze",
+  knock: "Klopfen",
+
+  // Farts Screen
+  chooseYourFartSound: "Wählen Sie Ihr Furzgeräusch!",
+  tapToPlayHoldToSchedule: "Tippen zum Abspielen • 2s halten zum Planen",
+  customSounds: "Benutzerdefinierte Töne",
+  scheduledSounds: "Geplante Töne",
+  scheduleSound: "Ton planen",
+  delayMinutes: "Verzögerung (Minuten)",
+  delaySeconds: "Verzögerung (Sekunden)",
+  repeatTimes: "Wiederholungsanzahl",
+  intervalSeconds: "Intervall (Sekunden)",
+  cancelSchedule: "Abbrechen",
+  schedule: "Planen",
+  timesLeft: "x übrig"
 };

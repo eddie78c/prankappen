@@ -179,5 +179,89 @@ export const fr = {
   minimumPayoutAmount: "Le montant minimum de paiement est de 50 $. Vous avez actuellement 47,00 $ disponible.",
   insufficientEarnings: "Vous ne pouvez pas demander plus que vos gains disponibles. Vous avez 47,00 $ disponible, mais avez demandé $[amount].",
   copied: "Copié !",
-  payoutHistory: "Historique des paiements"
+  payoutHistory: "Historique des paiements",
+
+  // Rating
+  rateUs: "Évaluez-nous",
+  rateAppQuestion: "Comment évalueriez-vous notre application ?",
+  writeComment: "Écrivez votre commentaire (optionnel)",
+  submitRating: "Soumettre l'évaluation",
+  thankYou: "Merci !",
+  thankYouFeedback: "Merci pour vos commentaires !",
+
+  // Security
+  setPinCode: "Définissez votre code PIN pour la sécurité de l'application :",
+  enter4DigitPin: "Entrez un PIN à 4 chiffres",
+  confirm4DigitPin: "Confirmez le PIN à 4 chiffres",
+  savePin: "Sauvegarder le PIN",
+  pinSet: "PIN défini",
+  pinDisabled: "PIN désactivé",
+  pinMismatch: "Erreur de PIN",
+  invalidPin: "PIN invalide",
+  enter4DigitPinOrEmpty: "Entrez un PIN à 4 chiffres ou laissez vide pour désactiver.",
+  pinsDoNotMatch: "Les PINs ne correspondent pas. Veuillez réessayer.",
+  pinSecuritySubText: "Utilisez ce PIN pour accéder aux fonctions sensibles de l'application. Laissez vide pour désactiver le PIN. Gardez-le sécurisé et ne le partagez pas avec d'autres.",
+
+  // Notifications
+  receiveUpdatesOffers: "Recevoir les mises à jour et offres de Prank Bank",
+  notificationsEnabledText: "Vous recevrez des notifications concernant les nouvelles fonctionnalités, mises à jour de l'application et offres spéciales. Vous pouvez vous désabonner à tout moment depuis les paramètres de votre appareil.",
+
+  // Help Center
+  welcomeToPrankBank: "Bienvenue sur Prank Bank !",
+  gettingStarted: "Commencer",
+  settingUpProfile: "1. Configuration de votre profil",
+  goToSettingsConfigure: "Aller dans Paramètres : Configurez Prank pour personnaliser votre expérience de prank :",
+  bulletReceiverName: "• Nom du destinataire : Définissez le nom de la personne que vous voulez faire marcher",
+  bulletLocation: "• Emplacement : Ajoutez un emplacement pour l'authenticité",
+  bulletTotalBalance: "• Solde total : Définissez votre faux solde de compte",
+  bulletDefaultAmount: "• Montant par défaut : Choisissez le montant de transaction pour votre prank",
+  soundSettings: "2. Paramètres audio",
+  makePranksConvincing: "Rendez vos pranks plus convaincants avec des sons personnalisés :",
+  bulletLaughterSounds: "• Sons de rire : Choisissez entre Rire, Gloussement ou Hee-hee",
+  bulletCustomSounds: "• Sons personnalisés : Téléchargez vos propres fichiers audio",
+  bulletRequestSound: "• Son de demande : Définissez un son qui joue lors de la demande d'argent",
+  photoSettings: "3. Paramètres photo",
+  addReceiverPhoto: "Ajoutez une photo du destinataire pour rendre le prank plus réaliste. Téléchargez depuis l'appareil photo ou la galerie.",
+  fartsKnockFeatures: "4. Fonctionnalités pets et coups",
+  additionalPrankTools: "Outils de prank supplémentaires pour plus de plaisir :",
+  bulletFarts: "• /pets : Jouez différents sons de pets pour un effet comique",
+  bulletKnock: "• /coups : Simulez des sons de coups",
+  howToExecutePrank: "5. Comment exécuter un prank",
+  followStepsPerfectPrank: "Suivez ces étapes pour le prank parfait :",
+  step1SetupProfile: "1. Configurez votre profil avec des détails réalistes",
+  step2ChooseSounds: "2. Choisissez des sons et montants appropriés",
+  step3NavigateMainScreen: "3. Naviguez vers l'écran principal et initiez une transaction",
+  step4ShowTransactionScreen: "4. Montrez l'écran de transaction factice à votre ami",
+  step5EnjoyReaction: "5. Profitez de la réaction et révélez le prank !",
+  importantNote: "⚠️ NOTE IMPORTANTE",
+  alwaysPrankResponsibly: "Faites toujours des pranks de manière responsable. Assurez-vous que vos victimes sont de bonnes natures et ne seront pas contrariées. Les pranks devraient être amusants pour tous les participants.",
+
+  // About
+  aboutDescription: "Prank Bank est une application amusante conçue uniquement pour le divertissement. Toutes les fonctionnalités sont destinées à des pranks inoffensifs entre amis et famille.",
+  aboutFeatures: "Les fonctionnalités incluent de fausses transactions bancaires, sons de prank, sons de pets, sons de coups et scénarios de prank personnalisables pour surprendre vos amis avec du plaisir inoffensif.",
+  aboutHowItWorks: "Comment ça marche : Configurez votre profil de prank avec les détails du destinataire, choisissez les montants et sons, montrez ensuite l'écran de transaction factice à votre ami innocent !",
+  legalDisclaimer: "AVERTISSEMENT JURIDIQUE :",
+  legalText1: "Cette application est destinée uniquement au divertissement. Les utilisateurs sont entièrement responsables de leur utilisation de cette app. L'app ne doit jamais être utilisée pour des activités frauduleuses, du harcèlement ou toute activité illégale. En utilisant cette app, vous acceptez de ne pas l'utiliser pour tromper, nuire ou arnaquer autrui. Les développeurs ne sont pas responsables de tout abus de cette application.",
+  legalText2: "Rappelez-vous : Les pranks devraient être amusants et inoffensifs. Respectez toujours les limites des autres et les lois locales.",
+  legalText3: "Cette app est fournie 'telle quelle' sans garantie d'aucune sorte. Utilisez à vos propres risques.",
+  legalText4: "L'utilisateur assume l'entière responsabilité de toutes les actions effectuées avec cette application. Les pranks ne doivent être joués que sur des participants consentants qui comprennent que c'est une blague.",
+
+  // Menu and Navigation
+  menu: "Menu",
+  farts: "Pets",
+  knock: "Coups",
+
+  // Farts Screen
+  chooseYourFartSound: "Choisissez votre son de pet !",
+  tapToPlayHoldToSchedule: "Appuyez pour jouer • Maintenez 2s pour programmer",
+  customSounds: "Sons personnalisés",
+  scheduledSounds: "Sons programmés",
+  scheduleSound: "Programmer le son",
+  delayMinutes: "Délai (minutes)",
+  delaySeconds: "Délai (secondes)",
+  repeatTimes: "Nombre de répétitions",
+  intervalSeconds: "Intervalle (secondes)",
+  cancelSchedule: "Annuler",
+  schedule: "Programmer",
+  timesLeft: "x restant"
 };

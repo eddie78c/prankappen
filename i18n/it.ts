@@ -174,5 +174,92 @@
   minimumPayoutAmount: "L'importo minimo di pagamento è $50. Attualmente hai $47.00 disponibile.",
   insufficientEarnings: "Non puoi richiedere più dei tuoi guadagni disponibili. Hai $47.00 disponibile, ma hai richiesto $[amount].",
   copied: "Copiato!",
-  payoutHistory: "Storico pagamenti"
+  payoutHistory: "Storico pagamenti",
+
+  // Rating
+  rateUs: "Valutaci",
+  rateAppQuestion: "Come valuteresti la nostra app?",
+  writeComment: "Scrivi il tuo commento (opzionale)",
+  submitRating: "Invia valutazione",
+  thankYou: "Grazie!",
+  thankYouFeedback: "Grazie per il tuo feedback!",
+
+  // Security
+  setPinCode: "Imposta il tuo codice PIN per la sicurezza dell'app:",
+  enter4DigitPin: "Inserisci PIN a 4 cifre",
+  confirm4DigitPin: "Conferma PIN a 4 cifre",
+  savePin: "Salva PIN",
+  pinSet: "PIN impostato",
+  pinDisabled: "PIN disabilitato",
+  pinMismatch: "PIN non corrispondente",
+  invalidPin: "PIN non valido",
+  enter4DigitPinOrEmpty: "Inserisci un PIN a 4 cifre o lascia vuoto per disabilitare.",
+  pinsDoNotMatch: "I PIN non corrispondono. Riprova.",
+  pinSecuritySubText: "Usa questo PIN per accedere alle funzioni sensibili dell'app. Lascia vuoto per disabilitare il PIN. Tienilo sicuro e non condividerlo con altri.",
+
+  // Notifications
+  receiveUpdatesOffers: "Ricevi aggiornamenti e offerte da Prank Bank",
+  notificationsEnabledText: "Riceverai notifiche su nuove funzionalità, aggiornamenti dell'app e offerte speciali. Puoi annullare l'iscrizione in qualsiasi momento dalle impostazioni del tuo dispositivo.",
+
+  // Help Center
+  welcomeToPrankBank: "Benvenuto su Prank Bank!",
+  gettingStarted: "Iniziare",
+  settingUpProfile: "1. Impostazione del tuo profilo",
+  goToSettingsConfigure: "Vai a Impostazioni: Configura Prank per personalizzare la tua esperienza di prank:",
+  bulletReceiverName: "• Nome destinatario: Imposta il nome della persona che vuoi prendere in giro",
+  bulletLocation: "• Posizione: Aggiungi una posizione per l'autenticità",
+  bulletTotalBalance: "• Saldo totale: Imposta il tuo falso saldo del conto",
+  bulletDefaultAmount: "• Importo predefinito: Scegli l'importo della transazione per il tuo prank",
+  soundSettings: "2. Impostazioni audio",
+  makePranksConvincing: "Rendi i tuoi prank più convincenti con suoni personalizzati:",
+  bulletLaughterSounds: "• Suoni di risata: Scegli tra Risata, Risatina o Hee-hee",
+  bulletCustomSounds: "• Suoni personalizzati: Carica i tuoi file audio",
+  bulletRequestSound: "• Suono richiesta: Imposta un suono che viene riprodotto quando richiedi denaro",
+  photoSettings: "3. Impostazioni foto",
+  addReceiverPhoto: "Aggiungi una foto del destinatario per rendere il prank più realistico. Carica da fotocamera o galleria.",
+  fartsKnockFeatures: "4. Funzionalità peti e colpi",
+  additionalPrankTools: "Strumenti di prank aggiuntivi per più divertimento:",
+  bulletFarts: "• /peti: Riproduci diversi suoni di peti per effetto comico",
+  bulletKnock: "• /colpi: Simula suoni di colpi",
+  howToExecutePrank: "5. Come eseguire un prank",
+  followStepsPerfectPrank: "Segui questi passi per il prank perfetto:",
+  step1SetupProfile: "1. Imposta il tuo profilo con dettagli realistici",
+  step2ChooseSounds: "2. Scegli suoni e importi appropriati",
+  step3NavigateMainScreen: "3. Naviga verso la schermata principale e avvia una transazione",
+  step4ShowTransactionScreen: "4. Mostra la schermata di transazione falsa al tuo amico",
+  step5EnjoyReaction: "5. Goditi la reazione e svela il prank!",
+  importantNote: "⚠️ NOTA IMPORTANTE",
+  alwaysPrankResponsibly: "Fai sempre prank in modo responsabile. Assicurati che le tue vittime siano buoni giocatori e non si offendano. I prank dovrebbero essere divertenti per tutti i partecipanti.",
+
+  // About
+  aboutDescription: "Prank Bank è un'app divertente progettata solo per intrattenimento. Tutte le funzionalità sono destinate a prank innocui tra amici e famiglia.",
+  aboutFeatures: "Le funzionalità includono transazioni bancarie false, suoni di prank, suoni di peti, suoni di colpi e scenari di prank personalizzabili per sorprendere i tuoi amici con divertimento innocuo.",
+  aboutHowItWorks: "Come funziona: Imposta il tuo profilo prank con i dettagli del destinatario, scegli importi e suoni, mostra poi la schermata di transazione falsa al tuo amico ignaro!",
+  legalDisclaimer: "DISCLAIMER LEGALE:",
+  legalText1: "Questa applicazione è destinata solo a scopo di intrattenimento. Gli utenti sono interamente responsabili del loro utilizzo di questa app. L'app non deve mai essere utilizzata per attività fraudolente, molestie o qualsiasi attività illegale. Utilizzando questa app, accetti di non utilizzarla per ingannare, danneggiare o truffare altri. Gli sviluppatori non sono responsabili per qualsiasi abuso di questa applicazione.",
+  legalText2: "Ricorda: I prank dovrebbero essere divertenti e innocui. Rispetta sempre i confini degli altri e le leggi locali.",
+  legalText3: "Questa app è fornita 'così com'è' senza garanzia di alcun tipo. Usa a tuo rischio.",
+  legalText4: "L'utente assume piena responsabilità per tutte le azioni intraprese con questa applicazione. I prank dovrebbero essere giocati solo su partecipanti consenzienti che capiscono che è uno scherzo.",
+
+  // Menu and Navigation
+  menu: "Menu",
+  farts: "Peti",
+  knock: "Colpi",
+
+  // Farts Screen
+  chooseYourFartSound: "Scegli il tuo suono di peto!",
+  tapToPlayHoldToSchedule: "Tocca per riprodurre • Tieni premuto 2s per programmare",
+  customSounds: "Suoni personalizzati",
+  scheduledSounds: "Suoni programmati",
+  scheduleSound: "Programma suono",
+  delayMinutes: "Ritardo (minuti)",
+  delaySeconds: "Ritardo (secondi)",
+  repeatTimes: "Numero ripetizioni",
+  intervalSeconds: "Intervallo (secondi)",
+  cancelSchedule: "Annulla",
+  schedule: "Programma",
+  timesLeft: "x rimanenti",
+
+  // Delete
+  delete: "Elimina"
 };
