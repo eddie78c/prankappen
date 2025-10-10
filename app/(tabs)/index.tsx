@@ -5,6 +5,7 @@ import { Send, Plus, CreditCard, PiggyBank, Bell, X, Wind, DoorOpen } from 'luci
 import Animated, { FadeInDown, FadeInRight } from 'react-native-reanimated';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useLanguage } from '../../contexts/LanguageContext';
 import { usePrank } from '../../contexts/PrankContext';
@@ -22,6 +23,7 @@ export default function HomeScreen() {
     const { theme } = useTheme();
     const { translations } = useLanguage();
     const router = useRouter();
+    const scrollRef = React.useRef<ScrollView>(null);
     const {
       settings,
       updateSettings,
@@ -48,6 +50,16 @@ export default function HomeScreen() {
     receiver: string;
   } | null>(null);
   const [showMenu, setShowMenu] = React.useState(false);
+
+  // Scroll to top when this screen gains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      setTimeout(() => {
+        scrollRef.current?.scrollTo({ y: 0, animated: false });
+      }, 0);
+      return undefined;
+    }, [])
+  );
 
   const playRequestSound = async () => {
     try {
@@ -225,9 +237,7 @@ export default function HomeScreen() {
         style={styles.secretTapSpot}
         onPress={handleSecretTap}
       />
-
-      <ScrollView showsVerticalScrollIndicator={false} style={{ marginTop: 48 }} contentContainerStyle={{ flexGrow: 1 }}>
-        {/* Balance Section */}
+      <ScrollView ref={scrollRef} showsVerticalScrollIndicator={false} style={{ marginTop: 48 }} contentContainerStyle={{ flexGrow: 1 }}>
         <LinearGradient
           colors={theme.colors.gradient}
           style={styles.balanceSection}

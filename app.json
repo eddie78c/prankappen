@@ -25,6 +25,8 @@
       "package": "com.nideart.pranko",
       "permissions": [
         "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.RECORD_AUDIO",
         "android.permission.MODIFY_AUDIO_SETTINGS"
       ]
     },
@@ -49,6 +51,12 @@
       },
       "router": {}
     },
-    "owner": "nide.art"
+    "owner": "nide.art",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3ad71390-d2c7-4518-9d81-ed9682bbc6aa"
+    }
   }
 }

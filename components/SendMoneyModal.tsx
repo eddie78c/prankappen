@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Modal, TouchableOpacity, TextInput, Alert } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, Text, StyleSheet, Modal, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -17,8 +17,10 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
   const { settings } = usePrank();
   const [phoneNumber, setPhoneNumber] = useState('');
   const [amount, setAmount] = useState('');
+  const amountRef = useRef<TextInput>(null);
 
   const handleSend = () => {
+    Keyboard.dismiss();
     if (!phoneNumber.trim()) {
       Alert.alert(translations.error || 'Error', translations.pleaseEnterPhone || 'Please enter a phone number');
       return;
@@ -42,6 +44,7 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
   };
 
   const handleClose = () => {
+    Keyboard.dismiss();
     setPhoneNumber('');
     setAmount('');
     onClose();
@@ -55,82 +58,95 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
       onRequestClose={handleClose}
     >
       <View style={styles.overlay}>
-        <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
-          <View style={styles.header}>
-            <Text style={[styles.title, { color: theme.colors.text }]}>
-              {translations.sendMoney}
-            </Text>
-            <TouchableOpacity 
-              style={[styles.closeButton, { backgroundColor: theme.colors.background }]}
-              onPress={handleClose}
-            >
-              <Ionicons name="close" size={24} color={theme.colors.text} />
-            </TouchableOpacity>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View style={[styles.container, { backgroundColor: theme.colors.surface }]}>
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+              <View>
+                <View style={styles.header}>
+                  <Text style={[styles.title, { color: theme.colors.text }]}>
+                    {translations.sendMoney}
+                  </Text>
+                  <TouchableOpacity 
+                    style={[styles.closeButton, { backgroundColor: theme.colors.background }]}
+                    onPress={handleClose}
+                  >
+                    <Ionicons name="close" size={24} color={theme.colors.text} />
+                  </TouchableOpacity>
+                </View>
+                
+                <View style={styles.content}>
+                  <View style={styles.inputContainer}>
+                    <Text style={[styles.label, { color: theme.colors.text }]}>
+                      {translations.phoneNumber}
+                    </Text>
+                    <TextInput
+                      style={[
+                        styles.input, {
+                          backgroundColor: theme.colors.background,
+                          color: theme.colors.text,
+                          borderColor: theme.colors.border,
+                        }
+                      ]}
+                      value={phoneNumber}
+                      onChangeText={setPhoneNumber}
+                      placeholder={translations.enterPhoneNumber}
+                      placeholderTextColor={theme.colors.textSecondary}
+                      keyboardType="phone-pad"
+                      returnKeyType="next"
+                      blurOnSubmit={false}
+                      onSubmitEditing={() => amountRef.current?.focus()}
+                    />
+                  </View>
+                  
+                  <View style={styles.inputContainer}>
+                    <Text style={[styles.label, { color: theme.colors.text }]}>
+                      {translations.amount}
+                    </Text>
+                    <TextInput
+                      ref={amountRef}
+                      style={[
+                        styles.input, {
+                          backgroundColor: theme.colors.background,
+                          color: theme.colors.text,
+                          borderColor: theme.colors.border,
+                        }
+                      ]}
+                      value={amount}
+                      onChangeText={setAmount}
+                      placeholder={translations.enterAmount}
+                      placeholderTextColor={theme.colors.textSecondary}
+                      keyboardType="numeric"
+                      returnKeyType="done"
+                      blurOnSubmit={true}
+                      onSubmitEditing={() => Keyboard.dismiss()}
+                    />
+                  </View>
+                </View>
+                
+                <View style={styles.footer}>
+                  <TouchableOpacity 
+                    style={[styles.cancelButton, { backgroundColor: theme.colors.background }]}
+                    onPress={handleClose}
+                  >
+                    <Text style={[styles.cancelButtonText, { color: theme.colors.text }]}>
+                      {translations.cancel}
+                    </Text>
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity 
+                    style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
+                    onPress={handleSend}
+                  >
+                    <Ionicons name="send" size={20} color={theme.colors.surface} />
+                    <Text style={[styles.sendButtonText, { color: theme.colors.surface }]}>
+                      {translations.send}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
-          
-          <View style={styles.content}>
-            <View style={styles.inputContainer}>
-              <Text style={[styles.label, { color: theme.colors.text }]}>
-                {translations.phoneNumber}
-              </Text>
-              <TextInput
-                style={[
-                  styles.input, {
-                    backgroundColor: theme.colors.background,
-                    color: theme.colors.text,
-                    borderColor: theme.colors.border,
-                  }
-                ]}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-                placeholder={translations.enterPhoneNumber}
-                placeholderTextColor={theme.colors.textSecondary}
-                keyboardType="phone-pad"
-              />
-            </View>
-            
-            <View style={styles.inputContainer}>
-              <Text style={[styles.label, { color: theme.colors.text }]}>
-                {translations.amount}
-              </Text>
-              <TextInput
-                style={[
-                  styles.input, {
-                    backgroundColor: theme.colors.background,
-                    color: theme.colors.text,
-                    borderColor: theme.colors.border,
-                  }
-                ]}
-                value={amount}
-                onChangeText={setAmount}
-                placeholder={translations.enterAmount}
-                placeholderTextColor={theme.colors.textSecondary}
-                keyboardType="numeric"
-              />
-            </View>
-          </View>
-          
-          <View style={styles.footer}>
-            <TouchableOpacity 
-              style={[styles.cancelButton, { backgroundColor: theme.colors.background }]}
-              onPress={handleClose}
-            >
-              <Text style={[styles.cancelButtonText, { color: theme.colors.text }]}>
-                {translations.cancel}
-              </Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={[styles.sendButton, { backgroundColor: theme.colors.primary }]}
-              onPress={handleSend}
-            >
-              <Ionicons name="send" size={20} color={theme.colors.surface} />
-              <Text style={[styles.sendButtonText, { color: theme.colors.surface }]}>
-                {translations.send}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        </KeyboardAvoidingView>
       </View>
     </Modal>
   );

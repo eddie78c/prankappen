@@ -9,6 +9,7 @@ import { AuthProvider, useAuth } from '../contexts/AuthContext';
 import { PrankProvider, usePrank } from '../contexts/PrankContext';
 import AnimatedSplash from '../components/AnimatedSplash';
 import PinInput from '../components/PinInput';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 function AuthenticatedApp() {
   const { isAuthenticated, authenticate } = useAuth();
@@ -55,18 +56,21 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <>
+      {/* Provide safe area context and ensure content starts below the system status bar */}
+      <SafeAreaProvider>
         <ThemeProvider>
           <LanguageProvider>
             <PrankProvider>
               <AuthProvider>
-                <AuthenticatedApp />
+                <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
+                  <AuthenticatedApp />
+                </SafeAreaView>
               </AuthProvider>
             </PrankProvider>
           </LanguageProvider>
         </ThemeProvider>
         <StatusBar style="auto" />
-      </>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
