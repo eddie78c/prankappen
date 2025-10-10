@@ -162,5 +162,26 @@ export const no = {
   chain7: "Vinmonopolet Oslo",
   chain8: "Joker Oslo",
   chain9: "Stockfleths Oslo",
-  chain10: "Kaffebrenneriet Oslo"
+  chain10: "Kaffebrenneriet Oslo",
+
+  // Affiliate Program
+  affiliateProgram: "Affiliate-program",
+  totalEarned: "Total opptjent",
+  earnPerReferral: "Tjen 1 USD per henvisning når noen kjøper appen",
+  totalReferrals: "Totalt antall henvisninger",
+  pendingPayouts: "Ventende utbetalinger",
+  referralLink: "Henvisningslenke",
+  requestPayout: "Be om utbetaling",
+  minimumPayout: "Minimum utbetaling: 50 USD",
+  paypalEmail: "PayPal e-post",
+  enterPaypalEmail: "Skriv inn PayPal e-post",
+  payoutAmount: "Utbetalingsbeløp",
+  enterPayoutAmount: "Skriv inn beløp",
+  payoutRequested: "Utbetalingsforespørsel sendt vellykket",
+  invalidPaypalEmail: "Vennligst skriv inn din PayPal e-postadresse",
+  invalidPayoutAmount: "Vennligst skriv inn et gyldig utbetalingsbeløp",
+  minimumPayoutAmount: "Minimum utbetalingsbeløp er 50 USD. Du har for øyeblikket 47.00 USD tilgjengelig.",
+  insufficientEarnings: "Du kan ikke be om mer enn dine tilgjengelige inntekter. Du har 47.00 USD tilgjengelig, men ba om $[beløp].",
+  copied: "Kopiert!",
+  payoutHistory: "Utbetalingshistorikk"
 };

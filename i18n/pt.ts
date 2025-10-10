@@ -145,5 +145,26 @@ export const pt = {
   chain7: " Worten Lisboa",
   chain8: "Delta Lisboa",
   chain9: "Livraria Bertrand Lisboa",
-  chain10: "Nespresso Lisboa"
+  chain10: "Nespresso Lisboa",
+
+  // Affiliate Program
+  affiliateProgram: "Programa de afiliados",
+  totalEarned: "Total ganho",
+  earnPerReferral: "Ganhe 1 USD por indicação quando alguém comprar o app",
+  totalReferrals: "Total de indicações",
+  pendingPayouts: "Pagamentos pendentes",
+  referralLink: "Link de indicação",
+  requestPayout: "Solicitar pagamento",
+  minimumPayout: "Pagamento mínimo: 50 USD",
+  paypalEmail: "Email PayPal",
+  enterPaypalEmail: "Digite email PayPal",
+  payoutAmount: "Valor do pagamento",
+  enterPayoutAmount: "Digite o valor",
+  payoutRequested: "Solicitação de pagamento enviada com sucesso",
+  invalidPaypalEmail: "Por favor, digite seu endereço de email PayPal",
+  invalidPayoutAmount: "Por favor, digite um valor de pagamento válido",
+  minimumPayoutAmount: "O valor mínimo de pagamento é 50 USD. Você tem atualmente 47.00 USD disponível.",
+  insufficientEarnings: "Você não pode solicitar mais do que seus ganhos disponíveis. Você tem 47.00 USD disponível, mas solicitou $[valor].",
+  copied: "Copiado!",
+  payoutHistory: "Histórico de pagamentos"
 };

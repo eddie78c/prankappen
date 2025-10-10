@@ -246,5 +246,26 @@ export const sv = {
   chain7: "NK Stockholm",
   chain8: "Systembolaget Stockholm",
   chain9: "Apotek Hjärtat Stockholm",
-  chain10: "Pressbyrån Stockholm"
+  chain10: "Pressbyrån Stockholm",
+
+  // Affiliate Program
+  affiliateProgram: "Affiliate-program",
+  totalEarned: "Totalt intjänat",
+  earnPerReferral: "Tjäna 1 USD per hänvisning när någon köper appen",
+  totalReferrals: "Totalt antal hänvisningar",
+  pendingPayouts: "Väntande utbetalningar",
+  referralLink: "Hänvisningslänk",
+  requestPayout: "Begär utbetalning",
+  minimumPayout: "Minsta utbetalning: 50 USD",
+  paypalEmail: "PayPal-e-post",
+  enterPaypalEmail: "Ange PayPal-e-post",
+  payoutAmount: "Utbetalningsbelopp",
+  enterPayoutAmount: "Ange belopp",
+  payoutRequested: "Utbetalning begärd framgångsrikt",
+  invalidPaypalEmail: "Ange din PayPal-e-postadress",
+  invalidPayoutAmount: "Ange ett giltigt utbetalningsbelopp",
+  minimumPayoutAmount: "Minsta utbetalningsbeloppet är 50 USD. Du har för närvarande 47.00 USD tillgängligt.",
+  insufficientEarnings: "Du kan inte begära mer än dina tillgängliga intäkter. Du har 47.00 USD tillgängligt, men begärde $[belopp].",
+  copied: "Kopierad!",
+  payoutHistory: "Utbetalningshistorik"
 };

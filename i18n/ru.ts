@@ -145,5 +145,26 @@ export const ru = {
   chain7: "Спортмастер Москва",
   chain8: "Пятёрочка Москва",
   chain9: "Кофе Хауз Москва",
-  chain10: "Шоколадница Москва"
+  chain10: "Шоколадница Москва",
+
+  // Affiliate Program
+  affiliateProgram: "Партнёрская программа",
+  totalEarned: "Всего заработано",
+  earnPerReferral: "Зарабатывайте 1 USD за каждого реферала при покупке приложения",
+  totalReferrals: "Всего рефералов",
+  pendingPayouts: "Ожидающие выплаты",
+  referralLink: "Реферальная ссылка",
+  requestPayout: "Запросить выплату",
+  minimumPayout: "Минимальная выплата: 50 USD",
+  paypalEmail: "PayPal email",
+  enterPaypalEmail: "Введите PayPal email",
+  payoutAmount: "Сумма выплаты",
+  enterPayoutAmount: "Введите сумму",
+  payoutRequested: "Запрос на выплату успешно отправлен",
+  invalidPaypalEmail: "Пожалуйста, введите ваш PayPal email адрес",
+  invalidPayoutAmount: "Пожалуйста, введите действительную сумму выплаты",
+  minimumPayoutAmount: "Минимальная сумма выплаты составляет 50 USD. У вас сейчас доступно 47.00 USD.",
+  insufficientEarnings: "Вы не можете запросить больше, чем ваши доступные доходы. У вас доступно 47.00 USD, но вы запросили $[сумма].",
+  copied: "Скопировано!",
+  payoutHistory: "История выплат"
 };

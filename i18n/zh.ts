@@ -144,5 +144,26 @@ export const zh = {
   chain7: "国美 北京",
   chain8: "物美 北京",
   chain9: "海底捞 北京",
-  chain10: "Costa 北京"
+  chain10: "Costa 北京",
+
+  // Affiliate Program
+  affiliateProgram: "联盟计划",
+  totalEarned: "总收入",
+  earnPerReferral: "每当有人购买应用时，通过推荐赚取1美元",
+  totalReferrals: "总推荐数",
+  pendingPayouts: "待付款",
+  referralLink: "推荐链接",
+  requestPayout: "申请付款",
+  minimumPayout: "最低付款：50美元",
+  paypalEmail: "PayPal邮箱",
+  enterPaypalEmail: "输入PayPal邮箱",
+  payoutAmount: "付款金额",
+  enterPayoutAmount: "输入金额",
+  payoutRequested: "付款申请成功提交",
+  invalidPaypalEmail: "请输入您的PayPal邮箱地址",
+  invalidPayoutAmount: "请输入有效的付款金额",
+  minimumPayoutAmount: "最低付款金额为50美元。您目前有47.00美元可用。",
+  insufficientEarnings: "您不能申请超过您的可用收入。您有47.00美元可用，但申请了$[金额]。",
+  copied: "已复制！",
+  payoutHistory: "付款历史"
 };
