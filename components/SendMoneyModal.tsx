@@ -91,7 +91,7 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
                       onChangeText={setPhoneNumber}
                       placeholder={translations.enterPhoneNumber}
                       placeholderTextColor={theme.colors.textSecondary}
-                      keyboardType="phone-pad"
+                      keyboardType={Platform.OS === 'web' ? 'default' : 'phone-pad'}
                       returnKeyType="next"
                       blurOnSubmit={false}
                       onSubmitEditing={() => amountRef.current?.focus()}
@@ -116,7 +116,7 @@ export default function SendMoneyModal({ visible, onClose, onSend }: SendMoneyMo
                       onChangeText={setAmount}
                       placeholder={translations.enterAmount}
                       placeholderTextColor={theme.colors.textSecondary}
-                      keyboardType="numeric"
+                      keyboardType={Platform.OS === 'web' ? 'default' : 'numeric'}
                       returnKeyType="send"
                       onSubmitEditing={handleSend}
                       autoFocus={false}

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Dimensions, Platform } from 'react-native';
 import { Audio } from 'expo-av';
 import { useRouter } from 'expo-router';
-import { useTheme } from '@/contexts/ThemeContext';
+import { useTheme } from '../contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePrank } from '@/contexts/PrankContext';
 import { ArrowLeft, X, Clock, Wallet, History, CreditCard, User, Settings } from 'lucide-react-native';
@@ -75,7 +75,7 @@ export default function FartsScreen() {
   };
 
   const playSound = async (index: number) => {
-    let soundUri: any = require('@/assets/sounds/farts/fart-4.mp3');
+    let soundUri: any = require('../assets/sounds/farts/fart-4.mp3');
 
     if (index >= 12) {
       const customIndex = index - 12;
@@ -106,7 +106,7 @@ export default function FartsScreen() {
     const delay = (delayMinutes * 60 + delaySeconds) * 1000;
     const numTimes = times;
     const interval = intervalSeconds * 1000;
-    const soundUri = selectedIndex >= 12 ? { uri: settings.customSounds[selectedIndex - 12] } : require('@/assets/sounds/farts/fart-4.mp3');
+    const soundUri = selectedIndex >= 12 ? { uri: settings.customSounds[selectedIndex - 12] } : require('../assets/sounds/farts/fart-4.mp3');
     const name = selectedIndex >= 12 ? `Custom ${selectedIndex - 11}` : `Fart ${selectedIndex + 1}`;
     const id = Date.now() + Math.random();
 
